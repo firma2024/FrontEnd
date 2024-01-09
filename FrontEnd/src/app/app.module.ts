@@ -12,6 +12,9 @@ import { ListLawyerComponent } from './modules/lawyers/list-lawyer/list-lawyer.c
 import { InfoLawyerComponent } from './modules/lawyers/info-lawyer/info-lawyer.component';
 import { RegisterProcessComponent } from './modules/processes/register-process/register-process.component';
 import { ListProcessComponent } from './modules/processes/list-process/list-process.component';
+import { InfoProcessComponent } from './modules/processes/info-process/info-process.component';
+import { EnterAudienceComponent } from './modules/processes/enter-audience/enter-audience.component';
+import { InfoActionComponent } from './modules/processes/info-action/info-action.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { ListProcessComponent } from './modules/processes/list-process/list-proc
     ListLawyerComponent,
     InfoLawyerComponent,
     RegisterProcessComponent,
-    ListProcessComponent
+    ListProcessComponent,
+    InfoProcessComponent,
+    EnterAudienceComponent,
+    InfoActionComponent
   ],
   imports: [
     BrowserModule,
