@@ -74,7 +74,7 @@ a{
 .col-izq{
 	flex: 2;
     width: 40%;
-    padding-top: 100px;
+    padding-top: 5%;
     padding-left: 8%;
     border-bottom-left-radius: 20px;
     border-top-left-radius: 20px;
@@ -116,7 +116,6 @@ label{
 .col-izq img {
 	width: 60%;
 	height: 15%;
-    margin-left: 20%;
     padding-bottom: 2%;
 }
 
