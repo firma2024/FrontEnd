@@ -15,6 +15,7 @@ import { ListProcessComponent } from './modules/processes/list-process/list-proc
 import { InfoProcessComponent } from './modules/processes/info-process/info-process.component';
 import { EnterAudienceComponent } from './modules/processes/enter-audience/enter-audience.component';
 import { InfoActionComponent } from './modules/processes/info-action/info-action.component';
+import { MainMenuComponent } from './modules/main-menu/main-menu.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { InfoActionComponent } from './modules/processes/info-action/info-action
     ListProcessComponent,
     InfoProcessComponent,
     EnterAudienceComponent,
-    InfoActionComponent
+    InfoActionComponent,
+    MainMenuComponent
   ],
   imports: [
     BrowserModule,
