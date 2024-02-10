@@ -1,0 +1,118 @@
+body{
+    max-width: fit-content;
+    margin: 10px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #f5f7f8;
+}
+.button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #e1e3e3;
+    border: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 30px rgba(10, 10, 10, 0.164);
+    cursor: pointer;
+    transition-duration: .3s;
+    overflow: hidden;
+    position: relative;
+}
+.button2 {
+    position: absolute;
+    z-index: 1; 
+    width: 43px;
+    height: 43px;
+    top: 130px; /* Ajusta la posición vertical según tus necesidades */
+    right: -20px;
+    border-radius: 50%;
+    border:#cccecf;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 30px rgba(70, 69, 69, 0.164);
+    cursor: pointer;
+    transition-duration: .3s;
+}
+.btn3 {
+    width: 240px;
+    height: 60px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: #AA2535;
+    font-size: 25px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    color: #ffffff;
+    border-color: none;
+}
+.btnUser {
+    padding-left: 30px;
+    padding-right: 1370px;
+}
+
+.svgIcon {
+    width: 30px;
+    transition-duration: .3s;
+}
+
+.botonBack{
+    padding: 15px;
+}
+.tituloPerfil{
+    color: #AA2535;
+    padding-left: 20px;
+}
+.infoPerfil{
+    display: flex;
+}
+.nombrePerfil{
+    padding-left: 15px;
+    color: #AA2535;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: bold;
+}
+.imagenPerfil{ 
+    padding-top: 20px;
+    width: 50%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+.foto{
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    border-radius: 50%;
+    display: flex;
+    width: 170px;
+    height: 170px;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+.datosPerfil{
+    width: 370px;
+}
+.botonActualizar{
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+    padding-left: 150px;
+}
+.form-group{
+    padding-left: 30px;
+    width: 370x;
+    margin-bottom: 10px;
+}
+.form-control.custom-input{
+    border-radius: 5px;
+    height: 40px;
+    background-color: #ffffff;
+}
+label {
+    color: #595a5a;
+}
