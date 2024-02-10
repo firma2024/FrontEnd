@@ -19,6 +19,7 @@ import { InfoActionComponent } from './modules/processes/info-action/info-action
 import { MainMenuComponent } from './modules/main-menu/main-menu.component';
 import { CreateProcessComponent } from './modules/processes/create-process/create-process.component';
 import { InfoAdminComponent } from './home/info-admin/info-admin.component';
+import { RecoverComponent } from './modules/authentication/recover/recover.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { InfoAdminComponent } from './home/info-admin/info-admin.component';
     InfoActionComponent,
     MainMenuComponent,
     CreateProcessComponent,
-    InfoAdminComponent
+    InfoAdminComponent,
+    RecoverComponent
   ],
   imports: [
     BrowserModule,
