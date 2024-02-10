@@ -1,0 +1,53 @@
+body, html {
+    margin-top: 1%;
+    margin-left: 1%;
+    height: 100%;
+    width: 100%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+.description{
+    color:#6C6C6C;
+    margin-bottom: 2%;
+}
+
+.searchProcess{
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+.columns {
+    display: flex; 
+    margin-left: 10px;
+
+}
+.column{
+    padding: 10px;
+    margin-right: 5%;
+}
+select{
+    background-color: #ffffff;
+    color: #6C6C6C;
+    border-color: #6C6C6C;
+    border-radius: 5px;
+    width: 15%;
+    height: 40px;
+}
+select:hover {
+    background-color: rgb(240, 239, 239);
+    cursor: pointer; 
+}
+.buttonBuscar{
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    margin-left: 5%;
+    margin-top: 3%;
+}
+button{
+    background-color: #AA2535 ;
+    color: white;
+    width: 20%;
+    height: 40px;
+}
