@@ -22,6 +22,9 @@ a{
     border-radius: 10px;
     width: 50%;
 }
+.btn-primary:hover{
+    background-color: #AA2535; 
+}
 
 .checkbox{
     width: 100%;
