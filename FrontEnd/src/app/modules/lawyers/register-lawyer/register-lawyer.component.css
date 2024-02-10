@@ -1,0 +1,74 @@
+body, html {
+    margin-top: 2%;
+    margin-left: 2%;
+    height: 100%;
+    width: 100%;
+}
+.description{
+    color:#6C6C6C;
+    margin-bottom: 4%;
+}
+
+.registerLawyer{
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+.buttonCreated{
+    background-color: #AA2535 ;
+    color: white;
+    width: 28%;
+    height: 40px;
+}
+.buttonCreate{
+    text-align:justify;
+    margin-left: 34%;
+}
+.columns {
+    display: flex; 
+    margin-left: 10px;
+
+}
+.column1{
+    padding-left: 5%;
+    padding-bottom: 5%;
+    display: block;
+}
+.buttonProfile{
+    font-size: 100px;
+    border-radius: 100px;
+    padding: 15px;
+    width: 180px;
+    color: white;
+    background-color: #d8d4d4;
+}
+.form{
+    display: flex;
+}
+.inputContainer{
+    display: block;
+}
+label{
+    display: block;
+    margin-bottom: 10px;
+    color: #6C6C6C;
+}
+input{
+    width: 280px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #BFBBBB; 
+    text-align: center;
+}
+::placeholder {
+    color: #BFBBBB; /* Cambia el color del texto de marcador de posición */
+}
+
+select{
+    color: #BFBBBB;
+    width: 280px;
+    height: 40px;
+    border-radius: 5px;
+    border-color: #BFBBBB;
+    text-align: center;
+}
