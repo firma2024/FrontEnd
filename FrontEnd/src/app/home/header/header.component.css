@@ -17,7 +17,7 @@
     padding-top: 5px;
 }
   
-  .boton {
+.boton {
     color: #787676;
     width: 200px; 
     height: 70px;
@@ -31,7 +31,12 @@
     display: block;
 }
   
-  .boton:hover {
+.boton:hover {
     background-color: #e0e0e0; /* Cambia el color de fondo al pasar el ratón por encima */
-  }
+}
+
+.custom-dialog-container {
+    border-radius: 20px; /* Define el radio del borde para hacerlo redondo */
+}
+  
   

@@ -7,5 +7,11 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
   styleUrl: './info-admin.component.css'
 })
 export class InfoAdminComponent {
+
+  constructor(private dialogRef: MatDialogRef<InfoAdminComponent>) { }
+
+  goBack() {
+    this.dialogRef.close();
+  }
   
 }
