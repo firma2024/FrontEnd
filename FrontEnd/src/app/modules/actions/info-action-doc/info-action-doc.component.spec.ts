@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InfoProcessComponent } from './info-process.component';
+import { InfoActionDocComponent } from './info-action-doc.component';
 
-describe('InfoProcessComponent', () => {
-  let component: InfoProcessComponent;
-  let fixture: ComponentFixture<InfoProcessComponent>;
+describe('InfoActionDocComponent', () => {
+  let component: InfoActionDocComponent;
+  let fixture: ComponentFixture<InfoActionDocComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [InfoProcessComponent]
+      declarations: [InfoActionDocComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(InfoProcessComponent);
+    fixture = TestBed.createComponent(InfoActionDocComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -8,7 +8,6 @@ import { CreateProcessComponent } from './modules/processes/create-process/creat
 import { InfoAdminComponent } from './home/info-admin/info-admin.component';
 import { RecoverComponent } from './modules/authentication/recover/recover.component';
 import { RegisterLawyerComponent } from './modules/lawyers/register-lawyer/register-lawyer.component';
-import { InfoActionComponent } from './modules/processes/info-action/info-action.component';
 import { HeaderComponent } from './home/header/header.component';
 
 const routes: Routes = [
@@ -21,7 +20,6 @@ const routes: Routes = [
   {path: 'registerlawyer',component: RegisterLawyerComponent},
   {path: 'registerprocess',component: RegisterProcessComponent},
   {path: 'createprocess',component: CreateProcessComponent},
-  {path: 'infoaction',component: InfoActionComponent},
   {path: 'header',component: HeaderComponent}
 
 ];

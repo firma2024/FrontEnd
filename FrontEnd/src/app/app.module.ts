@@ -12,15 +12,18 @@ import { RegisterLawyerComponent } from './modules/lawyers/register-lawyer/regis
 import { ListLawyerComponent } from './modules/lawyers/list-lawyer/list-lawyer.component';
 import { InfoLawyerComponent } from './modules/lawyers/info-lawyer/info-lawyer.component';
 import { RegisterProcessComponent } from './modules/processes/register-process/register-process.component';
-import { ListProcessComponent } from './modules/processes/list-process/list-process.component';
-import { InfoProcessComponent } from './modules/processes/info-process/info-process.component';
-import { EnterAudienceComponent } from './modules/processes/enter-audience/enter-audience.component';
-import { InfoActionComponent } from './modules/processes/info-action/info-action.component';
 import { MainMenuComponent } from './modules/main-menu/main-menu.component';
 import { CreateProcessComponent } from './modules/processes/create-process/create-process.component';
 import { InfoAdminComponent } from './home/info-admin/info-admin.component';
 import { RecoverComponent } from './modules/authentication/recover/recover.component';
 import { HeaderComponent } from './home/header/header.component';
+import { ListProcessAdminComponent } from './modules/processes/list-process-admin/list-process-admin.component';
+import { InfoProcessAdminComponent } from './modules/processes/info-process-admin/info-process-admin.component';
+import { ListProcessLawyerComponent } from './modules/processes/list-process-lawyer/list-process-lawyer.component';
+import { InfoProcessLawyerComponent } from './modules/processes/info-process-lawyer/info-process-lawyer.component';
+import { InfoActionDocComponent } from './modules/actions/info-action-doc/info-action-doc.component';
+import { InfoActionWebComponent } from './modules/actions/info-action-web/info-action-web.component';
+import { InfoActionComponent } from './modules/actions/info-action/info-action.component';
 
 @NgModule({
   declarations: [
@@ -32,15 +35,18 @@ import { HeaderComponent } from './home/header/header.component';
     ListLawyerComponent,
     InfoLawyerComponent,
     RegisterProcessComponent,
-    ListProcessComponent,
-    InfoProcessComponent,
-    EnterAudienceComponent,
-    InfoActionComponent,
     MainMenuComponent,
     CreateProcessComponent,
     InfoAdminComponent,
     RecoverComponent,
-    HeaderComponent
+    HeaderComponent,
+    ListProcessAdminComponent,
+    InfoProcessAdminComponent,
+    ListProcessLawyerComponent,
+    InfoProcessLawyerComponent,
+    InfoActionDocComponent,
+    InfoActionWebComponent,
+    InfoActionComponent
   ],
   imports: [
     BrowserModule,
