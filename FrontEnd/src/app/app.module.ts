@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatDrawerModule } from '@angular/material/drawer';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +20,7 @@ import { MainMenuComponent } from './modules/main-menu/main-menu.component';
 import { CreateProcessComponent } from './modules/processes/create-process/create-process.component';
 import { InfoAdminComponent } from './home/info-admin/info-admin.component';
 import { RecoverComponent } from './modules/authentication/recover/recover.component';
+import { HeaderComponent } from './home/header/header.component';
 
 @NgModule({
   declarations: [
@@ -39,11 +39,11 @@ import { RecoverComponent } from './modules/authentication/recover/recover.compo
     MainMenuComponent,
     CreateProcessComponent,
     InfoAdminComponent,
-    RecoverComponent
+    RecoverComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
-    MatDrawerModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
