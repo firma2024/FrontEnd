@@ -1,1 +1,11 @@
-<router-outlet></router-outlet>
+<mat-drawer-container class="container">
+    <mat-drawer mode="side" opened class="sidebar">
+      <!-- Contenido del drawer (sidebar), en este caso el componente app-home -->
+      <app-home></app-home>
+    </mat-drawer>
+    <div class="mainContent">
+      <!-- Contenido principal -->
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-container>
+  

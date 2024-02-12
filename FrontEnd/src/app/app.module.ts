@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDrawerModule } from '@angular/material/drawer';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,6 +43,7 @@ import { RecoverComponent } from './modules/authentication/recover/recover.compo
   ],
   imports: [
     BrowserModule,
+    MatDrawerModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,

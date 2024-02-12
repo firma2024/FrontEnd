@@ -7,6 +7,10 @@ body, html {
     justify-content: center;
     align-items: center;
 }
+h1,h2,h3,h4,h5,h6{
+    width: fit-content;
+    height:5px;
+}
 .description{
     color:#6C6C6C;
     margin-bottom: 2%;

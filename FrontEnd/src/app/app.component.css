@@ -1,3 +1,15 @@
-body{
-    background-color: #cdc9c9;
-}
+.container {
+    height: 100vh; /* Establece la altura del contenedor al 100% del viewport */
+    display: flex; /* Utiliza flexbox para distribuir los elementos */
+  }
+  
+  .sidebar {
+    width: 250px; /* Ancho del drawer (menú lateral) */
+    background-color: #f0f0f0; /* Color de fondo del drawer */
+  }
+  
+  .mainContent {
+    flex: 1; /* El contenido principal se expandirá para llenar el espacio restante */
+    padding: 20px; /* Añade espacio alrededor del contenido principal */
+  }
+  

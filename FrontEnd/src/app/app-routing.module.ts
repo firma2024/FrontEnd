@@ -8,6 +8,7 @@ import { CreateProcessComponent } from './modules/processes/create-process/creat
 import { InfoAdminComponent } from './home/info-admin/info-admin.component';
 import { RecoverComponent } from './modules/authentication/recover/recover.component';
 import { RegisterLawyerComponent } from './modules/lawyers/register-lawyer/register-lawyer.component';
+import { InfoActionComponent } from './modules/processes/info-action/info-action.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'login',pathMatch:'full'},
@@ -15,10 +16,11 @@ const routes: Routes = [
   {path: 'recover',component: RecoverComponent},
   {path: 'home',component: HomeComponent},
   {path: 'main',component: MainMenuComponent},
-  {path: 'infoadmin',component:InfoAdminComponent},
-  {path: 'registerlawyer',component:RegisterLawyerComponent},
+  {path: 'infoadmin',component: InfoAdminComponent},
+  {path: 'registerlawyer',component: RegisterLawyerComponent},
   {path: 'registerprocess',component: RegisterProcessComponent},
-  {path: 'createprocess',component:CreateProcessComponent},
+  {path: 'createprocess',component: CreateProcessComponent},
+  {path: 'infoaction',component: InfoActionComponent}
 
 ];
 
