@@ -36,6 +36,10 @@ a{
     padding-right: 5px;
 }
 
+input[type="checkbox"]:checked {
+    color: #AA2535; 
+}
+
 .checkbox label {
     margin-left: 8px;
 }

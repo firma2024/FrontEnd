@@ -1,0 +1,64 @@
+body, html {
+    margin-left: 5%;
+    margin-top: 3%;
+    height:fit-content;
+    width: 100%;
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+.infoAction{
+    margin-bottom: 3%;
+}
+.sujetos{
+    margin: 0;
+    border-bottom: 1px solid #ccc;
+}
+.columns {
+    display: flex;
+}
+
+.column { 
+    display: flex;
+}
+.column p {
+    margin: 0;
+    padding: 10px 10px;
+    height: 100px;
+    border-bottom: 1px solid #ccc;
+}
+.column li {
+    margin: 0;
+}
+.half-column1{
+    width: 150px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+.half-column2{
+    width: 250px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+.half-column3{
+    width: 450px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+.half-column4{
+    width: 160px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+.description {
+    margin-top: -80px; /* Ajusta el valor según sea necesario para mover el div más arriba */
+}
+

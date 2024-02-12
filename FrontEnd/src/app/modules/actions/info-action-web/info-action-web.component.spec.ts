@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListProcessComponent } from './list-process.component';
+import { InfoActionWebComponent } from './info-action-web.component';
 
-describe('ListProcessComponent', () => {
-  let component: ListProcessComponent;
-  let fixture: ComponentFixture<ListProcessComponent>;
+describe('InfoActionWebComponent', () => {
+  let component: InfoActionWebComponent;
+  let fixture: ComponentFixture<InfoActionWebComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ListProcessComponent]
+      declarations: [InfoActionWebComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ListProcessComponent);
+    fixture = TestBed.createComponent(InfoActionWebComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

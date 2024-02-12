@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EnterAudienceComponent } from './enter-audience.component';
+import { InfoActionDocComponent } from './info-action-doc.component';
 
-describe('EnterAudienceComponent', () => {
-  let component: EnterAudienceComponent;
-  let fixture: ComponentFixture<EnterAudienceComponent>;
+describe('InfoActionDocComponent', () => {
+  let component: InfoActionDocComponent;
+  let fixture: ComponentFixture<InfoActionDocComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EnterAudienceComponent]
+      declarations: [InfoActionDocComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(EnterAudienceComponent);
+    fixture = TestBed.createComponent(InfoActionDocComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

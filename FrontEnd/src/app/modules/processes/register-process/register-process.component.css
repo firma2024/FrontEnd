@@ -1,8 +1,8 @@
 body, html {
-    margin-top: 1%;
-    margin-left: 1%;
-    height: 100%;
-    width: 100%;
+    margin-top: 3%;
+    margin-left: 3%;
+    height:fit-content;
+    width: 70vw;
     display: block;
     justify-content: center;
     align-items: center;

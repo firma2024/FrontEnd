@@ -1,3 +1,32 @@
-body{
-    background-color: #cdc9c9;
+.container {
+  display: flex;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
+
+.sidebar {
+  width: 280px; /* Ancho del drawer (menú lateral) */
+}
+
+.mainContent {
+  width: 70%;
+  flex: 1; /* El contenido principal se expandirá para llenar el espacio restante */
+  margin-top: 80px;
+}
+
+app-home {
+  position: fixed; /* Establece la posición fija */
+  top: 0; /* Fija el componente en la parte superior */
+  left: 0; /* Fija el componente en el lado izquierdo */
+  bottom: 0; /* Fija el componente en la parte inferior */
+  width: 280px; /* Ancho del componente igual al del sidebar */
+}
+
+app-header{
+  position: fixed;
+  height: 80px;
+  top: -1px;
+}
+
+

@@ -1,0 +1,42 @@
+.header {
+    width: 81.8vw; /* Establece el ancho al 100% del viewport */
+    background-color: #ffffff; 
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: 80px;
+  }
+  .buttonprofile{
+    margin-right: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .icon-pull-right {
+    padding-left: 20px;
+    padding-top: 5px;
+}
+  
+.boton {
+    color: #787676;
+    width: 200px; 
+    height: 70px;
+    margin-bottom: 10px; 
+    border: none; 
+    background-color: transparent; 
+    transition: background-color 0.3s ease; 
+    font-size: 23px;
+    text-align: center;
+    justify-content: space-between;
+    display: block;
+}
+  
+.boton:hover {
+    background-color: #e0e0e0; /* Cambia el color de fondo al pasar el ratón por encima */
+}
+
+.custom-dialog-container {
+    border-radius: 20px; /* Define el radio del borde para hacerlo redondo */
+}
+  
+  
