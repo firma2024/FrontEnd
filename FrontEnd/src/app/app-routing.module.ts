@@ -9,6 +9,9 @@ import { InfoAdminComponent } from './home/info-admin/info-admin.component';
 import { RecoverComponent } from './modules/authentication/recover/recover.component';
 import { RegisterLawyerComponent } from './modules/lawyers/register-lawyer/register-lawyer.component';
 import { HeaderComponent } from './home/header/header.component';
+import { InfoActionComponent } from './modules/actions/info-action/info-action.component';
+import { InfoActionWebComponent } from './modules/actions/info-action-web/info-action-web.component';
+import { InfoActionDocComponent } from './modules/actions/info-action-doc/info-action-doc.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'login',pathMatch:'full'},
@@ -20,7 +23,10 @@ const routes: Routes = [
   {path: 'registerlawyer',component: RegisterLawyerComponent},
   {path: 'registerprocess',component: RegisterProcessComponent},
   {path: 'createprocess',component: CreateProcessComponent},
-  {path: 'header',component: HeaderComponent}
+  {path: 'header',component: HeaderComponent},
+  {path: 'infoaction',component: InfoActionComponent},
+  {path: 'infoactionweb',component: InfoActionWebComponent},
+  {path: 'infoactiondoc',component: InfoActionDocComponent},
 
 ];
 
