@@ -1,12 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -59,12 +54,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    MatDialogModule,
-    MatTableDataSource,
-    BrowserAnimationsModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatIconModule
+    MatDialogModule
   ],
   providers: [
     provideAnimationsAsync()
