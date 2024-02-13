@@ -12,6 +12,7 @@ import { HeaderComponent } from './home/header/header.component';
 import { InfoActionComponent } from './modules/actions/info-action/info-action.component';
 import { InfoActionWebComponent } from './modules/actions/info-action-web/info-action-web.component';
 import { InfoActionDocComponent } from './modules/actions/info-action-doc/info-action-doc.component';
+import { ListLawyerComponent } from './modules/lawyers/list-lawyer/list-lawyer.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'login',pathMatch:'full'},
@@ -21,13 +22,13 @@ const routes: Routes = [
   {path: 'main',component: MainMenuComponent},
   {path: 'infoadmin',component: InfoAdminComponent},
   {path: 'registerlawyer',component: RegisterLawyerComponent},
+  {path: 'listlawyer',component: ListLawyerComponent},
   {path: 'registerprocess',component: RegisterProcessComponent},
   {path: 'createprocess',component: CreateProcessComponent},
   {path: 'header',component: HeaderComponent},
   {path: 'infoaction',component: InfoActionComponent},
   {path: 'infoactionweb',component: InfoActionWebComponent},
   {path: 'infoactiondoc',component: InfoActionDocComponent},
-
 ];
 
 @NgModule({

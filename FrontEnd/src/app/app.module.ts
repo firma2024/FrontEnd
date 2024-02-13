@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +29,7 @@ import { InfoProcessLawyerComponent } from './modules/processes/info-process-law
 import { InfoActionDocComponent } from './modules/actions/info-action-doc/info-action-doc.component';
 import { InfoActionWebComponent } from './modules/actions/info-action-web/info-action-web.component';
 import { InfoActionComponent } from './modules/actions/info-action/info-action.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -53,9 +59,16 @@ import { InfoActionComponent } from './modules/actions/info-action/info-action.c
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableDataSource,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatIconModule
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

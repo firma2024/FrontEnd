@@ -1,0 +1,53 @@
+body, html {
+    margin-top: 2%;
+    margin-left: 2%;
+    height:fit-content;
+    width: 100%;
+}
+
+.head{
+    border-bottom: 1px solid #ccc;
+    display: flex;
+}
+
+.title{
+    width: 50%;
+}
+
+.options{
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buttonFilter{
+    color: #AA2535;
+    font-size: 30px;
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.buttonCreate{
+    background-color: #AA2535 ;
+    color: white;
+    width: 40%;
+    height: 40px;
+    border-radius: 6px;
+}
+
+.input-icon {
+    position: absolute;
+    top: 123px;
+    transform: translateY(-50%);
+    left: 930px; /* Ajusta la posición del icono según sea necesario */
+    color: #999; /* Color del icono */
+}
+
+input{
+    border: 1px solid #BFBBBB; 
+    border-radius: 5px;
+    width: 50%;
+    height: 40px;
+    color: #BFBBBB;
+}
