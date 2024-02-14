@@ -12,20 +12,50 @@
 <body>
     <div class="head">
         <div class="title">
-            <h3>Mis abogados</h3>
+          <h3>Mis abogados</h3>
         </div>
-
         <div class="options">
-            <input type="text" id="lawyer" name="lawyer" placeholder="Buscar abogado..."><span class="fa-solid fa-magnifying-glass input-icon"></span>
-            <button class="buttonFilter" ><span class="fa-solid fa-filter"></span> </button>
-            <button class="buttonCreate">Crear Abogado</button>
+          <input type="text" id="lawyer" name="lawyer" placeholder="Buscar abogado..."><span class="fa-solid fa-magnifying-glass input-icon"></span>
+          <button class="buttonFilter" ><span class="fa-solid fa-filter"></span> </button>
+          <button class="buttonCreate">Crear Abogado</button>
         </div>
-    </div>
-
-    <div class="table">
+      </div>
+      
+      <div class="table">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          
+            <!-- Columna de foto -->
+            <ng-container matColumnDef="photo">
+                <th mat-header-cell *matHeaderCellDef> Foto </th>
+                <td mat-cell *matCellDef="let row">
+                <img [src]="row.photo" alt="Foto" style="width: 100px; height: auto;">
+                </td>
+            </ng-container>
+            
+          
+          <!-- Columnas de texto -->
+          <ng-container matColumnDef="text{{i}}" *ngFor="let i of [1, 2, 3, 4]">
+            <th mat-header-cell *matHeaderCellDef> Texto {{ i }} </th>
+            <td mat-cell *matCellDef="let row"> {{ row['text' + i] }} </td>
+          </ng-container>
+          
+          <!-- Columna de botón -->
+          <ng-container matColumnDef="button">
+            <th mat-header-cell *matHeaderCellDef> Acción </th>
+            <td mat-cell *matCellDef="let row"> <button mat-button (click)="redirectToOtherComponent(row)"> {{ row.buttonText }} </button> </td>
+          </ng-container>
+          
+          <!-- Encabezados de fila -->
+          <tr mat-header-row *matHeaderRowDef="['photo', 'text1', 'text2', 'text3', 'text4', 'button']"></tr>
+          
+          <!-- Filas de datos -->
+          <tr mat-row *matRowDef="let row; columns: ['photo', 'text1', 'text2', 'text3', 'text4', 'button']"></tr>
+        </table>
         
-    </div>
-
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        
+      </div>
+      
 
 </body>
 </html>
