@@ -63,5 +63,9 @@ input{
     border-color: transparent;
     vertical-align: middle;
 }
+.mat-row:hover {
+    cursor: pointer;
+  }
+  
 
   

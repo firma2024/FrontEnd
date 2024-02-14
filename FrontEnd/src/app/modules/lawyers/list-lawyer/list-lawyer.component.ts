@@ -1,7 +1,8 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatPaginatorIntl } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-list-lawyer',
@@ -15,7 +16,7 @@ export class ListLawyerComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private changeDetectorRefs: ChangeDetectorRef) {
+  constructor(private changeDetectorRefs: ChangeDetectorRef, private router: Router) {
     this.dataSource = new MatTableDataSource([
       { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
       { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
@@ -47,5 +48,6 @@ export class ListLawyerComponent {
   redirectToOtherComponent(row: any) {
     // Implementa la lógica para la redirección aquí
     console.log('Redireccionando a otro componente:', row);
+    this.router.navigate(['/infolawyer']);
   }
 }

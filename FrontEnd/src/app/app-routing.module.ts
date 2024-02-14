@@ -13,6 +13,8 @@ import { InfoActionComponent } from './modules/actions/info-action/info-action.c
 import { InfoActionWebComponent } from './modules/actions/info-action-web/info-action-web.component';
 import { InfoActionDocComponent } from './modules/actions/info-action-doc/info-action-doc.component';
 import { ListLawyerComponent } from './modules/lawyers/list-lawyer/list-lawyer.component';
+import { InfoLawyerComponent } from './modules/lawyers/info-lawyer/info-lawyer.component';
+import { ListProcessAdminComponent } from './modules/processes/list-process-admin/list-process-admin.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'login',pathMatch:'full'},
@@ -23,8 +25,10 @@ const routes: Routes = [
   {path: 'infoadmin',component: InfoAdminComponent},
   {path: 'registerlawyer',component: RegisterLawyerComponent},
   {path: 'listlawyer',component: ListLawyerComponent},
+  {path: 'infolawyer',component: InfoLawyerComponent},
   {path: 'registerprocess',component: RegisterProcessComponent},
   {path: 'createprocess',component: CreateProcessComponent},
+  {path: 'listprocessadmin',component: ListProcessAdminComponent},
   {path: 'header',component: HeaderComponent},
   {path: 'infoaction',component: InfoActionComponent},
   {path: 'infoactionweb',component: InfoActionWebComponent},
