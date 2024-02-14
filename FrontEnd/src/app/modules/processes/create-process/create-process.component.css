@@ -25,6 +25,7 @@ body, html {
 .column{
     padding: 10px;
     margin-right: 5%;
+    list-style-type: none;
 }
 select{
     background-color: #ffffff;

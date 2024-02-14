@@ -16,6 +16,8 @@ import { ListLawyerComponent } from './modules/lawyers/list-lawyer/list-lawyer.c
 import { InfoLawyerComponent } from './modules/lawyers/info-lawyer/info-lawyer.component';
 import { ListProcessAdminComponent } from './modules/processes/list-process-admin/list-process-admin.component';
 import { ListProcessLawyerComponent } from './modules/processes/list-process-lawyer/list-process-lawyer.component';
+import { InfoProcessAdminComponent } from './modules/processes/info-process-admin/info-process-admin.component';
+import { InfoProcessLawyerComponent } from './modules/processes/info-process-lawyer/info-process-lawyer.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'login',pathMatch:'full'},
@@ -30,7 +32,9 @@ const routes: Routes = [
   {path: 'registerprocess',component: RegisterProcessComponent},
   {path: 'createprocess',component: CreateProcessComponent},
   {path: 'listprocessadmin',component: ListProcessAdminComponent},
+  {path: 'infoprocessadmin',component: InfoProcessAdminComponent},
   {path: 'listprocesslawyer',component: ListProcessLawyerComponent},
+  {path: 'infoprocesslawyer',component: InfoProcessLawyerComponent},
   {path: 'header',component: HeaderComponent},
   {path: 'infoaction',component: InfoActionComponent},
   {path: 'infoactionweb',component: InfoActionWebComponent},

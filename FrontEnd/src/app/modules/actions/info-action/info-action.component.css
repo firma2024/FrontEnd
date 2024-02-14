@@ -50,6 +50,7 @@ body, html {
     display: flex;
     flex-direction: column;
     font-size: 14px;
+    list-style-type: none;
 }
 .half-column4{
     width: 160px;
