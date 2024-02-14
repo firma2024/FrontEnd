@@ -10,30 +10,14 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 })
 export class ListLawyerComponent {
   dataSource: MatTableDataSource<any>;
-  displayedColumns: string[] = ['photo', 'text1', 'text2', 'text3', 'text4', 'button'];
+  columnNames: string[] = ['Nombre', 'Correo', 'Telefono', 'Especialidad', 'Procesos'];
+  displayedColumns: string[] = ['photo', 'Nombre', 'Correo', 'Telefono', 'Especialidad', 'Procesos', 'button'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private changeDetectorRefs: ChangeDetectorRef) {
     this.dataSource = new MatTableDataSource([
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', text1: 'Texto 1', text2: 'Texto 2', text3: 'Texto 3', text4: 'Texto 4', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
       // Agrega más filas según sea necesario
     ]);
   }
