@@ -1,1 +1,46 @@
-<p>list-process-lawyer works!</p>
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>list lawyer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="head">
+        <div class="title">
+          <h3>Mis Procesos</h3>
+        </div>
+        <div class="options">
+          <input type="text" id="lawyer" name="lawyer" placeholder="Buscar abogado...">
+          <button class="buttonFilter" ><span class="fa-solid fa-filter"></span> </button>
+        </div>
+    </div>
+      
+    <div class="table">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          
+          
+          <!-- Columnas de texto -->
+          <ng-container *ngFor="let columnName of columnNames" [matColumnDef]="columnName">
+            <th mat-header-cell *matHeaderCellDef style="vertical-align: middle; color: rgb(146, 144, 144);"> {{ columnName | titlecase }} </th>
+            <td mat-cell *matCellDef="let row" style="vertical-align: middle;"> {{ row[columnName] }} </td>
+          </ng-container>
+
+          <!-- Encabezados de fila -->
+          <tr mat-header-row *matHeaderRowDef="['Radicado', 'Despacho', 'Tipo', 'Fecha']"></tr>
+            
+          <!-- Filas de datos -->
+          <tr mat-row *matRowDef="let row; columns: ['Radicado', 'Despacho', 'Tipo', 'Fecha']" style="cursor: pointer;" (click)="redirectToOtherComponent(row)"></tr>
+        </table>
+        
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons style="justify-content: center;"></mat-paginator>
+        
+      </div>
+      
+
+</body>
+</html>
