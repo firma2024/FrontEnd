@@ -39,7 +39,7 @@ export class ListProcessAdminComponent {
   redirectToOtherComponent(row: any) {
     // Implementa la lógica para la redirección aquí
     console.log('Redireccionando a otro componente:', row);
-    this.router.navigate(['/infolawyer']);
+    this.router.navigate(['/infoprocessadmin']);
   }
 
 }
