@@ -1,0 +1,65 @@
+body, html {
+    margin-left: 3%;
+    margin-top: 1%;
+    height:fit-content;
+    width: 70vw;
+}
+.description{
+    color:#6C6C6C;
+    margin-bottom: 2%;
+}
+
+.searchProcess{
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+.columns {
+    display: flex; 
+    margin-left: 10px;
+
+}
+.column1{
+    padding: 10px;
+    margin-right: 5%;
+    width: 10vw;
+}
+.column2{
+    padding: 10px;
+    margin-right: 5%;
+    width: 23vw;
+}
+.infoLawyer{
+    margin-top: 30px;
+    display: flex;
+}
+.mat-elevation-z8 {
+    box-shadow: none;
+}
+.table{
+    margin-top: 1%;
+    width: 70vw;
+    margin-bottom: 3%;
+}
+    
+
+input{
+    border: 1px solid #BFBBBB; 
+    border-radius: 5px;
+    width: 50%;
+    height: 40px;
+    color: #BFBBBB;
+}
+.custom-button {
+    background-color: transparent;
+    border-color: transparent;
+    vertical-align: middle;
+}
+.mat-row:hover {
+    cursor: pointer;
+}
+
+.mat-mdc-paginator-container {
+    display: flex;
+    justify-content: center;
+}
