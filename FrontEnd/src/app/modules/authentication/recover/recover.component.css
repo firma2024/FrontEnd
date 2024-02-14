@@ -1,9 +1,8 @@
 
 body {
     height: 100%;
-    margin: 0;
-    padding-top: 4%;
-    padding-bottom: 5%;
+    width: 100vw;
+    padding: 6%;
     background-color: #cdc9c9;
 }
 a{

@@ -1,11 +1,11 @@
-<div class="container">
-  <div class="sidebar">
-    <!-- Contenido del drawer (sidebar), en este caso el componente app-home -->
+<div class="container" [ngClass]="{ 'special-page': isSpecialPage() }">
+  <div class="sidebar" *ngIf="!isSpecialPage()">
     <app-home></app-home>
   </div>
   <div class="mainContent">
-    <!-- Contenido principal -->
-    <app-header></app-header>
-    <router-outlet></router-outlet>
+    <app-header *ngIf="!isSpecialPage()"></app-header>
+    <div >
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
