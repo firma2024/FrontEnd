@@ -18,6 +18,22 @@ export class ListLawyerComponent {
   constructor(private changeDetectorRefs: ChangeDetectorRef) {
     this.dataSource = new MatTableDataSource([
       { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
+      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
       // Agrega más filas según sea necesario
     ]);
   }

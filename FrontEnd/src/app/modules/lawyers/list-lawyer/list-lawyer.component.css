@@ -6,7 +6,6 @@ body, html {
 }
 
 .head{
-    border-bottom: 1px solid #ccc;
     display: flex;
 }
 
@@ -44,12 +43,25 @@ body, html {
     color: #999; /* Color del icono */
 }
 
+.mat-elevation-z8 {
+    box-shadow: none;
+}
+.table{
+    margin-top: 3%;
+}
+    
+
 input{
     border: 1px solid #BFBBBB; 
     border-radius: 5px;
     width: 50%;
     height: 40px;
     color: #BFBBBB;
+}
+.custom-button {
+    background-color: transparent;
+    border-color: transparent;
+    vertical-align: middle;
 }
 
   
