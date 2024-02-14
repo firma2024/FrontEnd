@@ -16,8 +16,8 @@ export class HeaderComponent {
       height: '620px',
       panelClass: 'custom-dialog-container',
       position: {
-        top: '-740px', 
-        left: '850px' 
+        top: '3px', 
+        left: '830px' 
       },
       data: { /* Puedes pasar datos al componente del diálogo */ }
     });
