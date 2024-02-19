@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ProcessService } from '../../../services/process.service';
 
 @Component({
   selector: 'app-register-process',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './register-process.component.css'
 })
 export class RegisterProcessComponent {
+  filingNumberInput: string = ""
+  constructor() { }
 
 }
