@@ -1,9 +1,4 @@
-body, html {
-    margin-top: 2%;
-    margin-left: 2%;
-    height:fit-content;
-    width: 75vw;
-}
+
 
 .head{
     display: flex;

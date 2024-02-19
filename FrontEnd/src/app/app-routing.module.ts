@@ -37,8 +37,8 @@ const routes: Routes = [
   {path: 'infoprocesslawyer',component: InfoProcessLawyerComponent},
   {path: 'header',component: HeaderComponent},
   {path: 'infoaction/:id',component: InfoActionComponent},
-  {path: 'infoactionweb:id',component: InfoActionWebComponent},
-  {path: 'infoactiondoc:id',component: InfoActionDocComponent},
+  {path: 'infoactionweb/:id',component: InfoActionWebComponent},
+  {path: 'infoactiondoc/:id',component: InfoActionDocComponent},
 ];
 
 @NgModule({

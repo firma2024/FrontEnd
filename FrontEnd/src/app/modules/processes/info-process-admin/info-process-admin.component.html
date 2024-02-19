@@ -1,85 +1,70 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width">
-	<title>info lawyer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-
-<body>
-    <div class="titleinfoLawyer">
-        <h1><strong> Informacion del proceso</strong></h1>
-    </div>
-    <div class="infoProcess">
-        <div class="columns">
-            <div class="column1">
-                <p><strong>Numero Radicado</strong></p>
-                <p><strong>Sujetos procesales</strong></p>
-            </div>
-            <div class="column2">
-                <p>11001400305420210000800</p>
-                <li>BBVA SEGUROS DE VIDA COLOMBIA S.A.</li>
-                <li>DIEGO ALFONSO REYES MURCIA</li>
-                <li>DIEGO ALFONSO REYES MURCIA</li>
-            </div>
+<div class="titleinfoLawyer">
+    <h1><strong> Informacion del proceso</strong></h1>
+</div>
+<div class="infoProcess">
+    <div class="columns">
+        <div class="column1">
+            <p><strong>Numero Radicado</strong></p>
+            <p><strong>Sujetos procesales</strong></p>
         </div>
-
-        <div class="columns">
-            <div class="column3">
-                <p><strong>Abogado encargado</strong></p>
-                <p><strong>Estado</strong></p>
-            </div>
-            <div class="column2">
-                <select id="opciones" name="opciones">
-                    <option value="" selected disabled>Seleccionar</option>
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
-                    <option value="opcion4">Opción 4</option>
-                  </select>
-                  <select id="opciones" name="opciones">
-                    <option value="" selected disabled>Seleccionar</option>
-                    <option value="opcion1">Opción 1</option>
-                    <option value="opcion2">Opción 2</option>
-                    <option value="opcion3">Opción 3</option>
-                    <option value="opcion4">Opción 4</option>
-                  </select>
-            </div>
+        <div class="column2">
+            <p>11001400305420210000800</p>
+            <li>BBVA SEGUROS DE VIDA COLOMBIA S.A.</li>
+            <li>DIEGO ALFONSO REYES MURCIA</li>
+            <li>DIEGO ALFONSO REYES MURCIA</li>
         </div>
     </div>
 
-    <div class="buttonCreateDiv">
-        <button class="buttonCreate"  routerLink="/registerprocess">Guardar</button>
+    <div class="columns">
+        <div class="column3">
+            <p><strong>Abogado encargado</strong></p>
+            <p><strong>Estado</strong></p>
+        </div>
+        <div class="column2">
+            <select id="opciones" name="opciones">
+                <option value="" selected disabled>Seleccionar</option>
+                <option value="opcion1">Opción 1</option>
+                <option value="opcion2">Opción 2</option>
+                <option value="opcion3">Opción 3</option>
+                <option value="opcion4">Opción 4</option>
+              </select>
+              <select id="opciones" name="opciones">
+                <option value="" selected disabled>Seleccionar</option>
+                <option value="opcion1">Opción 1</option>
+                <option value="opcion2">Opción 2</option>
+                <option value="opcion3">Opción 3</option>
+                <option value="opcion4">Opción 4</option>
+              </select>
+        </div>
     </div>
-    
-    <div class="titleAction">
-        <h1><strong>Actuaciones</strong></h1>
-        <button class="buttonFilter" ><span class="fa-solid fa-filter"></span> </button>
-    </div>
-    
-    <div class="table">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            
-            
-            <!-- Columnas de texto -->
-            <ng-container *ngFor="let columnName of columnNames" [matColumnDef]="columnName">
-              <th mat-header-cell *matHeaderCellDef style="vertical-align: middle; color: rgb(146, 144, 144);"> {{ columnName | titlecase }} </th>
-              <td mat-cell *matCellDef="let row" style="vertical-align: middle;"> {{ row[columnName] }} </td>
-            </ng-container>
-  
-            <!-- Encabezados de fila -->
-            <tr mat-header-row *matHeaderRowDef="['Radicado', 'Despacho', 'Tipo', 'Fecha']"></tr>
-              
-            <!-- Filas de datos -->
-            <tr mat-row *matRowDef="let row; columns: ['Radicado', 'Despacho', 'Tipo', 'Fecha']" style="cursor: pointer;" (click)="redirectToOtherComponent(row)"></tr>
-          </table>
+</div>
+
+<div class="buttonCreateDiv">
+    <button class="buttonCreate"  routerLink="/registerprocess">Guardar</button>
+</div>
+
+<div class="titleAction">
+    <h1><strong>Actuaciones</strong></h1>
+    <button class="buttonFilter" ><span class="fa-solid fa-filter"></span> </button>
+</div>
+
+<div class="table">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        
+        
+        <!-- Columnas de texto -->
+        <ng-container *ngFor="let columnName of columnNames" [matColumnDef]="columnName">
+          <th mat-header-cell *matHeaderCellDef style="vertical-align: middle; color: rgb(146, 144, 144);"> {{ columnName | titlecase }} </th>
+          <td mat-cell *matCellDef="let row" style="vertical-align: middle;"> {{ row[columnName] }} </td>
+        </ng-container>
+
+        <!-- Encabezados de fila -->
+        <tr mat-header-row *matHeaderRowDef="['Radicado', 'Despacho', 'Tipo', 'Fecha']"></tr>
           
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons style="justify-content: center; "></mat-paginator>
-          
-        </div>
-
-</body>
-</html>
+        <!-- Filas de datos -->
+        <tr mat-row *matRowDef="let row; columns: ['Radicado', 'Despacho', 'Tipo', 'Fecha']" style="cursor: pointer;" (click)="redirectToOtherComponent(row)"></tr>
+      </table>
+      
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons style="justify-content: center; "></mat-paginator>
+      
+    </div>

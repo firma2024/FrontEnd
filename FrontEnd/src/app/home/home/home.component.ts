@@ -6,13 +6,12 @@ import { Component ,  OnInit} from '@angular/core';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
-  rol: string = ''; // Inicializamos la variable aquí
+  rol: string = ''; 
 
   constructor() { 
-    this.rol = 'jefe'; // Asignamos el valor en el constructor
+    this.rol = 'jefe' 
   }
 
   ngOnInit(): void {
-    // Aquí puedes realizar otras inicializaciones si es necesario
   }
 }

@@ -1,8 +1,4 @@
-body, html {
-    margin-left: 10%;
-    height: fit-content;
-    width: 100%;
-}
+
 .address{
     color:#6C6C6C;
     margin-bottom: 4%;
@@ -77,4 +73,9 @@ body, html {
 .infoProcess{
     width: 100%;
     margin-top: 1%;
+}
+.info{
+    width: 70vw;
+    height: 100%;
+    margin-bottom: 2%;
 }

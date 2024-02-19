@@ -1,12 +1,4 @@
-body, html {
-    margin-left: 5%;
-    margin-top: 3%;
-    height:fit-content;
-    width: 100%;
-    display: block;
-    justify-content: center;
-    align-items: center;
-}
+
 .infoAction{
     margin-bottom: 3%;
 }
