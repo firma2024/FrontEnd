@@ -1,4 +1,4 @@
-import { Actuacion } from "../actuacion";
+import { Actuacion } from "../actuaciones/actuacion";
 export interface Proceso {
     id: number;
     idProceso: BigInteger;

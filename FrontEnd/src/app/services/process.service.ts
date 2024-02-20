@@ -3,15 +3,15 @@ import { environment } from '../environments/environments';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Proceso } from '../shared/model/process/proceso';
-import { ProcessBusiness } from '../shared/model/process/process.business';
+import { ProcessBusiness } from '../shared/model/process/proceso.negocio';
 import { catchError } from 'rxjs/operators';
 import { Pageable } from '../shared/model/pageable';
-import { ProcessJefeFilter } from '../shared/model/process/proceso.boss.filter';
-import { ProcesoLawyerFilter } from '../shared/model/process/process.lawyer.filter';
+import { ProcessJefeFilter } from '../shared/model/process/proceso.jefe.filter';
+import { ProcesoLawyerFilter } from '../shared/model/process/process.abogado.filter';
 import { ProcesoUpdate } from '../shared/model/process/proceso.update';
-import { ProcesoLawyer } from '../shared/model/process/proceso.lawyer';
-import { ProcesoStatus } from '../shared/model/process/proceso.status';
-import { ProcesoType } from '../shared/model/process/proceso.type';
+import { ProcesoLawyer } from '../shared/model/process/proceso.abogado';
+import { ProcesoStatus } from '../shared/model/process/proceso.estado';
+import { ProcesoType } from '../shared/model/process/proceso.tipo';
 import { AudienciaRequest } from '../shared/model/audencia/audencia.req';
 
 @Injectable({
