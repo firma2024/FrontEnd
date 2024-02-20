@@ -3,5 +3,6 @@ export const environment = {
   lawFirmURL: 'http://localhost:10000/api/business/firma',
   actionsURL: 'http://localhost:10000/api/business/actuacion',
   storageURL: 'http://localhost:10000/api/business/storage',
-  userURL:'http://localhost:10000/api/business/user'
+  userURL:'http://localhost:10000/api/business/user',
+  authURL:'http://localhost:8080/api/auth'
 };

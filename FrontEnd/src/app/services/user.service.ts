@@ -14,7 +14,7 @@ import { TipoAbogado } from '../shared/model/user/user.tipo';
 })
 export class UserService {
   constructor(private http: HttpClient) {}
-  agregarAbogado(
+  /*agregarAbogado(
     nombres: string,
     correo: string,
     telefono: number,
@@ -36,7 +36,7 @@ export class UserService {
     };
     const url = `${environment.userURL}/add/abogado`;
     return this.http.post(url, user);
-  }
+  } AUTH*/ 
   agregarJefe(
     nombres: string,
     correo: string,
