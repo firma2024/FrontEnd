@@ -18,7 +18,7 @@ body, html {
 .content{
     width: 80%;
     float: left;
-    height: 100vh; /* Altura completa de la pantalla */
+    height: 100vh; 
 }
 .button {
     margin-top: 40%;

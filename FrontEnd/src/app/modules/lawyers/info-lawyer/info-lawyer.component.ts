@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
   styleUrl: './info-lawyer.component.css'
 })
 export class InfoLawyerComponent {
-
   
   dataSource: MatTableDataSource<any>;
   columnNames: string[] = ['Radicado', 'Despacho','Tipo', 'Fecha'];
