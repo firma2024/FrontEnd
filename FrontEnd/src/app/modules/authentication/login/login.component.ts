@@ -40,10 +40,6 @@ export class LoginComponent {
 
   iniciarSesion(): void {
     this.auth.login(this.username, this.password).subscribe(this.loginObserver)
-    console.log("intentando loguearse");
-  }
-
-  redirectToHome(): void {
-    this.router.navigate(['/home']);
+    localStorage.setItem('username', this.username)
   }
 }

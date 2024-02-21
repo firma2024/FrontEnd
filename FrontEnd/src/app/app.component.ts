@@ -11,7 +11,7 @@ export class AppComponent {
   constructor(private router: Router) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        // Verificar si la ruta actual es "/login", "/register" o "/recover"
+        // Verificar si la ruta actual es "/login"o "/recover"
         this.isSpecialPage();
       }
     });
@@ -19,6 +19,6 @@ export class AppComponent {
 
   isSpecialPage(): boolean {
     const currentUrl = this.router.url;
-    return currentUrl === '/login' || currentUrl === '/register' || currentUrl === '/recover';
+    return currentUrl === '/login' || currentUrl === '/recover';
   }
 }
