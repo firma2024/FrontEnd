@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observer } from 'rxjs';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,7 @@ import { Observer } from 'rxjs';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(private router: Router) { }
+  constructor(private auth: AuthService,private router: Router) { }
 
   username: string = '';
   password: string = '';
@@ -38,7 +39,8 @@ export class LoginComponent {
   };
 
   iniciarSesion(): void {
-   
+    this.auth.login(this.username, this.password).subscribe(this.loginObserver)
+    console.log("intentando loguearse");
   }
 
   redirectToHome(): void {

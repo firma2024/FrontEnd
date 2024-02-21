@@ -18,13 +18,14 @@ import { ListProcessAdminComponent } from './modules/processes/list-process-admi
 import { ListProcessLawyerComponent } from './modules/processes/list-process-lawyer/list-process-lawyer.component';
 import { InfoProcessAdminComponent } from './modules/processes/info-process-admin/info-process-admin.component';
 import { InfoProcessLawyerComponent } from './modules/processes/info-process-lawyer/info-process-lawyer.component';
+import { AuthGuard } from './shared/auth/auth.guard';
 
 const routes: Routes = [
   {path:'', redirectTo:'login',pathMatch:'full'},
   {path: 'login',component: LoginComponent},
   {path: 'recover',component: RecoverComponent},
   {path: 'home',component: HomeComponent},
-  {path: 'main',component: MainMenuComponent},
+  {path: 'main',component: MainMenuComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }},
   {path: 'infoadmin',component: InfoAdminComponent},
   {path: 'registerlawyer',component: RegisterLawyerComponent},
   {path: 'listlawyer',component: ListLawyerComponent},
