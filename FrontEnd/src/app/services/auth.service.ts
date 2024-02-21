@@ -21,7 +21,7 @@ export class AuthService {
       authReq
     ).pipe(
       tap((response: TokenResponse) => {
-        localStorage.setItem('token', response.acces_token);
+        localStorage.setItem('token', response.access_token);
         localStorage.setItem('role', response.role);
       })
     );
