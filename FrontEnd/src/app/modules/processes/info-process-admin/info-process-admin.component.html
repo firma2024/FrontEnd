@@ -8,10 +8,8 @@
             <p><strong>Sujetos procesales</strong></p>
         </div>
         <div class="column2">
-            <p>11001400305420210000800</p>
-            <li>BBVA SEGUROS DE VIDA COLOMBIA S.A.</li>
-            <li>DIEGO ALFONSO REYES MURCIA</li>
-            <li>DIEGO ALFONSO REYES MURCIA</li>
+            <p>{{nRadicado}}</p>
+            <li *ngFor="let item of listaItems">{{ item }}</li>
         </div>
     </div>
 
@@ -22,25 +20,17 @@
         </div>
         <div class="column2">
             <select id="opciones" name="opciones">
-                <option value="" selected disabled>Seleccionar</option>
-                <option value="opcion1">Opción 1</option>
-                <option value="opcion2">Opción 2</option>
-                <option value="opcion3">Opción 3</option>
-                <option value="opcion4">Opción 4</option>
-              </select>
-              <select id="opciones" name="opciones">
-                <option value="" selected disabled>Seleccionar</option>
-                <option value="opcion1">Opción 1</option>
-                <option value="opcion2">Opción 2</option>
-                <option value="opcion3">Opción 3</option>
-                <option value="opcion4">Opción 4</option>
-              </select>
+                <option *ngFor="let opcion of opcionesLawyer" [value]="opcion.valor">{{ opcion.texto }}</option>
+            </select>   
+            <select id="opciones" name="opciones">
+                <option *ngFor="let opcion of opcionesState" [value]="opcion.valor">{{ opcion.texto }}</option>
+            </select>   
         </div>
     </div>
 </div>
 
 <div class="buttonCreateDiv">
-    <button class="buttonCreate"  routerLink="/registerprocess">Guardar</button>
+    <button class="buttonCreate" (click)="crearProceso()">Guardar</button>
 </div>
 
 <div class="titleAction">

@@ -10,9 +10,9 @@
             <p><strong>Anotación</strong></p>
         </div>
         <div class="half-column2">
-            <p>JUZGADO 054 CIVIL MUNICIPAL DE BOGOTÁ</p>
-            <p>2023-11-22</p>
-            <p>solicitud certificacion</p>
+            <p>{{despacho}}</p>
+            <p>{{date}}</p>
+            <p>{{annotation}}</p>
         </div>
     </div>
     <div class="column">
@@ -22,9 +22,9 @@
             <p><strong>Fecha de Registro</strong></p>
         </div>
         <div class="half-column2">
-            <p>DECLARATIVO</p>
-            <p>Fijación de estado</p>
-            <p>2023-09-29</p>
+            <p>{{typeProcess}}</p>
+            <p>{{action}}</p>
+            <p>{{dateRegister}}</p>
         </div>
     </div>
 </div>
@@ -35,9 +35,7 @@
             <p class="sujetos"><strong>Sujetos</strong></p>
         </div>
         <div class="half-column3">
-                <li>BBVA SEGUROS DE VIDA COLOMBIA S.A.</li>
-                <li>DIEGO ALFONSO REYES MURCIA</li>
-                <li>DIEGO ALFONSO REYES MURCIA</li>
+            <li *ngFor="let item of listaItems">{{ item }}</li>
         </div>
     </div>
 </div>

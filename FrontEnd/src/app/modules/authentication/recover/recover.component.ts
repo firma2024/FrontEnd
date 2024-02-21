@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './recover.component.css'
 })
 export class RecoverComponent {
+  mail: string = '';
 
 }

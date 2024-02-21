@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
   styleUrl: './list-process-admin.component.css'
 })
 export class ListProcessAdminComponent {
+  processSearch: string = ''; 
+  
   dataSource: MatTableDataSource<any>;
   columnNames: string[] = ['Radicado', 'Abogado', 'Despacho', 'Tipo', 'Fecha', 'Estado'];
   displayedColumns: string[] = ['Radicado', 'Abogado', 'Despacho', 'Tipo', 'Fecha' , 'Estado'];

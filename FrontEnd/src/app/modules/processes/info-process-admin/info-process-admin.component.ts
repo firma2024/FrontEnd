@@ -9,10 +9,12 @@ import { Router } from '@angular/router';
   styleUrl: './info-process-admin.component.css'
 })
 export class InfoProcessAdminComponent {
+  nRadicado: string = 'Valor para nRadicado';
   
   dataSource: MatTableDataSource<any>;
   columnNames: string[] = ['Radicado', 'Despacho','Tipo', 'Fecha'];
   displayedColumns: string[] = ['Radicado', 'Despacho', 'Tipo', 'Fecha'];
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -28,16 +30,39 @@ export class InfoProcessAdminComponent {
     ]);
   }
 
+  listaItems: string[] = [
+    'BBVA SEGUROS DE VIDA COLOMBIA S.A.',
+    'DIEGO ALFONSO REYES MURCIA',
+    'DIEGO ALFONSO REYES MURCIA'
+  ];
+
+  opcionesLawyer: { valor: string, texto: string }[] = [
+    { valor: '', texto: 'Seleccionar' },
+    { valor: 'opcion1', texto: 'Opción 1' },
+    { valor: 'opcion2', texto: 'Opción 2' },
+    { valor: 'opcion3', texto: 'Opción 3' },
+    { valor: 'opcion4', texto: 'Opción 4' }
+  ];
+  opcionesState: { valor: string, texto: string }[] = [
+    { valor: '', texto: 'Seleccionar' },
+    { valor: 'opcion1', texto: 'Opción 1' },
+    { valor: 'opcion2', texto: 'Opción 2' },
+    { valor: 'opcion3', texto: 'Opción 3' },
+    { valor: 'opcion4', texto: 'Opción 4' }
+  ];
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator!;
     this.changeDetectorRefs.detectChanges();
   }
 
-  // Función para redirigir a otro componente al hacer clic en una fila
   redirectToOtherComponent(row: any) {
-    // Implementa la lógica para la redirección aquí
     console.log('Redireccionando a otro componente:', row);
-    this.router.navigate(['/infolawyer']);
+    this.router.navigate(['/infoaction/:1']);
+  }
+
+  crearProceso(){
+
   }
 
 }

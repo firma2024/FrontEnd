@@ -7,6 +7,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./info-action.component.css']
 })
 export class InfoActionComponent implements OnInit {
+  despacho: string = 'Valor del despacho';
+  date: string = 'Valor de la fecha';
+  annotation: string = 'Valor de la anotación';
+  typeProcess: string = 'Valor del tipo de proceso';
+  action: string = 'Valor de la acción';
+  dateRegister: string = 'Valor de la fecha de registro';
+
   id: string | null = null; // Inicializa id como string o null
 
   constructor(private route: ActivatedRoute) {}
@@ -22,4 +29,10 @@ export class InfoActionComponent implements OnInit {
       console.error('No se encontró el ID en la ruta.');
     }
   }
+
+  listaItems: string[] = [
+    'BBVA SEGUROS DE VIDA COLOMBIA S.A.',
+    'DIEGO ALFONSO REYES MURCIA',
+    'DIEGO ALFONSO REYES MURCIA'
+  ];
 }

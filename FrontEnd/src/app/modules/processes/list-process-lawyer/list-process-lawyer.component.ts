@@ -9,6 +9,9 @@ import { Router } from '@angular/router';
   styleUrl: './list-process-lawyer.component.css'
 })
 export class ListProcessLawyerComponent {
+
+  processSearch: string = ''; 
+
   dataSource: MatTableDataSource<any>;
   columnNames: string[] = ['Radicado', 'Despacho','Tipo', 'Fecha'];
   displayedColumns: string[] = ['Radicado', 'Despacho', 'Tipo', 'Fecha'];

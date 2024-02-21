@@ -12,27 +12,21 @@
         <p><strong>Sujetos Procesales</strong></p>
     </div>
     <div class="column">
-        <p>11001400305420210000800</p>
-        <p>JUZGADO 054 CIVIL MUNICIPAL DE BOGOTÁ</p>
-        <p>DECLARATIVO</p>
-        <p>2021-01-13</p>   
-        <li>BBVA SEGUROS DE VIDA COLOMBIA S.A.</li>
-        <li>DIEGO ALFONSO REYES MURCIA</li>
-        <li>DIEGO ALFONSO REYES MURCIA</li>
+        <p>{{nRadicado}}</p>
+        <p>{{despacho}}</p>
+        <p>{{typeProcess}}</p>
+        <p>{{dateFiling}}</p>   
+        <li *ngFor="let item of listaItems">{{ item }}</li>
     </div>
 </div>
 
 <div class="select">
     <h4 class="description">Seleccione el abogado que desea asignar a el proceso</h4>
     <select id="opciones" name="opciones">
-        <option value="" selected disabled>Seleccionar</option>
-        <option value="opcion1">Opción 1</option>
-        <option value="opcion2">Opción 2</option>
-        <option value="opcion3">Opción 3</option>
-        <option value="opcion4">Opción 4</option>
-      </select>
+        <option *ngFor="let opcion of opciones" [value]="opcion.valor">{{ opcion.texto }}</option>
+    </select>      
 </div>
 
 <div class="buttonBuscar">
-    <button>Crear Proceso</button>
+    <button (click)="crearProceso()">Crear Proceso</button>
 </div>
