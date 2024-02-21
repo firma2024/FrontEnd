@@ -2,9 +2,9 @@
 <div class="info">
 
     <div class="companyName">
-        <h1><strong> Bran Holding Abogados & Asociados</strong></h1>
-        <h4 class="address">Calle 6c #82a-25</h4>
-    </div>
+        <h1><strong>{{ nombreEmpresa }}</strong></h1>
+        <h4 class="address">{{ direccionEmpresa }}</h4>
+      </div>
 
     <div class="generalInfo">
         <h2 class="title"><strong> Información General</strong></h2>
@@ -17,7 +17,7 @@
             </div>
             <div class="contenido">
                 <p class="texto-izquierda">Procesos Activos</p>
-                <p class="texto-derecha"><strong>80</strong></p>
+                <p class="texto-derecha"><strong>{{activeProcess}}</strong></p>
             </div>
         </div>
         <div class="registerLawyers">
@@ -26,7 +26,7 @@
             </div>
             <div class="contenido">
                 <p class="texto-izquierda">Abogados Registrados</p>
-                <p class="texto-derecha"><strong>34</strong></p>
+                <p class="texto-derecha"><strong>{{lawyersRegister}}</strong></p>
             </div>
         </div>
 
@@ -43,7 +43,7 @@
             </div>
             <div class="contenido">
                 <p class="texto-izquierda">Procesos Finalizados a favor</p>
-                <p class="texto-derecha"><strong>10</strong></p>
+                <p class="texto-derecha"><strong>{{favorProcess}}</strong></p>
             </div>
         </div>
 
@@ -53,7 +53,7 @@
             </div>
             <div class="contenido">
                 <p class="texto-izquierda">Procesos Finalizados en contra</p>
-                <p class="texto-derecha"><strong>8</strong></p>
+                <p class="texto-derecha"><strong>{{againstProcess}}</strong></p>
             </div>
         </div>
 
