@@ -28,7 +28,7 @@ export class MainMenuComponent implements OnInit {
   
       // Llamar a la función getFirmaByUser solo si se encontró un nombre de usuario
       this.lawFirmService.getFirmaByUser(this.username).subscribe(
-        (firma: Firma) => {
+        (firma: any) => {
           // Haces lo que necesites con la firma obtenida
           console.log('Firma obtenida:', firma);
         },
