@@ -9,6 +9,11 @@ import { Router } from '@angular/router';
   styleUrl: './info-lawyer.component.css'
 })
 export class InfoLawyerComponent {
+  name: string = 'Valor del nombre';
+  mail: string = 'Valor del correo electrónico';
+  numberPhone: string = 'Valor del número de teléfono';
+  identification: string = 'Valor de la identificación';
+  speciality: string = 'Valor de la especialidad';
   
   dataSource: MatTableDataSource<any>;
   columnNames: string[] = ['Radicado', 'Despacho','Tipo', 'Fecha'];
