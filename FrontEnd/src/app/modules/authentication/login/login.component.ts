@@ -24,7 +24,7 @@ export class LoginComponent {
   loginObserver : Observer<any> = {
     next: (data: any) => {
       console.log(data);
-      this.router.navigate(["/home"])
+      this.router.navigate(["/main"])
     },
     error: (error: any) => {
       let code: number | undefined = error.status ? Math.round(error.status/100)*100 : undefined;

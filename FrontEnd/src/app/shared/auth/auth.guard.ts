@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
         return true;
       } else {
         // Usuario no tiene el rol necesario para acceder a la ruta, redirige a una página de acceso no autorizado.
-        this.router.navigate(['/unauthorized']);
+        this.router.navigate(['/login']);
         return false;
       }
     } else {
