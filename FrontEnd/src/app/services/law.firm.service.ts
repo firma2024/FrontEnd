@@ -10,9 +10,9 @@ import { FirmaRequest } from '../shared/model/lawFirm/firma.req';
 export class LawFirmService {
   constructor(private http: HttpClient) {}
   // Get firma name by username.
-  getFirmaByUser(userName: string): Observable<any> {
-    return this.http.get<any>(
-      `${environment.lawFirmURL}/hi`
+  getFirmaByUser(userName: string): Observable<Firma> {
+    return this.http.get<Firma>(
+      `${environment.lawFirmURL}/get/user?userName=${userName}`
     );
   }
   guardarFirma(nombre: string, direccion: string): Observable<void> {
