@@ -11,13 +11,13 @@
 
 <body>
         <div class="menu">
-
             <div class="logo">
                 <img src="/assets/logoFirma.png" alt="Descripción de la imagen" style="padding: 15px; margin-top: 55px;">
             </div>
             
             <div class="button">
-                <button class="boton" routerLink="/main">Menu Principal<span class="icon-pull-right fas fa-home"> </span></button>
+                <button *ngIf="rol === 'JEFE'" class="boton" routerLink="/main">Menu Principal<span class="icon-pull-right fas fa-home"> </span></button>
+                <button *ngIf="rol === 'ABOGADO'" class="boton" routerLink="/main-lawyer">Menu Principal<span class="icon-pull-right fas fa-home"> </span></button>
                 <button *ngIf="rol === 'JEFE'" class="boton" routerLink="/listlawyer">Abogados<span class="icon-pull-right fas fa-users"> </span></button>
                 <button class="boton" routerLink="/listprocessadmin">Procesos<span class="icon-pull-right fa-regular fa-clipboard"> </span></button>
             </div>

@@ -15,7 +15,6 @@ import { RegisterLawyerComponent } from './modules/lawyers/register-lawyer/regis
 import { ListLawyerComponent } from './modules/lawyers/list-lawyer/list-lawyer.component';
 import { InfoLawyerComponent } from './modules/lawyers/info-lawyer/info-lawyer.component';
 import { RegisterProcessComponent } from './modules/processes/register-process/register-process.component';
-import { MainMenuComponent } from './modules/main-menu/main-menu.component';
 import { CreateProcessComponent } from './modules/processes/create-process/create-process.component';
 import { InfoAdminComponent } from './home/info-admin/info-admin.component';
 import { RecoverComponent } from './modules/authentication/recover/recover.component';
@@ -29,6 +28,8 @@ import { InfoActionWebComponent } from './modules/actions/info-action-web/info-a
 import { InfoActionComponent } from './modules/actions/info-action/info-action.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
+import { MainMenuLawyerComponent } from './modules/main-menu/main-menu-lawyer/main-menu-lawyer.component';
+import { MainMenuAdminComponent } from './modules/main-menu/main-menu-admin/main-menu-admin.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,6 @@ import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
     ListLawyerComponent,
     InfoLawyerComponent,
     RegisterProcessComponent,
-    MainMenuComponent,
     CreateProcessComponent,
     InfoAdminComponent,
     RecoverComponent,
@@ -51,7 +51,9 @@ import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
     InfoProcessLawyerComponent,
     InfoActionDocComponent,
     InfoActionWebComponent,
-    InfoActionComponent
+    InfoActionComponent,
+    MainMenuLawyerComponent,
+    MainMenuAdminComponent
   ],
   imports: [
     BrowserModule,

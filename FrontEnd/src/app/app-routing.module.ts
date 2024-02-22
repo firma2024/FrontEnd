@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './modules/authentication/login/login.component';
 import { HomeComponent } from './home/home/home.component';
-import { MainMenuComponent } from './modules/main-menu/main-menu.component';
 import { RegisterProcessComponent } from './modules/processes/register-process/register-process.component';
 import { CreateProcessComponent } from './modules/processes/create-process/create-process.component';
 import { InfoAdminComponent } from './home/info-admin/info-admin.component';
@@ -19,13 +18,16 @@ import { ListProcessLawyerComponent } from './modules/processes/list-process-law
 import { InfoProcessAdminComponent } from './modules/processes/info-process-admin/info-process-admin.component';
 import { InfoProcessLawyerComponent } from './modules/processes/info-process-lawyer/info-process-lawyer.component';
 import { AuthGuard } from './shared/auth/auth.guard';
+import { MainMenuAdminComponent } from './modules/main-menu/main-menu-admin/main-menu-admin.component';
+import { MainMenuLawyerComponent } from './modules/main-menu/main-menu-lawyer/main-menu-lawyer.component';
 
 const routes: Routes = [
   {path:'', redirectTo:'login',pathMatch:'full'},
   {path: 'login',component: LoginComponent},
   {path: 'recover',component: RecoverComponent},
   {path: 'home',component: HomeComponent},
-  {path: 'main',component: MainMenuComponent, canActivate:[AuthGuard], data: { roles: ['JEFE'] }},
+  {path: 'main',component: MainMenuAdminComponent, canActivate:[AuthGuard], data: { roles: ['JEFE'] }},
+  {path: 'main-lawyer',component: MainMenuLawyerComponent},
   {path: 'infoadmin',component: InfoAdminComponent},
   {path: 'registerlawyer',component: RegisterLawyerComponent},
   {path: 'listlawyer',component: ListLawyerComponent},

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { LawFirmService } from '../../services/law.firm.service';
-import { Firma } from '../../shared/model/lawFirm/firma';
+import { LawFirmService } from '../../../services/law.firm.service';
+import { Firma } from '../../../shared/model/lawFirm/firma';
 
 @Component({
-  selector: 'app-main-menu',
-  templateUrl: './main-menu.component.html',
-  styleUrls: ['./main-menu.component.css'], // El nombre de esta propiedad es styleUrls, no styleUrl
+  selector: 'app-main-menu-admin',
+  templateUrl: './main-menu-admin.component.html',
+  styleUrl: './main-menu-admin.component.css'
 })
-export class MainMenuComponent implements OnInit {
+export class MainMenuAdminComponent {
   nombreEmpresa: string = '';
   direccionEmpresa: string = '';
   activeProcess: string = '';
@@ -31,7 +31,8 @@ export class MainMenuComponent implements OnInit {
         (firma: Firma) => {
           // Haces lo que necesites con la firma obtenida
           console.log('Firma obtenida:', firma);
-          this.nombreEmpresa = `${firma.nombre} - ${firma.direccion}`;
+          this.nombreEmpresa = `${firma.nombre}`;
+          this.direccionEmpresa = `${firma.direccion}`;
         },
         (error) => {
           console.error('Error al obtener la firma:', error);

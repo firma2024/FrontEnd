@@ -24,7 +24,15 @@ export class LoginComponent {
   loginObserver : Observer<any> = {
     next: (data: any) => {
       console.log(data);
-      this.router.navigate(["/main"])
+      const rol = localStorage.getItem('role');
+      if (rol === 'JEFE') {
+        this.router.navigate(['/main']);
+      } else if (rol === 'ABOGADO') {
+        this.router.navigate(['/main-lawyer']);
+      } else {
+        console.error('Rol no reconocido');
+        // Manejar el caso en el que el rol no es ni 'JEFE' ni 'ABOGADO'
+      }
     },
     error: (error: any) => {
       let code: number | undefined = error.status ? Math.round(error.status/100)*100 : undefined;
