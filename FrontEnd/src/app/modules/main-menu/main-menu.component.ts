@@ -5,7 +5,7 @@ import { Firma } from '../../shared/model/lawFirm/firma';
 @Component({
   selector: 'app-main-menu',
   templateUrl: './main-menu.component.html',
-  styleUrls: ['./main-menu.component.css'] // El nombre de esta propiedad es styleUrls, no styleUrl
+  styleUrls: ['./main-menu.component.css'], // El nombre de esta propiedad es styleUrls, no styleUrl
 })
 export class MainMenuComponent implements OnInit {
   nombreEmpresa: string = '';
@@ -14,23 +14,24 @@ export class MainMenuComponent implements OnInit {
   lawyersRegister: string = '';
   favorProcess: string = '';
   againstProcess: string = '';
-  username: string = ''; // No es necesario el uso de "?" aquí
+  username: string = '';
 
   constructor(private lawFirmService: LawFirmService) {}
 
   ngOnInit() {
     // Obtener el valor del localStorage
     const storedUsername = localStorage.getItem('username');
-  
+
     // Verificar si storedUsername es null antes de asignarlo a username
     if (storedUsername !== null) {
       this.username = storedUsername;
-  
+
       // Llamar a la función getFirmaByUser solo si se encontró un nombre de usuario
       this.lawFirmService.getFirmaByUser(this.username).subscribe(
         (firma: Firma) => {
           // Haces lo que necesites con la firma obtenida
           console.log('Firma obtenida:', firma);
+          this.nombreEmpresa = `${firma.nombre} - ${firma.direccion}`;
         },
         (error) => {
           console.error('Error al obtener la firma:', error);
@@ -40,5 +41,4 @@ export class MainMenuComponent implements OnInit {
       console.error('No se encontró un nombre de usuario en el localStorage');
     }
   }
-  
 }
