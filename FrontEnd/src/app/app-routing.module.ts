@@ -27,7 +27,7 @@ const routes: Routes = [
   {path: 'recover',component: RecoverComponent},
   {path: 'home',component: HomeComponent},
   {path: 'main',component: MainMenuAdminComponent, canActivate:[AuthGuard], data: { roles: ['JEFE'] }},
-  {path: 'main-lawyer',component: MainMenuLawyerComponent},
+  {path: 'main-lawyer',component: MainMenuLawyerComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }},
   {path: 'infoadmin',component: InfoAdminComponent},
   {path: 'registerlawyer',component: RegisterLawyerComponent},
   {path: 'listlawyer',component: ListLawyerComponent},
