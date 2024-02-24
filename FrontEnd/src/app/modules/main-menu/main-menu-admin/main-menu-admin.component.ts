@@ -19,20 +19,16 @@ export class MainMenuAdminComponent {
   constructor(private lawFirmService: LawFirmService) {}
 
   ngOnInit() {
-    // Obtener el valor del localStorage
     const storedUsername = localStorage.getItem('username');
 
-    // Verificar si storedUsername es null antes de asignarlo a username
     if (storedUsername !== null) {
       this.username = storedUsername;
 
-      // Llamar a la función getFirmaByUser solo si se encontró un nombre de usuario
       this.lawFirmService.getFirmaByUser(this.username).subscribe(
         (firma: Firma) => {
-          // Haces lo que necesites con la firma obtenida
-          console.log('Firma obtenida:', firma);
           this.nombreEmpresa = `${firma.nombre}`;
           this.direccionEmpresa = `${firma.direccion}`;
+          localStorage.setItem("firmaId",firma.id.toString())
         },
         (error) => {
           console.error('Error al obtener la firma:', error);

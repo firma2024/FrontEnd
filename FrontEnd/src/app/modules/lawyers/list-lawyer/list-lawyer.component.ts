@@ -2,52 +2,83 @@ import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
-
+import { UserService } from '../../../services/user.service';
+import { UserProcesess } from '../../../shared/model/user/user.procesos';
+import { StorageService } from '../../../services/storage.service';
 
 @Component({
   selector: 'app-list-lawyer',
   templateUrl: './list-lawyer.component.html',
-  styleUrls: ['./list-lawyer.component.css']
+  styleUrls: ['./list-lawyer.component.css'],
 })
 export class ListLawyerComponent {
-  dataSource: MatTableDataSource<any>;
-  columnNames: string[] = ['Nombre', 'Correo', 'Telefono', 'Especialidad', 'Procesos'];
-  displayedColumns: string[] = ['photo', 'Nombre', 'Correo', 'Telefono', 'Especialidad', 'Procesos', 'button'];
-
+  dataSource: MatTableDataSource<UserProcesess>;
+  columnNames: string[] = [
+    'nombres',
+    'correo',
+    'telefono',
+    'identificacion',
+    'especialidades',
+    'procesos',
+  ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private changeDetectorRefs: ChangeDetectorRef, private router: Router) {
-    this.dataSource = new MatTableDataSource([
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      { photo: '/assets/jpaez.jpg', Nombre: 'Texto 1', Correo: 'Texto 2', Telefono: 'Texto 3', Especialidad: 'Texto 4', Procesos: 'paez', buttonText: 'Botón' },
-      // Agrega más filas según sea necesario
-    ]);
+  constructor(
+    private changeDetectorRefs: ChangeDetectorRef,
+    private userService: UserService,
+    private router: Router,
+    private storageService: StorageService
+  ) {
+    this.dataSource = new MatTableDataSource<UserProcesess>([]);
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator!;
-    this.changeDetectorRefs.detectChanges();
+    //this.changeDetectorRefs.detectChanges();
   }
 
-  // Función para redirigir a otro componente al hacer clic en una fila
+  ngOnInit() {
+    const firmaId = localStorage.getItem('firmaId')!;
+    this.userService.getAllAbogadosNames(parseInt(firmaId)).subscribe(
+      (lawyers: UserProcesess[]) => {
+        this.dataSource.data = lawyers;
+        console.log(lawyers);
+        this.dataSource.data.forEach((item) => {
+          this.storageService
+            .descargarFoto(item.id)
+            .subscribe((photo: Blob) => {
+              item.photo = photo;
+            });
+        });
+
+        /*const userProcesess: UserProcesess = {
+          id: 1,
+          nombres: "Usuario de prueba",
+          correo: "correo@example.com",
+          telefono: 1234567890,
+          identificacion: 123456789,
+          especialidades: ["especialidad1", "especialidad2"],
+          procesos: 5,
+          photo:null!
+      };
+      this.dataSource.data.push(userProcesess)*/
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+  getImageUrl(userProcesess: UserProcesess): string {
+    if (userProcesess && userProcesess.photo) {
+      return URL.createObjectURL(userProcesess.photo);
+    }
+    return 'assets/defaultProfile.png';
+  }
+
   redirectToOtherComponent(row: any) {
-    // Implementa la lógica para la redirección aquí
     console.log('Redireccionando a otro componente:', row);
+    localStorage.setItem('selectedLawyer', JSON.stringify(row));
+
     this.router.navigate(['/infolawyer']);
   }
 }

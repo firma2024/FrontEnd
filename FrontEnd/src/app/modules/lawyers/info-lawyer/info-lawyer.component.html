@@ -3,7 +3,7 @@
 </div>
 <div class="infoLawyer">
     <div class="photoProfile">
-        <img [src]="'/assets/jpaez.jpg'" alt="Foto" style="width: 200px; height: auto;">
+        <img [src]="getImageUrlByUserId(lawyerObj)" alt="Foto" style="width: 200px; height: auto;">
     </div>
     <div class="columns">
         <div class="column1">
@@ -15,7 +15,7 @@
         </div>
         <div class="column2">
             <p>{{name}}</p>
-            <p>{{mail}}</p>
+            <p>{{email}}</p>
             <p>{{numberPhone}}</p>
             <p>{{identification}}</p>
             <p>{{speciality}}</p>

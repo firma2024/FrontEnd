@@ -33,7 +33,7 @@
                 
                 <div class="inputContainer">
                     <label for="identification">Tipo de documento:</label>
-                    <select id="opciones" name="opciones">
+                    <select id="opciones" name="opciones" [(ngModel)]="selectedTypeDoc">
                         <option *ngFor="let opcion of opcionesIdentification" [value]="opcion.valor">{{ opcion.texto }}</option>
                     </select>   
                 </div>
@@ -41,7 +41,7 @@
             <div class="column1">
                 <div class="inputContainer">
                     <label for="identification">Identificación:</label>
-                    <input type="text" id="identification" name="identification" placeholder="Ingrese el número de identificación" [(ngModel)]="identificacion">
+                    <input  type="text" id="identification" name="identification" placeholder="Ingrese el número de identificación" [(ngModel)]="identificacion" pattern="[0-9]*">
                 </div>
                 
                 <div class="inputContainer">
@@ -51,7 +51,7 @@
                 
                 <div class="inputContainer">
                     <label for="specialty">Especialidad:</label>
-                    <select id="opciones" name="opciones">
+                    <select id="opciones" name="opciones" [(ngModel)]="selectedSpecialization">
                         <option *ngFor="let opcion of opcionesSpecialty" [value]="opcion.valor">{{ opcion.texto }}</option>
                     </select>   
                 </div>

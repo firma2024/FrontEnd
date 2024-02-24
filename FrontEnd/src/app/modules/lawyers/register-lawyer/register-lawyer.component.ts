@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { UserService } from '../../../services/user.service';
+import { TipoDocumento } from '../../../shared/model/doc.tipo';
+import { TipoAbogado } from '../../../shared/model/user/user.tipo';
 
 @Component({
   selector: 'app-register-lawyer',
   templateUrl: './register-lawyer.component.html',
-  styleUrl: './register-lawyer.component.css'
+  styleUrl: './register-lawyer.component.css',
 })
 export class RegisterLawyerComponent {
   nombreUsuario: string = '';
@@ -11,27 +14,54 @@ export class RegisterLawyerComponent {
   correoElectronico: string = '';
   identificacion: string = '';
   telefono: string = '';
-
-  opcionesIdentification: { valor: string, texto: string }[] = [
+  selectedTypeDoc: string = '';
+  selectedSpecialization: string = '';
+  constructor(private userService: UserService) {}
+  opcionesIdentification: { valor: string; texto: string }[] = [
     { valor: '', texto: 'Seleccionar' },
-    { valor: 'opcion1', texto: 'Opción 1' },
-    { valor: 'opcion2', texto: 'Opción 2' },
-    { valor: 'opcion3', texto: 'Opción 3' },
-    { valor: 'opcion4', texto: 'Opción 4' }
   ];
-  opcionesSpecialty: { valor: string, texto: string }[] = [
+  opcionesSpecialty: { valor: string; texto: string }[] = [
     { valor: '', texto: 'Seleccionar' },
-    { valor: 'opcion1', texto: 'Opción 1' },
-    { valor: 'opcion2', texto: 'Opción 2' },
-    { valor: 'opcion3', texto: 'Opción 3' },
-    { valor: 'opcion4', texto: 'Opción 4' }
   ];
-
-  crearAbogado(){
-
+  ngOnInit() {
+    this.userService.getAllTipoDocumento().subscribe(
+      (typeDoc: TipoDocumento[]) => {
+        typeDoc.forEach((tipoDocumento) => {
+          this.opcionesIdentification.push({
+            valor: tipoDocumento.nombre,
+            texto: tipoDocumento.nombre,
+          });
+        });
+      },
+      (error) => {
+        console.error('Error al obtener tipos de documento:', error);
+      }
+    );
+    this.userService.getAllTipoAbogado().subscribe(
+      (typeDoc: TipoAbogado[]) => {
+        typeDoc.forEach((tipoAbogado) => {
+          this.opcionesSpecialty.push({
+            valor: tipoAbogado.nombre,
+            texto: tipoAbogado.nombre,
+          });
+        });
+      },
+      (error) => {
+        console.error('Error al obtener tipos de documento:', error);
+      }
+    );
   }
-  cargarFoto(){
-    
+  crearAbogado() {
+    this.userService.agregarAbogado(
+      this.nombreUsuario,
+      this.correoElectronico,
+      parseInt(this.telefono),
+      parseInt(this.identificacion),
+      this.nombreUsuario,
+      this.selectedTypeDoc,
+      [this.selectedSpecialization],
+      parseInt(localStorage.getItem('firmaId')!)
+    );
   }
-
+  cargarFoto() {}
 }
