@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LawFirmService } from '../../../services/law.firm.service';
 import { Firma } from '../../../shared/model/lawFirm/firma';
+import { ProcessService } from '../../../services/process.service';
 
 @Component({
   selector: 'app-main-menu-lawyer',

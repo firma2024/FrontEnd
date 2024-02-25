@@ -96,7 +96,7 @@ export class ProcessService {
     if (fechaFinStr) {
       params = params.set('fechaFinStr', fechaFinStr);
     }
-    if (estadosProceso) {
+    if (estadosProceso && estadosProceso.length > 0) {
       params = params.set('estadosProceso', estadosProceso.join(','));
     }
     if (tipoProceso) {

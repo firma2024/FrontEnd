@@ -12,12 +12,12 @@ export class HeaderComponent {
 
   openDialog() {
     const dialogRef = this.dialog.open(InfoAdminComponent, {
-      width: '650px', 
+      width: '750px', 
       height: '620px',
       panelClass: 'custom-dialog-container',
       position: {
-        top: '3px', 
-        left: '830px' 
+        top: '4px', 
+        left: '750px' 
       },
       data: { /* Puedes pasar datos al componente del diálogo */ }
     });
