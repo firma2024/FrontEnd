@@ -33,41 +33,28 @@ export class ListLawyerComponent {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator!;
-    //this.changeDetectorRefs.detectChanges();
-  }
-
-  ngOnInit() {
-    const firmaId = localStorage.getItem('firmaId')!;
-    this.userService.getAllAbogadosNames(parseInt(firmaId)).subscribe(
+    this.userService.getAllAbogadosNames(parseInt(localStorage.getItem('firmaId')!)).subscribe(
       (lawyers: UserProcesess[]) => {
         this.dataSource.data = lawyers;
         console.log(lawyers);
-        this.dataSource.data.forEach((item) => {
-          this.storageService
-            .descargarFoto(item.id)
-            .subscribe((photo: Blob) => {
-              item.photo = photo;
-            });
-        });
-
-        /*const userProcesess: UserProcesess = {
-          id: 1,
-          nombres: "Usuario de prueba",
-          correo: "correo@example.com",
-          telefono: 1234567890,
-          identificacion: 123456789,
-          especialidades: ["especialidad1", "especialidad2"],
-          procesos: 5,
-          photo:null!
-      };
-      this.dataSource.data.push(userProcesess)*/
       },
       (error) => {
         console.error(error);
       }
     );
+
+    setTimeout(() => {
+      this.dataSource.paginator = this.paginator!;
+      this.dataSource.data.forEach((item) => {
+        this.storageService
+          .descargarFoto(item.id)
+          .subscribe((photo: Blob) => {
+            item.photo = photo;
+          });
+      });
+    });
   }
+
   getImageUrl(userProcesess: UserProcesess): string {
     if (userProcesess && userProcesess.photo) {
       return URL.createObjectURL(userProcesess.photo);
@@ -78,7 +65,6 @@ export class ListLawyerComponent {
   redirectToOtherComponent(row: any) {
     console.log('Redireccionando a otro componente:', row);
     localStorage.setItem('selectedLawyer', JSON.stringify(row));
-
     this.router.navigate(['/infolawyer']);
   }
 }
