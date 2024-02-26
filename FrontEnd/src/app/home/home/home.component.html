@@ -19,7 +19,10 @@
                 <button *ngIf="rol === 'JEFE'" class="boton" routerLink="/main">Menu Principal<span class="icon-pull-right fas fa-home"> </span></button>
                 <button *ngIf="rol === 'ABOGADO'" class="boton" routerLink="/main-lawyer">Menu Principal<span class="icon-pull-right fas fa-home"> </span></button>
                 <button *ngIf="rol === 'JEFE'" class="boton" routerLink="/listlawyer">Abogados<span class="icon-pull-right fas fa-users"> </span></button>
-                <button class="boton" routerLink="/listprocessadmin">Procesos<span class="icon-pull-right fa-regular fa-clipboard"> </span></button>
+                <!-- To be tested -->
+                <button *ngIf="rol === 'JEFE'" class="boton" [routerLink]="['/listprocessadmin']">Procesos<span class="icon-pull-right fa-regular fa-clipboard"> </span></button>
+                <button *ngIf="rol === 'ABOGADO'" class="boton" [routerLink]="['/listprocesslawyer']">Procesos<span class="icon-pull-right fa-regular fa-clipboard"> </span></button>
+</div>
             </div>
             <div class="exit">
                 <button class="botonExit" (click)="logout()" routerLink="/login">Cerrar Sesión<span class="icon-pull-right fas fa-sign-out-alt"> </span></button>

@@ -18,5 +18,6 @@ export class HomeComponent implements OnInit {
     localStorage.removeItem('role');
     localStorage.removeItem('username');
     localStorage.removeItem('firmaId');
+    localStorage.removeItem("lawyerId")
   }
 }

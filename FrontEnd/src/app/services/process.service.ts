@@ -63,7 +63,7 @@ export class ProcessService {
     if (fechaFinStr) {
       params = params.set('fechaFinStr', fechaFinStr);
     }
-    if (estadosProceso) {
+    if (estadosProceso.length !== 0) {
       params = params.set('estadosProceso', estadosProceso.join(','));
     }
     if (tipoProceso) {
@@ -134,8 +134,8 @@ export class ProcessService {
     );
   }
   //idk what this does.
-  getProcesoPorIdJefe(processId: number): Observable<ProcessJefeFilter> {
-    let params = new HttpParams().set('processId', processId.toString());
+  getProcesoPorIdJefe(processId: string): Observable<ProcessJefeFilter> {
+    let params = new HttpParams().set('processId', processId);
 
     return this.http.get<ProcessJefeFilter>(
       `${environment.processURL}/get/jefe`,
@@ -152,8 +152,8 @@ export class ProcessService {
   }
   //Update process
   actualizarProceso(
-    id: number,
-    idAbogado: number,
+    id: string,
+    idAbogado: string,
     estadoProceso: string
   ): Observable<string> {
     const proceso: ProcesoUpdate = {

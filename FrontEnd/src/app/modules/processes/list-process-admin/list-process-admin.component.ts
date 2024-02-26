@@ -9,18 +9,34 @@ import { Pageable } from '../../../shared/model/pageable';
 @Component({
   selector: 'app-list-process-admin',
   templateUrl: './list-process-admin.component.html',
-  styleUrls: ['./list-process-admin.component.css']
+  styleUrls: ['./list-process-admin.component.css'],
 })
 export class ListProcessAdminComponent {
-  processSearch: string = ''; 
+  processSearch: string = '';
   dataSource: MatTableDataSource<ProcessJefeFilter>;
-  columnNames: string[] = ['Radicado', 'Abogado', 'Despacho', 'Tipo', 'Fecha', 'Estado'];
-  displayedColumns: string[] = ['Radicado', 'Abogado', 'Despacho', 'Tipo', 'Fecha' , 'Estado'];
+  columnNames: string[] = [
+    'numeroRadicado',
+    'abogado',
+    'despacho',
+    'Tipo',
+    'Fecha',
+    'Estado',
+  ];
+  displayedColumns: string[] = [
+    'numeroRadicado',
+    'abogado',
+    'despacho',
+    'Tipo',
+    'Fecha',
+    'Estado',
+  ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private changeDetectorRefs: ChangeDetectorRef, 
-              private router: Router,
-              private servicio: ProcessService) { 
+  constructor(
+    private changeDetectorRefs: ChangeDetectorRef,
+    private router: Router,
+    private servicio: ProcessService
+  ) {
     this.dataSource = new MatTableDataSource<ProcessJefeFilter>([]);
   }
 
@@ -31,40 +47,37 @@ export class ListProcessAdminComponent {
   }
 
   fetchData() {
-    const fechaInicioStr = ''; 
-    const firmaId = parseInt(localStorage.getItem('firmaId')!); 
-    const fechaFinStr = ''; 
-    const estadosProceso: string[] = []; 
-    const tipoProceso = ''; 
-    const page = 0; 
-    const size = 10; 
-  
-    this.servicio.getProcesosByFirmaFilter(
-      fechaInicioStr,
-      firmaId,
-      fechaFinStr,
-      estadosProceso,
-      tipoProceso,
-      page,
-      size
-    ).subscribe(
-      (data: Pageable<ProcessJefeFilter>) => {
-        console.log(data); 
-        if (data && data.data) {
-          this.dataSource.data = data.data;
-        } else {
-          console.error('La respuesta del servicio no tiene la propiedad "data".', data);
-        }
-      },
-      (error) => {
-        console.error('Error al obtener los datos:', error);
-      }
-    );
-  }
-  
+    const fechaInicioStr = '';
+    const firmaId = parseInt(localStorage.getItem('firmaId')!);
+    const fechaFinStr = '';
+    const estadosProceso: string[] = [];
+    const tipoProceso = '';
+    const page = 0;
+    const size = 10;
 
-  redirectToOtherComponent(row: any) {
-    console.log('Redireccionando a otro componente:', row);
+    this.servicio
+      .getProcesosByFirmaFilter(
+        fechaInicioStr,
+        firmaId,
+        fechaFinStr,
+        estadosProceso,
+        tipoProceso,
+        page,
+        size
+      )
+      .subscribe(
+        (data: Pageable<ProcessJefeFilter>) => {
+          this.dataSource.data = data.data
+          console.log(data.data)
+        },
+        (error) => {
+          console.error('Error al obtener los datos:', error);
+        }
+      );
+  }
+
+  redirectToOtherComponent(row: ProcessJefeFilter) {
+    localStorage.setItem("selectedIdProcessAdmin",row.id.toString())
     this.router.navigate(['/infoprocessadmin']);
   }
 }

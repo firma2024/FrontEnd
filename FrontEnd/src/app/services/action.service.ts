@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../environments/environments';
 import { Observable } from 'rxjs';
 import { ActuacionResponse } from '../shared/model/actuaciones/actuacion.req';
@@ -16,17 +16,38 @@ export class ActionService {
     return this.http.get<ActuacionResponse>(url);
   }
   //Get actions filtered by boss.
-  getActuacionesFiltradas(
+  getActuacionesFilter(
     procesoId: number,
-    fechaInicioStr: string,
-    fechaFinStr: string,
-    estadoActuacion: string,
-    page: number,
-    size: number
+    fechaInicioStr?: string,
+    fechaFinStr?: string,
+    estadoActuacion?: string,
+    page: number = 0,
+    size: number = 5
   ): Observable<Pageable<ActuacionJefeFilter>> {
-    const url = `${environment.actionsURL}/jefe/get/all/filter?procesoId=${procesoId}&fechaInicioStr=${fechaInicioStr}&fechaFinStr=${fechaFinStr}&estadoActuacion=${estadoActuacion}&page=${page}&size=${size}`;
-    return this.http.get<Pageable<ActuacionJefeFilter>>(url);
+    let params = new HttpParams().set('procesoId', procesoId.toString());
+  
+    if (fechaInicioStr) {
+      params = params.set('fechaInicioStr', fechaInicioStr);
+    }
+    if (fechaFinStr) {
+      params = params.set('fechaFinStr', fechaFinStr);
+    }
+    if (estadoActuacion) {
+      params = params.set('estadoActuacion', estadoActuacion);
+    }
+    if (page !== undefined) {
+      params = params.set('page', page.toString());
+    }
+    if (size !== undefined) {
+      params = params.set('size', size.toString());
+    }
+  
+    return this.http.get<Pageable<ActuacionJefeFilter>>(`${environment.actionsURL}/jefe/get/all/filter`, {
+      params,
+    });
   }
+  
+  //FIXME CORRECT THIS
   //Get actions filtered by lawyer.
   getAllActuacionesByProcesoAbogado(
     procesoId: number,

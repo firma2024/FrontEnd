@@ -101,7 +101,7 @@ export class UserService {
     return this.http.delete(url);
   }
 
-  getUserName(name: string): Observable<UserProcesess> {
+  getLawyerByUsername(name: string): Observable<UserProcesess> {
     const url = `${environment.userURL}/get/name?name=${name}`;
     return this.http.get<UserProcesess>(url);
   }

@@ -1,7 +1,7 @@
 import { Audiencia } from "../audencia/audiencia";
 
 export interface ProcesoLawyer {
-    id: number;
+  id: number;
   numeroRadicado: string;
   despacho: string;
   sujetos: string;

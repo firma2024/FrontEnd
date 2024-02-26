@@ -4,6 +4,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { UserProcesess } from '../../../shared/model/user/user.procesos';
 import { StorageService } from '../../../services/storage.service';
+import { ProcesoLawyer } from '../../../shared/model/process/proceso.abogado';
+import { ProcessService } from '../../../services/process.service';
 
 @Component({
   selector: 'app-info-lawyer',
@@ -17,23 +19,15 @@ export class InfoLawyerComponent {
   identification: string = '';
   speciality: string = '';
   
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<ProcesoLawyer>;
   columnNames: string[] = ['Radicado', 'Despacho','Tipo', 'Fecha'];
   displayedColumns: string[] = ['Radicado', 'Despacho', 'Tipo', 'Fecha'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   lawyerObj!: UserProcesess;
 
-  constructor(private changeDetectorRefs: ChangeDetectorRef, private router: Router, private storageService:StorageService) {
-    this.dataSource = new MatTableDataSource([
-      {Radicado: 'Texto 1', Despacho: 'Texto 2', Tipo: 'Texto 3', Fecha: 'Texto 4'},
-      {Radicado: 'Texto 1', Despacho: 'Texto 2', Tipo: 'Texto 3', Fecha: 'Texto 4'},
-      {Radicado: 'Texto 1', Despacho: 'Texto 2', Tipo: 'Texto 3', Fecha: 'Texto 4'},
-      {Radicado: 'Texto 1', Despacho: 'Texto 2', Tipo: 'Texto 3', Fecha: 'Texto 4'},
-      {Radicado: 'Texto 1', Despacho: 'Texto 2', Tipo: 'Texto 3', Fecha: 'Texto 4'},
-      {Radicado: 'Texto 1', Despacho: 'Texto 2', Tipo: 'Texto 3', Fecha: 'Texto 4'},
-      // Agrega más filas según sea necesario
-    ]);
+  constructor(private changeDetectorRefs: ChangeDetectorRef, private router: Router, private storageService:StorageService,private  processService:ProcessService) {
+    this.dataSource = new MatTableDataSource<ProcesoLawyer>([]);
   }
 
   ngAfterViewInit() {
@@ -48,8 +42,11 @@ export class InfoLawyerComponent {
     this.numberPhone = this.lawyerObj.correo,
     this.identification = this.lawyerObj.identificacion.toString()
     this.speciality = this.lawyerObj.especialidades.toString()
-    //this.getImageUrlByUserId(this.lawyerObj)
-
+    
+    const lawyerId = this.lawyerObj.id
+    this.processService.getProcesoPorIdAbogado(lawyerId).subscribe((procesoLawyer:ProcesoLawyer) => {
+      this.dataSource.data = [procesoLawyer];
+    });
 
   }
   ngOnDestroy(){

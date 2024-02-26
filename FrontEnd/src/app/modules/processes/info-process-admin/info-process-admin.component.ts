@@ -2,54 +2,48 @@ import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { ProcessService } from '../../../services/process.service';
+import { ProcessJefeFilter } from '../../../shared/model/process/proceso.jefe.filter';
+import { UserService } from '../../../services/user.service';
+import { UserProcesess } from '../../../shared/model/user/user.procesos';
+import { ActuacionResponse } from '../../../shared/model/actuaciones/actuacion.req';
+import { ActionService } from '../../../services/action.service';
+import { Pageable } from '../../../shared/model/pageable';
+import { ActuacionJefeFilter } from '../../../shared/model/actuaciones/actuacion.jefe.filter';
+import { ProcesoStatus } from '../../../shared/model/process/proceso.estado';
 
 @Component({
   selector: 'app-info-process-admin',
   templateUrl: './info-process-admin.component.html',
-  styleUrl: './info-process-admin.component.css'
+  styleUrl: './info-process-admin.component.css',
 })
 export class InfoProcessAdminComponent {
   nRadicado: string = 'Valor para nRadicado';
-  
-  dataSource: MatTableDataSource<any>;
-  columnNames: string[] = ['Radicado', 'Despacho','Tipo', 'Fecha'];
-  displayedColumns: string[] = ['Radicado', 'Despacho', 'Tipo', 'Fecha'];
 
+  dataSource: MatTableDataSource<ActuacionJefeFilter>;
+  columnNames: string[] = ['Radicado', 'Despacho', 'Tipo', 'Fecha'];
+  displayedColumns: string[] = ['Radicado', 'Despacho', 'Tipo', 'Fecha'];
+  selectedLawyer!: string;
+  selectedState!: string;
+  documentImageUrl: string = 'assets/document.png';
+  IdSelectedProcess!: string;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private changeDetectorRefs: ChangeDetectorRef, private router: Router) {
-    this.dataSource = new MatTableDataSource([
-      {Radicado: 'Texto 1', Despacho: 'Texto 2', Tipo: 'Texto 3', Fecha: 'Texto 4'},
-      {Radicado: 'Texto 1', Despacho: 'Texto 2', Tipo: 'Texto 3', Fecha: 'Texto 4'},
-      {Radicado: 'Texto 1', Despacho: 'Texto 2', Tipo: 'Texto 3', Fecha: 'Texto 4'},
-      {Radicado: 'Texto 1', Despacho: 'Texto 2', Tipo: 'Texto 3', Fecha: 'Texto 4'},
-      {Radicado: 'Texto 1', Despacho: 'Texto 2', Tipo: 'Texto 3', Fecha: 'Texto 4'},
-      {Radicado: 'Texto 1', Despacho: 'Texto 2', Tipo: 'Texto 3', Fecha: 'Texto 4'},
-      // Agrega más filas según sea necesario
-    ]);
+  constructor(
+    private changeDetectorRefs: ChangeDetectorRef,
+    private router: Router,
+    private processService: ProcessService,
+    private userService: UserService,
+    private actionService: ActionService
+  ) {
+    this.dataSource = new MatTableDataSource<ActuacionJefeFilter>([]);
   }
 
-  listaItems: string[] = [
-    'BBVA SEGUROS DE VIDA COLOMBIA S.A.',
-    'DIEGO ALFONSO REYES MURCIA',
-    'DIEGO ALFONSO REYES MURCIA'
-  ];
+  sujetosProcesales: string[] = [];
 
-  opcionesLawyer: { valor: string, texto: string }[] = [
-    { valor: '', texto: 'Seleccionar' },
-    { valor: 'opcion1', texto: 'Opción 1' },
-    { valor: 'opcion2', texto: 'Opción 2' },
-    { valor: 'opcion3', texto: 'Opción 3' },
-    { valor: 'opcion4', texto: 'Opción 4' }
-  ];
-  opcionesState: { valor: string, texto: string }[] = [
-    { valor: '', texto: 'Seleccionar' },
-    { valor: 'opcion1', texto: 'Opción 1' },
-    { valor: 'opcion2', texto: 'Opción 2' },
-    { valor: 'opcion3', texto: 'Opción 3' },
-    { valor: 'opcion4', texto: 'Opción 4' }
-  ];
+  opcionesLawyer: { valor: string; texto: string }[] = [];
+  opcionesState: { valor: string; texto: string }[] = [];
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator!;
@@ -60,10 +54,89 @@ export class InfoProcessAdminComponent {
     console.log('Redireccionando a otro componente:', row);
     this.router.navigate(['/infoaction/:1']);
   }
+  ngOnInit() {
+    const idProcess = localStorage.getItem('selectedIdProcessAdmin')!;
+    this.processService
+      .getProcesoPorIdJefe(idProcess)
+      .subscribe((process: ProcessJefeFilter) => {
+        this.nRadicado = process.numeroRadicado;
+        this.sujetosProcesales = process.sujetos.split('|');
+        
+        this.opcionesLawyer.push({
+          valor: process.abogado,
+          texto: process.abogado,
+        });
+        this.selectedLawyer = process.abogado;
+        this.opcionesState.push({
+          valor: process.estado,
+          texto: process.estado,
+        });
+        this.selectedState = process.estado;
+        this.IdSelectedProcess = process.id.toString();
 
-  crearProceso(){
-
+        this.actionService
+          .getActuacionesFilter(process.id /*Add pagination */)
+          .subscribe((actions: Pageable<ActuacionJefeFilter>) => {
+            console.log(actions);
+            this.dataSource.data = actions.data;
+          });
+      });
+    this.userService
+      .getAllAbogadosNames(parseInt(localStorage.getItem('firmaId')!))
+      .subscribe(
+        (lawyers: UserProcesess[]) => {
+          lawyers.forEach((lawyer: UserProcesess) => {
+            if (
+              !this.opcionesLawyer.some(
+                (opcion) => opcion.valor === lawyer.nombres
+              )
+            ) {
+              this.opcionesLawyer.push({
+                valor: lawyer.id.toString(),
+                texto: lawyer.nombres,
+              });
+            }else{
+              this.opcionesLawyer = this.opcionesLawyer.filter(opcion => opcion.valor !== lawyer.nombres);
+              this.opcionesLawyer.push({
+                valor: lawyer.id.toString(),
+                texto: lawyer.nombres,
+              });
+            }
+          });
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    this.processService
+      .getAllEstadoProcesos()
+      .subscribe((estados: ProcesoStatus[]) => {
+        estados.forEach((estado: ProcesoStatus) => {
+          if (
+            !this.opcionesState.some((opcion) => opcion.valor === estado.nombre)
+          ) {
+            this.opcionesState.push({
+              valor: estado.nombre,
+              texto: estado.nombre,
+            });
+          }
+        });
+      });
+  }
+  updateProcess() {
+    console.log(this.selectedLawyer)
+    this.processService
+          .actualizarProceso(
+            this.IdSelectedProcess,
+            this.selectedLawyer,
+            this.selectedState
+          )
+          .subscribe((response: string) => {
+            console.log(response)
+          });
   }
 
+  ngOnDestroy() {
+    localStorage.removeItem('selectedIdProcessAdmin');
+  }
 }
-

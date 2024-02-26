@@ -1,7 +1,7 @@
 
 export interface ProcesoUpdate {
-    id: number;
-    idAbogado:number,
+    id: string;
+    idAbogado:string,
     estadoProceso:string
 }
 
