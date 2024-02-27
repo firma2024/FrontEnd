@@ -24,6 +24,10 @@ export class RegisterLawyerComponent {
     { valor: '', texto: 'Seleccionar' },
   ];
   ngOnInit() {
+    this.obtaintTypeOfDoc()
+    this.obtainLaywersInfo()
+  }
+  obtaintTypeOfDoc(){
     this.userService.getAllTipoDocumento().subscribe(
       (typeDoc: TipoDocumento[]) => {
         typeDoc.forEach((tipoDocumento) => {
@@ -37,6 +41,8 @@ export class RegisterLawyerComponent {
         console.error('Error al obtener tipos de documento:', error);
       }
     );
+  }
+  obtainLaywersInfo(){
     this.userService.getAllTipoAbogado().subscribe(
       (typeDoc: TipoAbogado[]) => {
         typeDoc.forEach((tipoAbogado) => {
@@ -61,6 +67,13 @@ export class RegisterLawyerComponent {
       this.selectedTypeDoc,
       [this.selectedSpecialization],
       parseInt(localStorage.getItem('firmaId')!)
+    ).subscribe(
+      (response) => {
+        console.log('Abogado agregado correctamente:', response);
+      },
+      (error) => {
+        console.error('Error al agregar el abogado:', error);
+      }
     );
   }
   cargarFoto() {}

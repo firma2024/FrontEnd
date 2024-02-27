@@ -17,6 +17,9 @@ export class InfoAdminComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.obtaintUserInfo()
+  }
+  obtaintUserInfo(){
     const role = localStorage.getItem('role');
     const userName = localStorage.getItem('username')!;
     if (role === 'ADMIN') {
@@ -43,8 +46,7 @@ export class InfoAdminComponent implements OnInit {
       );
     }
   }
-
-  actualizarPerfil() {
+  updateProfile() {
     console.log(this.usuario.nombres);
     this.userService
       .actualizarInfoJefe(

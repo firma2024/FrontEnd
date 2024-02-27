@@ -30,18 +30,16 @@ export class InfoLawyerComponent {
     this.dataSource = new MatTableDataSource<ProcesoLawyer>([]);
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator!;
-    //this.changeDetectorRefs.detectChanges();
-  }
   ngOnInit(){
     const lawyer:string = localStorage.getItem("selectedLawyer")!
-    this.lawyerObj = JSON.parse(lawyer);
+    this.speciality = "SEXXXXXXXXXXXXXXXXo"
+    this.lawyerObj= JSON.parse(lawyer);
+    console.log(this.lawyerObj)
     this.name = this.lawyerObj.nombres
     this.email = this.lawyerObj.correo
-    this.numberPhone = this.lawyerObj.correo,
+    this.numberPhone = this.lawyerObj.telefono.toString()
     this.identification = this.lawyerObj.identificacion.toString()
-    this.speciality = this.lawyerObj.especialidades.toString()
+    console.log(this.lawyerObj.id)
     
     const lawyerId = this.lawyerObj.id
     this.processService.getProcesoPorIdAbogado(lawyerId).subscribe((procesoLawyer:ProcesoLawyer) => {
@@ -67,7 +65,7 @@ export class InfoLawyerComponent {
   redirectToOtherComponent(row: any) {
     // Implementa la lógica para la redirección aquí
     console.log('Redireccionando a otro componente:', row);
-    this.router.navigate(['/infolawyer']);
+    //this.router.navigate(['/infolawyer']);
   }
 
 }

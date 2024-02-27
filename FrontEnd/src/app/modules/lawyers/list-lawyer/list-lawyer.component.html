@@ -12,35 +12,47 @@
 <div class="table">
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     
-    <!-- Columna de foto -->
-    <ng-container matColumnDef="photo">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let row">
-        </td>
-    </ng-container>
-    
-    <!-- Columnas de texto -->
-    <ng-container *ngFor="let columnName of columnNames" [matColumnDef]="columnName">
-      <th mat-header-cell *matHeaderCellDef style="vertical-align: middle; color: rgb(146, 144, 144);"> {{ columnName | titlecase }} </th>
-      <td mat-cell *matCellDef="let row" style="vertical-align: middle;"> {{ row[columnName] }} </td>
-    </ng-container>
+  <ng-container matColumnDef="nombres">
+    <th mat-header-cell *matHeaderCellDef>Nombres</th>
+    <td mat-cell *matCellDef="let row">{{ row.nombres }}</td>
+  </ng-container>
+  
+  <ng-container matColumnDef="correo">
+    <th mat-header-cell *matHeaderCellDef>Correo</th>
+    <td mat-cell *matCellDef="let row">{{ row.correo }}</td>
+  </ng-container>
+  
+  <ng-container matColumnDef="telefono">
+    <th mat-header-cell *matHeaderCellDef>Teléfono</th>
+    <td mat-cell *matCellDef="let row">{{ row.telefono }}</td>
+  </ng-container>
+  
+  <ng-container matColumnDef="especialidades">
+    <th mat-header-cell *matHeaderCellDef>Especialidades</th>
+    <td mat-cell *matCellDef="let row">{{ row.especialidades.join(', ') }}</td>
+  </ng-container>
+  
+  <ng-container matColumnDef="procesos">
+    <th mat-header-cell *matHeaderCellDef>Procesos Asignados</th>
+    <td mat-cell *matCellDef="let row">{{ row.numeroProcesosAsignados }}</td>
+  </ng-container>
 
     
     <!-- Columna de botón -->
     <ng-container matColumnDef="button">
-      <th mat-header-cell *matHeaderCellDef> </th>
-      <td mat-cell *matCellDef="let row"  style="vertical-align: middle;">
-        <button mat-icon-button class="custom-button" >
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row" style="vertical-align: middle;">
+        <button mat-icon-button class="custom-button" (click)="deleteUser(row)">
           <i class="fas fa-trash"></i>
         </button>
       </td>
     </ng-container>
     
     <!-- Encabezados de fila -->
-    <tr mat-header-row *matHeaderRowDef="['photo', 'nombres', 'correo', 'telefono', 'identificacion', 'especialidades', 'procesos', 'button']"></tr>
+    <tr mat-header-row *matHeaderRowDef="['nombres', 'correo', 'telefono', 'especialidades', 'procesos', 'button']"></tr>
       
     <!-- Filas de datos -->
-    <tr mat-row *matRowDef="let row; columns: ['photo','nombres', 'correo', 'telefono', 'identificacion', 'especialidades', 'procesos', 'button']" style="cursor: pointer;" (click)="redirectToOtherComponent(row)"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['nombres', 'correo', 'telefono',  'especialidades', 'procesos', 'button']" style="cursor: pointer;" (click)="redirectToOtherComponent(row)"></tr>
   </table>
   
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

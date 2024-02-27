@@ -104,10 +104,10 @@ export class UserService {
     return this.http.put(url, body);
   }
 
-  deleteUser(id: number): Observable<any> {
+  deleteUser(id: number): Observable<string> {
     const url = `${environment.userURL}/delete?id=${id}`;
-    return this.http.delete(url);
-  }
+    return this.http.delete<string>(url);
+  } 
 
   getLawyerByUsername(name: string): Observable<UserProcesess> {
     const url = `${environment.userURL}/get/name?name=${name}`;
@@ -118,25 +118,43 @@ export class UserService {
     return this.http.get<UserProcesess[]>(url);
   }
 
-  /*getAbogadosFilter(
-    especialidades: string[] | null,
+  getAbogadosFilter(
     firmaId: number,
-    numProcesosInicial: number = 0,
-    numProcesosFinal: number = 5,
-    page: number = 0,
-    size: number = 10
+    especialidades?: string[],
+    numProcesosInicial?: number,
+    numProcesosFinal?: number,
+    page?: number,
+    size?: number
   ): Observable<Pageable<UserProcesess>> {
-    const url = `${environment.userURL}/jefe/abogados/filter`;
-    const params = {
-      especialidades: especialidades ? especialidades.join(',') : undefined,
-      firmaId: firmaId.toString(),
-      numProcesosInicial: numProcesosInicial.toString(),
-      numProcesosFinal: numProcesosFinal.toString(),
-      page: page.toString(),
-      size: size.toString(),
-    };
-    return this.http.get<Pageable<UserProcesess>>(url, { params });
-  }*/
+    let params = new HttpParams().set('firmaId', firmaId.toString());
+
+    if (especialidades) {
+      especialidades.forEach((especialidad) => {
+        params = params.append('especialidades', especialidad);
+      });
+    }
+
+    if (numProcesosInicial != null) {
+      params = params.set('numProcesosInicial', numProcesosInicial.toString());
+    }
+
+    if (numProcesosFinal != null) {
+      params = params.set('numProcesosFinal', numProcesosFinal.toString());
+    }
+
+    if (page != null) {
+      params = params.set('page', page.toString());
+    }
+
+    if (size != null) {
+      params = params.set('size', size.toString());
+    }
+
+    return this.http.get<Pageable<UserProcesess>>(
+      `${environment.userURL}/jefe/abogados/filter`,
+      { params: params }
+    );
+  }
   getAbogado(userName: string): Observable<UserProcesess> {
     const url = `${environment.userURL}/get/abogado?userName=${userName}`;
     return this.http.get<UserProcesess>(url);

@@ -6,5 +6,5 @@ export interface UserProcesess {
     telefono: number;
     identificacion: number;
     especialidades: string[];
-    procesos: number;
+    numeroProcesosAsignados: number;
 }

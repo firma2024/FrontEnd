@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { UserProcesess } from '../../../shared/model/user/user.procesos';
 import { StorageService } from '../../../services/storage.service';
+import { Pageable } from '../../../shared/model/pageable';
 
 @Component({
   selector: 'app-list-lawyer',
@@ -17,9 +18,9 @@ export class ListLawyerComponent {
     'nombres',
     'correo',
     'telefono',
-    'identificacion',
     'especialidades',
     'procesos',
+    'button',
   ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -32,27 +33,19 @@ export class ListLawyerComponent {
     this.dataSource = new MatTableDataSource<UserProcesess>([]);
   }
 
-  ngAfterViewInit() {
-    this.userService.getAllAbogadosNames(parseInt(localStorage.getItem('firmaId')!)).subscribe(
-      (lawyers: UserProcesess[]) => {
-        this.dataSource.data = lawyers;
-        console.log(lawyers);
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-
-    setTimeout(() => {
-      this.dataSource.paginator = this.paginator!;
-      this.dataSource.data.forEach((item) => {
-        this.storageService
-          .descargarFoto(item.id)
-          .subscribe((photo: Blob) => {
-            item.photo = photo;
-          });
-      });
-    });
+  ngOnInit() {
+    this.userService
+      .getAbogadosFilter(parseInt(localStorage.getItem('firmaId')!))
+      .subscribe(
+        (data: Pageable<UserProcesess>) => {
+          this.dataSource.data = data.data;
+          console.log(data.data);
+          console.log(data.data[0].numeroProcesosAsignados);
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
   }
 
   getImageUrl(userProcesess: UserProcesess): string {
@@ -61,9 +54,19 @@ export class ListLawyerComponent {
     }
     return 'assets/defaultProfile.png';
   }
-
-  redirectToOtherComponent(row: any) {
-    console.log('Redireccionando a otro componente:', row);
+  deleteUser(row: UserProcesess) {
+    event!.stopPropagation();
+    this.userService.deleteUser(row.id).subscribe(
+      (message) => {
+        alert(message);
+      },
+      (error) => {
+        console.error('Error al eliminar usuario:', error);
+      }
+    );
+  }
+  
+  redirectToOtherComponent(row: UserProcesess) {
     localStorage.setItem('selectedLawyer', JSON.stringify(row));
     this.router.navigate(['/infolawyer']);
   }
