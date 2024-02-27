@@ -67,6 +67,7 @@ export class ListLawyerComponent {
   }
   
   redirectToOtherComponent(row: UserProcesess) {
+    localStorage.setItem('selectedIdLawyer', row.id.toString());
     localStorage.setItem('selectedLawyer', JSON.stringify(row));
     this.router.navigate(['/infolawyer']);
   }

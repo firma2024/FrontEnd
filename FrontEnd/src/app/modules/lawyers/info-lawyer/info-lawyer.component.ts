@@ -6,6 +6,8 @@ import { UserProcesess } from '../../../shared/model/user/user.procesos';
 import { StorageService } from '../../../services/storage.service';
 import { ProcesoLawyer } from '../../../shared/model/process/proceso.abogado';
 import { ProcessService } from '../../../services/process.service';
+import { Pageable } from '../../../shared/model/pageable';
+import { ProcesoLawyerFilter } from '../../../shared/model/process/process.abogado.filter';
 
 @Component({
   selector: 'app-info-lawyer',
@@ -32,23 +34,32 @@ export class InfoLawyerComponent {
 
   ngOnInit(){
     const lawyer:string = localStorage.getItem("selectedLawyer")!
-    this.speciality = "SEXXXXXXXXXXXXXXXXo"
     this.lawyerObj= JSON.parse(lawyer);
-    console.log(this.lawyerObj)
-    this.name = this.lawyerObj.nombres
-    this.email = this.lawyerObj.correo
-    this.numberPhone = this.lawyerObj.telefono.toString()
-    this.identification = this.lawyerObj.identificacion.toString()
-    console.log(this.lawyerObj.id)
-    
-    const lawyerId = this.lawyerObj.id
-    this.processService.getProcesoPorIdAbogado(lawyerId).subscribe((procesoLawyer:ProcesoLawyer) => {
-      this.dataSource.data = [procesoLawyer];
-    });
+    this.obtainLawyerInfo(this.lawyerObj)
+    this.getProcessOfLawyer(localStorage.getItem("selectedIdLawyer")!)
 
+  }
+  getProcessOfLawyer(lawyerId:string){
+    console.log(lawyerId+"AAAAAAAAAAAAA")
+    this.processService.getProcesosByAbogadoFilter(lawyerId).subscribe((data: Pageable<ProcesoLawyerFilter>) => {
+      // Aquí puedes manejar la respuesta del servicio
+      console.log(data);
+    }, error => {
+      // Manejo de errores
+      console.error(error);
+    });
+  }
+  obtainLawyerInfo(lawyerObj:UserProcesess){
+    
+    this.speciality = "SEXXXXXXXXXXXXXXXXo"
+    this.name = lawyerObj.nombres
+    this.email = lawyerObj.correo
+    //this.numberPhone = lawyerObj.telefono.toString()
+    //this.identification = lawyerObj.identificacion.toString()
   }
   ngOnDestroy(){
     localStorage.removeItem('selectedLawyer')
+    localStorage.removeItem('selectedIdLawyer');
   }
   getImageUrlByUserId(lawyerObj: UserProcesess): string {
     this.storageService.descargarFoto(lawyerObj.id).subscribe(
