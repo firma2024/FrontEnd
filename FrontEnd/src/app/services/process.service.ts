@@ -23,7 +23,7 @@ export class ProcessService {
   // Obtain preview process information.
   getProcessInfo(file_number: string): Observable<Proceso> {
     return this.http.get<Proceso>(
-      `${environment.processURL}/get/info/numberProcess=${file_number}`
+      `${environment.processURL}/get/info?numberProcess=${file_number}`
     );
   }
 
@@ -77,30 +77,39 @@ export class ProcessService {
   }
   //Filter process information by lawyer
   getProcesosByAbogadoFilter(
-    abogadoId: number,
-    fechaInicioStr: string,
-    fechaFinStr: string,
-    estadosProceso: string[],
-    tipoProceso: string,
-    page: number,
-    size: number
+    abogadoId: string,
+    fechaInicioStr?: string,
+    fechaFinStr?: string,
+    estadosProceso?: string[],
+    tipoProceso?: string,
+    page?: number,
+    size?: number
   ): Observable<Pageable<ProcesoLawyerFilter>> {
     let params = new HttpParams()
-      .set('abogadoId', abogadoId.toString())
-      .set('page', page.toString())
-      .set('size', size.toString());
+    .set('abogadoId', abogadoId.toString())
 
     if (fechaInicioStr) {
       params = params.set('fechaInicioStr', fechaInicioStr);
     }
+
     if (fechaFinStr) {
       params = params.set('fechaFinStr', fechaFinStr);
     }
+
     if (estadosProceso && estadosProceso.length > 0) {
       params = params.set('estadosProceso', estadosProceso.join(','));
     }
+
     if (tipoProceso) {
       params = params.set('tipoProceso', tipoProceso);
+    }
+
+    if (page) {
+      params = params.set('page', page.toString());
+    }
+
+    if (size) {
+      params = params.set('size', size.toString());
     }
 
     return this.http.get<Pageable<ProcesoLawyerFilter>>(
@@ -108,6 +117,7 @@ export class ProcessService {
       { params }
     );
   }
+
   //Obtain count of procesess group by type of process and law firm.
   getNumeroProcesosPorFirmaYEstado(
     firmaId: number,

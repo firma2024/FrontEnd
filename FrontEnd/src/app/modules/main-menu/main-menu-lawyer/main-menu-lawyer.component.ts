@@ -19,11 +19,13 @@ export class MainMenuLawyerComponent {
   againstProcess: string = '';
   username: string = '';
 
-  constructor(private lawFirmService: LawFirmService,private userService: UserService) {}
+  constructor(private lawFirmService: LawFirmService,private userService: UserService,private processService:ProcessService) {}
 
   ngOnInit() {
 
-    const storedUsername = localStorage.getItem('username');
+    const storedUsername = localStorage.getItem('username')!;
+    
+    this.getProcesses(storedUsername)
 
     if (storedUsername !== null) {
       this.username = storedUsername;
@@ -50,6 +52,34 @@ export class MainMenuLawyerComponent {
     } else {
       console.error('No se encontró un nombre de usuario en el localStorage');
     }
+    this.processService.getNumeroProcesosPorAbogadoYEstado(this.username, 'Activo').subscribe(
+      (response: any) => {
+        console.log(response.value)
+        this.activeProcess = response.value;
+      },
+      (error) => {
+        console.error('Error al obtener el número de procesos activos:', error);
+      }
+    );
+    this.processService.getNumeroProcesosPorAbogadoYEstado(this.username, 'Finalizado a favor').subscribe(
+      (response: any) => {console.log(response.value)
+        this.favorProcess = response.value;
+      },
+      (error) => {
+        console.error('Error al obtener el número de procesos activos:', error);
+      }
+    );
+    this.processService.getNumeroProcesosPorAbogadoYEstado(this.username, 'Finalizado en contra').subscribe(
+      (response: any) => {console.log(response.value)
+        this.againstProcess = response.value;
+      },
+      (error) => {
+        console.error('Error al obtener el número de procesos activos:', error);
+      }
+    );
+  }
+  getProcesses(username: string) {
+    
   }
 }
 

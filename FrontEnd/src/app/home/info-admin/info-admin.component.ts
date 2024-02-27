@@ -6,37 +6,63 @@ import { UserProcesess } from '../../shared/model/user/user.procesos';
 @Component({
   selector: 'app-info-admin',
   templateUrl: './info-admin.component.html',
-  styleUrls: ['./info-admin.component.css']
+  styleUrls: ['./info-admin.component.css'],
 })
 export class InfoAdminComponent implements OnInit {
   usuario: UserProcesess = {} as UserProcesess;
-
+  usuarioName: string = '';
   constructor(
     private dialogRef: MatDialogRef<InfoAdminComponent>,
     private userService: UserService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    // Aquí realizamos la llamada al servicio para obtener la información del usuario
-    const userName = localStorage.getItem('username'); // Reemplaza 'nombreDeUsuario' con el nombre de usuario real
-    
-    // Verificamos si userName es null antes de llamar al servicio
-    if (userName !== null) {
+    const role = localStorage.getItem('role');
+    const userName = localStorage.getItem('username')!;
+    if (role === 'ADMIN') {
       this.userService.obtenerInformacionJefe(userName).subscribe(
         (data: UserProcesess) => {
-          // Cuando se recibe la información del usuario, la asignamos a la variable 'usuario'
           this.usuario = data;
+          this.usuarioName = this.usuario.nombres;
         },
-        error => {
+        (error) => {
           console.error('Error al obtener la información del usuario:', error);
         }
       );
     } else {
-      console.error('El nombre de usuario es null');
+      this.userService.getLawyerByUsername(userName).subscribe(
+        (data: UserProcesess) => {
+          //ESTE NO SIRVE POR QUE TOCA ESPERAR QUE EL PATO DE DANIEL PONGA QUE RETORNE TODO EN VEZ DE SOLO EL ID Y NOMBRE
+          this.usuario = data;
+          console.log(data)
+          this.usuarioName = this.usuario.nombres;
+        },
+        (error) => {
+          console.error('Error al obtener la información del usuario:', error);
+        }
+      );
     }
   }
-  
 
+  actualizarPerfil() {
+    console.log(this.usuario.nombres);
+    this.userService
+      .actualizarInfoJefe(
+        this.usuario.id,
+        this.usuario.nombres,
+        this.usuario.correo,
+        this.usuario.telefono.toString(),
+        this.usuario.identificacion.toString()
+      )
+      .subscribe(
+        () => {
+          console.log('Información actualizada exitosamente');
+        },
+        (error) => {
+          console.error('Error al actualizar la información:', error);
+        }
+      );
+  }
   goBack() {
     this.dialogRef.close();
   }

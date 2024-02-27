@@ -9,21 +9,38 @@
 </div>
 
 <div class="table">
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-    
-    
-    <!-- Columnas de texto -->
-    <ng-container *ngFor="let columnName of columnNames" [matColumnDef]="columnName">
-      <th mat-header-cell *matHeaderCellDef style="vertical-align: middle; color: rgb(146, 144, 144);"> {{ columnName | titlecase }} </th>
-      <td mat-cell *matCellDef="let row" style="vertical-align: middle;"> {{ row[columnName] }} </td>
-    </ng-container>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-    <!-- Encabezados de fila -->
-    <tr mat-header-row *matHeaderRowDef="['Radicado', 'Despacho', 'Tipo', 'Fecha']"></tr>
-      
-    <!-- Filas de datos -->
-    <tr mat-row *matRowDef="let row; columns: ['Radicado', 'Despacho', 'Tipo', 'Fecha']" style="cursor: pointer;" (click)="redirectToOtherComponent(row)"></tr>
+    <!-- Numero Radicado Column -->
+    <ng-container matColumnDef="numeroRadicado">
+      <th mat-header-cell *matHeaderCellDef> Numero Radicado </th>
+      <td mat-cell *matCellDef="let proceso"> {{proceso.numeroRadicado}} </td>
+    </ng-container>
+  
+    <!-- Despacho Column -->
+    <ng-container matColumnDef="despacho">
+      <th mat-header-cell *matHeaderCellDef> Despacho </th>
+      <td mat-cell *matCellDef="let proceso"> {{proceso.despacho}} </td>
+    </ng-container>
+  
+    <!-- Tipo Proceso Column -->
+    <ng-container matColumnDef="tipoProceso">
+      <th mat-header-cell *matHeaderCellDef> Tipo Proceso </th>
+      <td mat-cell *matCellDef="let proceso"> {{proceso.tipoProceso}} </td>
+    </ng-container>
+  
+    <!-- Fecha Radicacion Column -->
+    <ng-container matColumnDef="fechaRadicacion">
+      <th mat-header-cell *matHeaderCellDef> Fecha Radicacion </th>
+      <td mat-cell *matCellDef="let proceso"> {{proceso.fechaRadicacion}} </td>
+    </ng-container>
+  
+    <!-- Columnas de la tabla -->
+    <tr mat-header-row *matHeaderRowDef="['numeroRadicado', 'despacho', 'tipoProceso', 'fechaRadicacion']"></tr>
+<tr mat-row *matRowDef="let row; columns: ['numeroRadicado', 'despacho', 'tipoProceso', 'fechaRadicacion'];"></tr>
+
   </table>
+  
   
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons style="justify-content: center;"></mat-paginator>
   

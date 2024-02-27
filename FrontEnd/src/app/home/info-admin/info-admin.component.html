@@ -11,8 +11,8 @@
             <!-- <img [src]="usuario.photo" alt="Foto de perfil"> -->
         </div>
         <div class="nombrePerfil">
-            <h2 class="nombrePerfil">
-                {{ usuario.nombres }}
+            <h2 class="nombrePerfil" [(ngModel)]="usuarioName"> 
+                {{ usuarioName }}
             </h2>
         </div>
     </div>
@@ -36,5 +36,5 @@
     </div>
 </div>
 <div class="botonActualizar">
-    <button type="submit" class="btn3">Actualizar</button>
+    <button type="submit" class="btn3" (click)="actualizarPerfil()">Actualizar</button>
 </div>

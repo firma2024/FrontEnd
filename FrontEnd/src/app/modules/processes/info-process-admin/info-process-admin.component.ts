@@ -61,7 +61,7 @@ export class InfoProcessAdminComponent {
       .subscribe((process: ProcessJefeFilter) => {
         this.nRadicado = process.numeroRadicado;
         this.sujetosProcesales = process.sujetos.split('|');
-        
+
         this.opcionesLawyer.push({
           valor: process.abogado,
           texto: process.abogado,
@@ -95,12 +95,14 @@ export class InfoProcessAdminComponent {
                 valor: lawyer.id.toString(),
                 texto: lawyer.nombres,
               });
-            }else{
-              this.opcionesLawyer = this.opcionesLawyer.filter(opcion => opcion.valor !== lawyer.nombres);
-              this.opcionesLawyer.push({
-                valor: lawyer.id.toString(),
-                texto: lawyer.nombres,
-              });
+            } else {
+              this.opcionesLawyer = this.opcionesLawyer.map((opcion) =>
+                opcion.valor === lawyer.nombres
+                  ? { valor: lawyer.id.toString(), texto: lawyer.nombres }
+                  : opcion
+              );
+              this.selectedLawyer  = lawyer.id.toString();
+           
             }
           });
         },
@@ -124,7 +126,7 @@ export class InfoProcessAdminComponent {
       });
   }
   updateProcess() {
-    console.log(this.selectedLawyer)
+    console.log(this.selectedLawyer);
     this.processService
           .actualizarProceso(
             this.IdSelectedProcess,

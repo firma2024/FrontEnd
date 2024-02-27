@@ -14,10 +14,6 @@ export class HomeComponent implements OnInit {
     this.rol = localStorage.getItem('role') || '';
   }
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    localStorage.removeItem('username');
-    localStorage.removeItem('firmaId');
-    localStorage.removeItem("lawyerId")
+    localStorage.clear()
   }
 }

@@ -92,10 +92,18 @@ export class UserService {
     return this.http.put(url, userRequest);
   }
 
-  actualizarInfoJefe(userRequest: UserJefeUpdate): Observable<any> {
+  actualizarInfoJefe(
+    id: number,
+    nombres: string,
+    correo: string,
+    telefono: string,
+    identificacion: string
+  ): Observable<any> {
     const url = `${environment.userURL}/update/info/jefe`;
-    return this.http.put(url, userRequest);
+    const body = { id, nombres, correo, telefono, identificacion };
+    return this.http.put(url, body);
   }
+
   deleteUser(id: number): Observable<any> {
     const url = `${environment.userURL}/delete?id=${id}`;
     return this.http.delete(url);

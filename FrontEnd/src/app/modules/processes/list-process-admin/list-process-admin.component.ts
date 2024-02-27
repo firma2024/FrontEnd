@@ -35,7 +35,7 @@ export class ListProcessAdminComponent {
   constructor(
     private changeDetectorRefs: ChangeDetectorRef,
     private router: Router,
-    private servicio: ProcessService
+    private processService: ProcessService
   ) {
     this.dataSource = new MatTableDataSource<ProcessJefeFilter>([]);
   }
@@ -55,7 +55,7 @@ export class ListProcessAdminComponent {
     const page = 0;
     const size = 10;
 
-    this.servicio
+    this.processService
       .getProcesosByFirmaFilter(
         fechaInicioStr,
         firmaId,
