@@ -41,7 +41,8 @@ export class LoginComponent {
         icon: 'error',
         title: 'Error al iniciar sesión',
         text: this.error_message,
-        confirmButtonText: 'Aceptar'
+        confirmButtonText: 'Aceptar',
+        confirmButtonColor: '#AA2535'
       });
     },
     complete: () => {

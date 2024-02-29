@@ -60,6 +60,7 @@ export class InfoLawyerComponent {
     this.speciality = 'SEXXXXXXXXXXXXXXXXo';
     this.name = lawyerObj.nombres;
     this.email = lawyerObj.correo;
+
   }
   getImageUrlByUserId(lawyerObj: UserProcesess): void {
     this.storageService.descargarFoto(lawyerObj.id).subscribe((photo: Blob) => {

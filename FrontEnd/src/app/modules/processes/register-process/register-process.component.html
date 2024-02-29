@@ -3,10 +3,19 @@
     <h4 class="description">Ingrese el numero de radicado del proceso este se buscará en la plataforma CONSULTA DE PROCESOS NACIONAL UNIFICADA</h4>
 </div>
 <div class="input">
-    <input [(ngModel)]="filingNumberInput" type="text" id="filingNumber" name="filingNumber" maxlength="23" >
+    <input [(ngModel)]="filingNumberInput" 
+           type="text" 
+           id="filingNumber" 
+           name="filingNumber" 
+           maxlength="23"
+           (input)="filterNonNumericCharacters()">
 </div>
 
 <div class="buttonBuscar">
     <button (click)="searchProceso()">Buscar Proceso</button>
 </div>
+
+
+
+
 
