@@ -23,10 +23,6 @@
                     <label for="password">Contraseña:</label>
                     <input type="password" class="form-control" id="password" name="password" placeholder="Ingrese su contraseña" [(ngModel)]="password">
                   </div>
-                  <div class="checkbox">
-                    <input type="checkbox" id="rememberMe">
-                    <label for="rememberMe">Recordarme</label>
-                  </div>
                   <button type="submit" class="btn btn-primary" (click)="iniciarSesion()" >Ingresar</button>
                   <button type="button" class="botonTexto"  onclick="window.location.href = '/recover';">¿Olvidaste tu contraseña?</button>
                 </form>

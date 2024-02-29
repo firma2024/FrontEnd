@@ -143,7 +143,7 @@ export class ProcessService {
       { params }
     );
   }
-  //idk what this does.
+  
   getProcesoPorIdJefe(processId: string): Observable<ProcessJefeFilter> {
     let params = new HttpParams().set('processId', processId);
 

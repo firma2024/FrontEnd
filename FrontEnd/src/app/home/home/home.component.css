@@ -26,6 +26,7 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex-grow: 1;
 }
 .icon-pull-right {
     padding-left: 20px;
@@ -62,6 +63,7 @@ body, html {
 }
 .exit{
     margin-top: 60%;
+
 }
 .boton:hover {
     background-color: #AA2535;

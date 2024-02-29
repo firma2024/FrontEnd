@@ -31,6 +31,10 @@ export class ListLawyerComponent {
     private storageService: StorageService
   ) {
     this.dataSource = new MatTableDataSource<UserProcesess>([]);
+    // Define el filtro personalizado para la columna 'nombres'
+    this.dataSource.filterPredicate = (data: UserProcesess, filter: string) => {
+      return data.nombres.toLowerCase().includes(filter);
+    };
   }
 
   ngOnInit() {
@@ -39,6 +43,7 @@ export class ListLawyerComponent {
       .subscribe(
         (data: Pageable<UserProcesess>) => {
           this.dataSource.data = data.data;
+          this.dataSource.paginator = this.paginator;
           console.log(data.data)
         },
         (error) => {
@@ -47,12 +52,20 @@ export class ListLawyerComponent {
       );
   }
 
+  // Método para aplicar el filtro en tiempo real
+  applyFilter(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    // Aplica el filtro solo a la columna 'nombres'
+    this.dataSource.filter = filterValue;
+  }
+
   getImageUrl(userProcesess: UserProcesess): string {
     if (userProcesess && userProcesess.photo) {
       return URL.createObjectURL(userProcesess.photo);
     }
     return 'assets/defaultProfile.png';
   }
+
   deleteUser(row: UserProcesess) {
     event!.stopPropagation();
     this.userService.deleteUser(row.id).subscribe(

@@ -3,7 +3,7 @@
     <h3>Mis abogados</h3>
   </div>
   <div class="options">
-    <input type="text" id="lawyer" name="lawyer" placeholder="Buscar abogado...">
+    <input matInput (input)="applyFilter($event)" placeholder="Buscar abogado...">
     <button class="buttonFilter" ><span class="fa-solid fa-filter"></span> </button>
     <button class="buttonCreate"  routerLink="/registerlawyer">Crear Abogado</button>
   </div>
