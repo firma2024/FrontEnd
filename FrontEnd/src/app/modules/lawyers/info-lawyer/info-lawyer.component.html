@@ -3,7 +3,7 @@
 </div>
 <div class="infoLawyer">
     <div class="photoProfile">
-        <img  alt="Foto" style="width: 200px; height: auto;">
+      <img [src]="imageUrl" alt="Foto" style="width: 200px; height: auto;">
     </div>
     <div class="columns">
         <div class="column1">
@@ -25,21 +25,33 @@
 
 <div class="table">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-        
-        
-        <!-- Columnas de texto -->
-        <ng-container *ngFor="let columnName of columnNames" [matColumnDef]="columnName">
-          <th mat-header-cell *matHeaderCellDef style="vertical-align: middle; color: rgb(146, 144, 144);"> {{ columnName | titlecase }} </th>
-          <td mat-cell *matCellDef="let row" style="vertical-align: middle;"> {{ row[columnName] }} </td>
-        </ng-container>
-
-        <!-- Encabezados de fila -->
-        <tr mat-header-row *matHeaderRowDef="['Radicado', 'Despacho', 'Tipo', 'Fecha']"></tr>
-          
-        <!-- Filas de datos -->
-        <tr mat-row *matRowDef="let row; columns: ['Radicado', 'Despacho', 'Tipo', 'Fecha']" style="cursor: pointer;" (click)="redirectToOtherComponent(row)"></tr>
-      </table>
       
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons style="justify-content: center; "></mat-paginator>
+        <ng-container matColumnDef="numeroRadicado">
+          <th mat-header-cell *matHeaderCellDef style="vertical-align: middle; color: rgb(146, 144, 144);"> Numero Radicado </th>
+          <td mat-cell *matCellDef="let row" style="vertical-align: middle;"> {{ row.numeroRadicado }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="despacho">
+          <th mat-header-cell *matHeaderCellDef style="vertical-align: middle; color: rgb(146, 144, 144);"> Despacho </th>
+          <td mat-cell *matCellDef="let row" style="vertical-align: middle;"> {{ row.despacho }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="tipoProceso">
+          <th mat-header-cell *matHeaderCellDef style="vertical-align: middle; color: rgb(146, 144, 144);"> Tipo Proceso </th>
+          <td mat-cell *matCellDef="let row" style="vertical-align: middle;"> {{ row.tipoProceso }} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="fechaRadicacion">
+          <th mat-header-cell *matHeaderCellDef style="vertical-align: middle; color: rgb(146, 144, 144);"> Fecha Radicacion </th>
+          <td mat-cell *matCellDef="let row" style="vertical-align: middle;"> {{ row.fechaRadicacion }} </td>
+        </ng-container>
+      
+        <!-- Encabezados de fila -->
+        <tr mat-header-row *matHeaderRowDef="[ 'numeroRadicado','despacho', 'tipoProceso', 'fechaRadicacion']"></tr>
+      
+        <!-- Filas de datos -->
+        <tr mat-row *matRowDef="let row; columns: [ 'numeroRadicado','despacho', 'tipoProceso', 'fechaRadicacion']" style="cursor: pointer;" (click)="redirectToOtherComponent(row)"></tr>
+      </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons style="justify-content: center; "></mat-paginator>
       
     </div>

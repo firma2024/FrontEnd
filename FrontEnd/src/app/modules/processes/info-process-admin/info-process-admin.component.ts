@@ -184,6 +184,6 @@ export class InfoProcessAdminComponent {
   
 
   ngOnDestroy() {
-    localStorage.removeItem('selectedIdProcessAdmin');
+    //localStorage.removeItem('selectedIdProcessAdmin');
   }
 }

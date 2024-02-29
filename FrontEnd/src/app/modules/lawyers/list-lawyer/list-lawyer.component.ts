@@ -39,8 +39,7 @@ export class ListLawyerComponent {
       .subscribe(
         (data: Pageable<UserProcesess>) => {
           this.dataSource.data = data.data;
-          console.log(data.data);
-          console.log(data.data[0].numeroProcesosAsignados);
+          console.log(data.data)
         },
         (error) => {
           console.error(error);
