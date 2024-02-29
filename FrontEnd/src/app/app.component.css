@@ -8,6 +8,7 @@
 
 .sidebar {
   width: 280px; /* Ancho del drawer (menú lateral) */
+  height: 100%;
 }
 
 .mainContent {
