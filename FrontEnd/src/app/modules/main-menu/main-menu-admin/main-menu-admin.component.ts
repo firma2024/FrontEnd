@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { LawFirmService } from '../../../services/law.firm.service';
 import { Firma } from '../../../shared/model/lawFirm/firma';
-import { ProcessService } from '../../../services/process.service';// Asegúrate de importar el servicio ProcessService
+import { ProcessService } from '../../../services/process.service'; // Asegúrate de importar el servicio ProcessService
 import { Observable } from 'rxjs';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-main-menu-admin',
   templateUrl: './main-menu-admin.component.html',
-  styleUrls: ['./main-menu-admin.component.css']
+  styleUrls: ['./main-menu-admin.component.css'],
 })
 export class MainMenuAdminComponent implements OnInit {
   nombreEmpresa: string = '';
@@ -20,7 +21,8 @@ export class MainMenuAdminComponent implements OnInit {
 
   constructor(
     private lawFirmService: LawFirmService,
-    private processService: ProcessService // Agrega ProcessService al constructor
+    private processService: ProcessService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -33,9 +35,10 @@ export class MainMenuAdminComponent implements OnInit {
         (firma: Firma) => {
           this.nombreEmpresa = firma.nombre;
           this.direccionEmpresa = firma.direccion;
-          localStorage.setItem("firmaId", firma.id.toString());
+          localStorage.setItem('firmaId', firma.id.toString());
 
           this.getProcesses(firma.id);
+          this.getRegisteredLawyers(firma.id)
         },
         (error) => {
           console.error('Error al obtener la firma:', error);
@@ -45,31 +48,51 @@ export class MainMenuAdminComponent implements OnInit {
       console.error('No se encontró un nombre de usuario en el localStorage');
     }
   }
-
+  getRegisteredLawyers(firmaId:number) {
+    this.userService.getActiveAbogados(firmaId).subscribe((registeredLawyers: any)=>{
+      console.log(registeredLawyers)
+      this.lawyersRegister = registeredLawyers.value
+    })
+  }
   getProcesses(firmaId: number) {
-    this.processService.getNumeroProcesosPorFirmaYEstado(firmaId, 'Activo').subscribe(
-      (response: any) => {
-        this.activeProcess = response.value;
-      },
-      (error) => {
-        console.error('Error al obtener el número de procesos activos:', error);
-      }
-    );
-    this.processService.getNumeroProcesosPorFirmaYEstado(firmaId, 'Finalizado a favor').subscribe(
-      (response: any) => {
-        this.favorProcess = response.value;
-      },
-      (error) => {
-        console.error('Error al obtener el número de procesos activos:', error);
-      }
-    );
-    this.processService.getNumeroProcesosPorFirmaYEstado(firmaId, 'Finalizado en contra').subscribe(
-      (response: any) => {
-        this.againstProcess = response.value;
-      },
-      (error) => {
-        console.error('Error al obtener el número de procesos activos:', error);
-      }
-    );
+    this.processService
+      .getNumeroProcesosPorFirmaYEstado(firmaId, 'Activo')
+      .subscribe(
+        (response: any) => {
+          this.activeProcess = response.value;
+        },
+        (error) => {
+          console.error(
+            'Error al obtener el número de procesos activos:',
+            error
+          );
+        }
+      );
+    this.processService
+      .getNumeroProcesosPorFirmaYEstado(firmaId, 'Finalizado a favor')
+      .subscribe(
+        (response: any) => {
+          this.favorProcess = response.value;
+        },
+        (error) => {
+          console.error(
+            'Error al obtener el número de procesos activos:',
+            error
+          );
+        }
+      );
+    this.processService
+      .getNumeroProcesosPorFirmaYEstado(firmaId, 'Finalizado en contra')
+      .subscribe(
+        (response: any) => {
+          this.againstProcess = response.value;
+        },
+        (error) => {
+          console.error(
+            'Error al obtener el número de procesos activos:',
+            error
+          );
+        }
+      );
   }
 }
