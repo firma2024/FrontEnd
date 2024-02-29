@@ -9,51 +9,56 @@ import { TipoAbogado } from '../../../shared/model/user/user.tipo';
   styleUrl: './register-lawyer.component.css',
 })
 export class RegisterLawyerComponent {
+  
   nombreUsuario: string = '';
   nombreCompleto: string = '';
   correoElectronico: string = '';
   identificacion: string = '';
   telefono: string = '';
-  selectedTypeDoc: string = '';
-  selectedSpecialization: string = '';
+  imageUrl:string | null = null;
+
+
+  selectedTypeDoc: TipoDocumento | null = null;
+  selectedSpecialization: TipoAbogado | null = null;
   constructor(private userService: UserService) {}
-  opcionesIdentification: { valor: string; texto: string }[] = [
-    { valor: '', texto: 'Seleccionar' },
-  ];
-  opcionesSpecialty: { valor: string; texto: string }[] = [
-    { valor: '', texto: 'Seleccionar' },
-  ];
+
+  opcionesIdentification: { valor: TipoDocumento | null; texto: string }[] = [];
+  opcionesSpecialty: { valor: TipoAbogado | null; texto: string }[] = [];
+
   ngOnInit() {
-    this.obtaintTypeOfDoc()
-    this.obtainLaywersInfo()
+    this.obtaintTypeOfDoc();
+    this.obtainLaywersInfo();
   }
-  obtaintTypeOfDoc(){
+  obtaintTypeOfDoc() {
     this.userService.getAllTipoDocumento().subscribe(
       (typeDoc: TipoDocumento[]) => {
+        this.opcionesIdentification.push({ valor: null, texto: 'Seleccionar' });
         typeDoc.forEach((tipoDocumento) => {
           this.opcionesIdentification.push({
-            valor: tipoDocumento.nombre,
+            valor: tipoDocumento,
             texto: tipoDocumento.nombre,
           });
         });
+        console.log(this.opcionesIdentification);
       },
       (error) => {
         console.error('Error al obtener tipos de documento:', error);
       }
     );
   }
-  obtainLaywersInfo(){
+  obtainLaywersInfo() {
     this.userService.getAllTipoAbogado().subscribe(
       (typeDoc: TipoAbogado[]) => {
+        this.opcionesSpecialty.push({ valor: null, texto: 'Seleccionar' });
         typeDoc.forEach((tipoAbogado) => {
           this.opcionesSpecialty.push({
-            valor: tipoAbogado.nombre,
+            valor: tipoAbogado,
             texto: tipoAbogado.nombre,
           });
         });
       },
       (error) => {
-        console.error('Error al obtener tipos de documento:', error);
+        console.error('Error al obtener tipos de abogado:', error);
       }
     );
   }
@@ -64,8 +69,8 @@ export class RegisterLawyerComponent {
       parseInt(this.telefono),
       parseInt(this.identificacion),
       this.nombreUsuario,
-      this.selectedTypeDoc,
-      [this.selectedSpecialization],
+      this.selectedTypeDoc!,
+      [this.selectedSpecialization!],
       parseInt(localStorage.getItem('firmaId')!)
     ).subscribe(
       (response) => {
@@ -76,5 +81,17 @@ export class RegisterLawyerComponent {
       }
     );
   }
-  cargarFoto() {}
+
+  onSpecializationChange($event: any) {}
+  onTypeDocChange($event: any) {}
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imageUrl = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 }

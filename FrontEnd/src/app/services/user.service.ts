@@ -20,8 +20,8 @@ export class UserService {
     telefono: number,
     identificacion: number,
     username: string,
-    tipoDocumento: string,
-    especialidades: string[],
+    tipoDocumento: TipoDocumento,
+    especialidades: TipoAbogado[],
     firmaId?: number
   ): Observable<any> {
     const user: UserRequest = {
@@ -43,8 +43,8 @@ export class UserService {
     telefono: number,
     identificacion: number,
     username: string,
-    tipoDocumento: string,
-    especialidades: string[],
+    tipoDocumento: TipoDocumento,
+    especialidades: TipoAbogado[],
     firmaId?: number
   ): Observable<any> {
     const user: UserRequest = {
@@ -66,8 +66,8 @@ export class UserService {
     telefono: number,
     identificacion: number,
     username: string,
-    tipoDocumento: string,
-    especialidades: string[],
+    tipoDocumento: TipoDocumento,
+    especialidades: TipoAbogado[],
     firmaId?: number
   ): Observable<any> {
     const user: UserRequest = {
