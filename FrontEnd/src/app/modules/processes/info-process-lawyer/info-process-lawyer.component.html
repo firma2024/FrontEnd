@@ -1,1 +1,25 @@
-<p>info-process-lawyer works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Carga SweetAlert2 desde el CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <!-- Mueve el script arriba del botón -->
+    <script>
+        function showAlert() {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: 'Esta es una alerta de prueba.',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+    </script>
+
+    <button onclick="showAlert()">Mostrar Alerta</button>
+</body>
+</html>

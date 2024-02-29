@@ -1,6 +1,7 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ProcessService } from '../../../services/process.service';
 import { ProcessJefeFilter } from '../../../shared/model/process/proceso.jefe.filter';
@@ -127,16 +128,60 @@ export class InfoProcessAdminComponent {
   }
   updateProcess() {
     console.log(this.selectedLawyer);
-    this.processService
+  
+    // Preguntar al usuario si desea actualizar el proceso
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Quieres actualizar el proceso?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No',
+      confirmButtonColor: '#AA2535',
+      cancelButtonColor: '#AA2535',
+      iconColor:'#AA2535'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Usuario confirmó la actualización, proceder
+        this.processService
           .actualizarProceso(
             this.IdSelectedProcess,
             this.selectedLawyer,
             this.selectedState
           )
-          .subscribe((response: string) => {
-            console.log(response)
-          });
+          .subscribe(
+            (response: string) => {
+              console.log(response);
+              Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: 'Proceso actualizado satisfactoriamente.',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#AA2535',
+                iconColor:'#AA2535'
+              }).then(() => {
+                location.reload();
+              });
+            },
+            (error: any) => {
+              console.error('Error al actualizar el proceso:', error);
+              Swal.fire({
+                icon: 'error',
+                title: '¡Error!',
+                text: 'Error al actualizar el proceso. Por favor, inténtalo de nuevo.',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#AA2535',
+                iconColor:'#AA2535'
+              });
+            }
+          );
+      }
+    });
   }
+  
+  
+  
+  
 
   ngOnDestroy() {
     localStorage.removeItem('selectedIdProcessAdmin');

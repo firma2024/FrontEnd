@@ -60,7 +60,8 @@ body, html {
     background-color: #8c8284;
     color: black;
 }
-.exit{margin-top: 70%;
+.exit{
+    margin-top: 60%;
 }
 .boton:hover {
     background-color: #AA2535;
