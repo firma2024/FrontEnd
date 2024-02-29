@@ -52,7 +52,7 @@ export class MainMenuLawyerComponent {
     } else {
       console.error('No se encontró un nombre de usuario en el localStorage');
     }
-    this.processService.getNumeroProcesosPorAbogadoYEstado(this.username, 'Activo').subscribe(
+    this.processService.getNumeroProcesosPorAbogadoYEstado('Activo',this.username).subscribe(
       (response: any) => {
         console.log(response.value)
         this.activeProcess = response.value;
@@ -61,7 +61,7 @@ export class MainMenuLawyerComponent {
         console.error('Error al obtener el número de procesos activos:', error);
       }
     );
-    this.processService.getNumeroProcesosPorAbogadoYEstado(this.username, 'Finalizado a favor').subscribe(
+    this.processService.getNumeroProcesosPorAbogadoYEstado('Finalizado a favor',this.username).subscribe(
       (response: any) => {console.log(response.value)
         this.favorProcess = response.value;
       },
@@ -69,7 +69,7 @@ export class MainMenuLawyerComponent {
         console.error('Error al obtener el número de procesos activos:', error);
       }
     );
-    this.processService.getNumeroProcesosPorAbogadoYEstado(this.username, 'Finalizado en contra').subscribe(
+    this.processService.getNumeroProcesosPorAbogadoYEstado('Finalizado en contra',this.username).subscribe(
       (response: any) => {console.log(response.value)
         this.againstProcess = response.value;
       },

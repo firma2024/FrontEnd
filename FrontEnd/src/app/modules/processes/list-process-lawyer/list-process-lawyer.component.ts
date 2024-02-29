@@ -32,7 +32,6 @@ export class ListProcessLawyerComponent {
 
   // Función para redirigir a otro componente al hacer clic en una fila
   redirectToOtherComponent(row: any) {
-    // Implementa la lógica para la redirección aquí
     console.log('Redireccionando a otro componente:', row);
     this.router.navigate(['/infolawyer']);
   }
@@ -45,12 +44,8 @@ export class ListProcessLawyerComponent {
     const lawyerId = localStorage.getItem("lawyerId")!
     this.processService
       .getProcesosByAbogadoFilter(
-        lawyerId,
-        fechaInicioStr,
-        fechaFinStr,
-        estadosProceso,
-        tipoProceso
-        //Add when pagination
+        lawyerId
+        
       )
       .subscribe(
         (data: Pageable<ProcesoLawyerFilter>) => {
