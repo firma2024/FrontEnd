@@ -1,3 +1,6 @@
+import { TipoDocumento } from "../doc.tipo";
+import { TipoAbogado } from "./user.tipo";
+
 export interface UserRequest {
   id?: number;
   nombres: string;
@@ -5,7 +8,7 @@ export interface UserRequest {
   telefono: number;
   identificacion: number;
   username: string;
-  tipoDocumento: string;
-  especialidades: string[];
+  tipoDocumento: TipoDocumento;
+  especialidades: TipoAbogado[];
   firmaId?: number;
 }

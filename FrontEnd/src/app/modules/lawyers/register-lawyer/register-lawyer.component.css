@@ -12,6 +12,7 @@
 .buttonCreated{
     background-color: #AA2535 ;
     color: white;
+    border-color: transparent;
     width: 28%;
     height: 40px;
 }

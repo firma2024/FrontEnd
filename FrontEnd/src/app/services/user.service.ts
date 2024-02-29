@@ -9,19 +9,43 @@ import { UserJefeUpdate } from '../shared/model/user/user.jefe.update';
 import { Pageable } from '../shared/model/pageable';
 import { TipoDocumento } from '../shared/model/doc.tipo';
 import { TipoAbogado } from '../shared/model/user/user.tipo';
+import { MensajeResponse } from '../shared/model/message';
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   constructor(private http: HttpClient) {}
+  validarAgregarAbogado(
+    nombres: string,
+    correo: string,
+    telefono: number,
+    identificacion: number,
+    username: string,
+    tipoDocumento: TipoDocumento,
+    especialidades: TipoAbogado[],
+    firmaId?: number
+  ): Observable<MensajeResponse> {
+    const user: UserRequest = {
+      nombres: nombres,
+      correo: correo,
+      telefono: telefono,
+      identificacion: identificacion,
+      username: username,
+      tipoDocumento: tipoDocumento,
+      especialidades: especialidades,
+      firmaId: firmaId,
+    };
+    const url = `${environment.userURL}/check/insert`;
+    return this.http.post<MensajeResponse>(url, user);
+  }
   agregarAbogado(
     nombres: string,
     correo: string,
     telefono: number,
     identificacion: number,
     username: string,
-    tipoDocumento: string,
-    especialidades: string[],
+    tipoDocumento: TipoDocumento,
+    especialidades: TipoAbogado[],
     firmaId?: number
   ): Observable<any> {
     const user: UserRequest = {
@@ -43,8 +67,8 @@ export class UserService {
     telefono: number,
     identificacion: number,
     username: string,
-    tipoDocumento: string,
-    especialidades: string[],
+    tipoDocumento: TipoDocumento,
+    especialidades: TipoAbogado[],
     firmaId?: number
   ): Observable<any> {
     const user: UserRequest = {
@@ -66,8 +90,8 @@ export class UserService {
     telefono: number,
     identificacion: number,
     username: string,
-    tipoDocumento: string,
-    especialidades: string[],
+    tipoDocumento: TipoDocumento,
+    especialidades: TipoAbogado[],
     firmaId?: number
   ): Observable<any> {
     const user: UserRequest = {
