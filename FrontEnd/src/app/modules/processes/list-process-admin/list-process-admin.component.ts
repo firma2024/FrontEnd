@@ -1,6 +1,6 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ProcessService } from '../../../services/process.service';
 import { ProcessJefeFilter } from '../../../shared/model/process/proceso.jefe.filter';
@@ -32,6 +32,10 @@ export class ListProcessAdminComponent {
   ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  pageSize = 5;
+  pageIndex = 0;
+  totalItems = 0;
+
   constructor(
     private changeDetectorRefs: ChangeDetectorRef,
     private router: Router,
@@ -41,9 +45,9 @@ export class ListProcessAdminComponent {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator!;
-    this.changeDetectorRefs.detectChanges();
-    this.fetchData();
+    setTimeout(() => {
+      this.fetchData();
+    });
   }
 
   fetchData() {
@@ -52,9 +56,8 @@ export class ListProcessAdminComponent {
     const fechaFinStr = '';
     const estadosProceso: string[] = [];
     const tipoProceso = '';
-    const page = 0;
-    const size = 10;
-
+    const page = this.pageIndex; // Ajuste del índice de página
+  
     this.processService
       .getProcesosByFirmaFilter(
         fechaInicioStr,
@@ -63,12 +66,13 @@ export class ListProcessAdminComponent {
         estadosProceso,
         tipoProceso,
         page,
-        size
+        this.pageSize
       )
       .subscribe(
         (data: Pageable<ProcessJefeFilter>) => {
-          this.dataSource.data = data.data
-          console.log(data.data)
+          this.dataSource.data = data.data;
+          this.totalItems = data.totalItems; // Actualizamos totalItems con el valor devuelto por el servicio
+          console.log(data.data);
         },
         (error) => {
           console.error('Error al obtener los datos:', error);
@@ -76,8 +80,14 @@ export class ListProcessAdminComponent {
       );
   }
 
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.fetchData();
+  }
+
   redirectToOtherComponent(row: ProcessJefeFilter) {
-    localStorage.setItem("selectedIdProcessAdmin",row.id.toString())
+    localStorage.setItem("selectedIdProcessAdmin", row.id.toString())
     this.router.navigate(['/infoprocessadmin']);
   }
 }

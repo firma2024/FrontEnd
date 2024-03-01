@@ -145,12 +145,13 @@ export class UserService {
   getAbogadosFilter(
     firmaId: number,
     especialidades?: string[],
-    numProcesosInicial?: number,
-    numProcesosFinal?: number,
+    numProcesosInicial?: string,
+    numProcesosFinal?: string,
     page?: number,
     size?: number
   ): Observable<Pageable<UserProcesess>> {
-    let params = new HttpParams().set('firmaId', firmaId.toString());
+    let params = new HttpParams()
+    .set('firmaId', firmaId.toString());
 
     if (especialidades) {
       especialidades.forEach((especialidad) => {

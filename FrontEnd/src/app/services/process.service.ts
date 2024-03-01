@@ -77,13 +77,13 @@ export class ProcessService {
   }
   //Filter process information by lawyer
   getProcesosByAbogadoFilter(
-    abogadoId: string,
-    fechaInicioStr?: string,
-    fechaFinStr?: string,
-    estadosProceso?: string[],
-    tipoProceso?: string,
-    page?: number,
-    size?: number
+    fechaInicioStr: string,
+    abogadoId: number,
+    fechaFinStr: string,
+    estadosProceso: string[],
+    tipoProceso: string,
+    page: number,
+    size: number
   ): Observable<Pageable<ProcesoLawyerFilter>> {
     let params = new HttpParams()
     .set('abogadoId', abogadoId.toString())
@@ -143,7 +143,7 @@ export class ProcessService {
       { params }
     );
   }
-  
+
   getProcesoPorIdJefe(processId: string): Observable<ProcessJefeFilter> {
     let params = new HttpParams().set('processId', processId);
 

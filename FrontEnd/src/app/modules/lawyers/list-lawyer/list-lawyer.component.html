@@ -62,6 +62,10 @@
     <tr mat-row *matRowDef="let row; columns: ['nombres', 'correo', 'telefono',  'especialidades', 'procesos', 'button']" style="cursor: pointer;" (click)="redirectToOtherComponent(row)"></tr>
   </table>
   
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <mat-paginator
+    [length]="totalItems"
+    [pageSize]="pageSize"
+    (page)="onPageChange($event)">
+  </mat-paginator>
   
 </div>
