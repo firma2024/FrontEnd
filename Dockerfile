@@ -1,5 +1,5 @@
 # Etapa de construcción
-FROM node:14.17.1 AS build
+FROM node:21.2.0 AS build
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
