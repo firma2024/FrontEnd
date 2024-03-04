@@ -8,5 +8,5 @@ RUN npm run build --prod
 
 # Etapa de producción
 FROM nginx:1.21.1-alpine
-COPY --from=build /usr/src/app/dist/my-app /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist/FrontEnd /usr/share/nginx/html
 COPY ./nginx-custom.conf /etc/nginx/conf.d/default.conf
