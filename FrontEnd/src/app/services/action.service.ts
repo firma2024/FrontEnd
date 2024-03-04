@@ -18,11 +18,12 @@ export class ActionService {
   //Get actions filtered by boss.
   getActuacionesFilter(
     procesoId: number,
+    page: number ,
+    size: number,
     fechaInicioStr?: string,
     fechaFinStr?: string,
     estadoActuacion?: string,
-    page: number = 0,
-    size: number = 5
+    
   ): Observable<Pageable<ActuacionJefeFilter>> {
     let params = new HttpParams().set('procesoId', procesoId.toString());
   

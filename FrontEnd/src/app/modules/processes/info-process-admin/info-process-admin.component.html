@@ -76,6 +76,11 @@
         <tr mat-row *matRowDef="let row; columns: ['fechaActuacion','nombreActuacion', 'anotacion', 'fechaRegistro',  'existDocument', 'estado']"></tr>
       </table>
       
-      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons style="justify-content: center; "></mat-paginator>
+      <mat-paginator
+  [length]="totalItems"
+  [pageSize]="pageSize"
+  (page)="onPageChange($event)"
+>
+</mat-paginator>
       
     </div>

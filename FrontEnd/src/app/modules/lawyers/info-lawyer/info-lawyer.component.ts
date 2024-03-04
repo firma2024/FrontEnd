@@ -1,6 +1,6 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator'; 
 import { Router } from '@angular/router';
 import { UserProcesess } from '../../../shared/model/user/user.procesos';
 import { StorageService } from '../../../services/storage.service';
@@ -12,7 +12,7 @@ import { ProcesoLawyerFilter } from '../../../shared/model/process/process.aboga
 @Component({
   selector: 'app-info-lawyer',
   templateUrl: './info-lawyer.component.html',
-  styleUrl: './info-lawyer.component.css',
+  styleUrls: ['./info-lawyer.component.css'],
 })
 export class InfoLawyerComponent {
   name: string = '';
@@ -28,6 +28,9 @@ export class InfoLawyerComponent {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   lawyerObj!: UserProcesess;
+  pageSize = 5;
+  pageIndex = 0;
+  totalItems = 0;
 
   constructor(
     private changeDetectorRefs: ChangeDetectorRef,
@@ -42,26 +45,40 @@ export class InfoLawyerComponent {
     const lawyer: string = localStorage.getItem('selectedLawyer')!;
     this.lawyerObj = JSON.parse(lawyer);
     this.obtainLawyerInfo(this.lawyerObj);
-    this.getProcessOfLawyer(localStorage.getItem('selectedIdLawyer')!);
+    this.fetchData();
     this.getImageUrlByUserId(this.lawyerObj);
   }
-  getProcessOfLawyer(lawyerId: string) {
-    console.log(lawyerId + 'AAAAAAAAAAAAA');
-    this.processService.getProcesosByAbogadoFilter(lawyerId).subscribe(
+
+  fetchData() {
+    const fechaInicioStr = '';
+    const fechaFinStr = '';
+    const estadosProceso: string[] = [];
+    const tipoProceso = '';
+    const lawyerId = parseInt(localStorage.getItem("selectedIdLawyer")!);
+    const page = this.pageIndex; 
+    this.processService.getProcesosByAbogadoFilter(fechaInicioStr,
+      lawyerId,
+      fechaFinStr,
+      estadosProceso,
+      tipoProceso,
+      page,
+      this.pageSize).subscribe(
       (data: Pageable<ProcesoLawyerFilter>) => {
         this.dataSource.data = data.data;
+        this.totalItems = data.totalItems;
       },
       (error) => {
         console.error(error);
       }
     );
   }
+
   obtainLawyerInfo(lawyerObj: UserProcesess) {
     this.speciality = 'SEXXXXXXXXXXXXXXXXo';
     this.name = lawyerObj.nombres;
     this.email = lawyerObj.correo;
-
   }
+
   getImageUrlByUserId(lawyerObj: UserProcesess): void {
     this.storageService.descargarFoto(lawyerObj.id).subscribe((photo: Blob) => {
       this.imageUrl = URL.createObjectURL(photo);
@@ -72,5 +89,12 @@ export class InfoLawyerComponent {
   redirectToOtherComponent(row: ProcesoLawyerFilter) {
     localStorage.setItem('selectedIdProcessAdmin', row.id.toString());
     this.router.navigate(['/infoprocessadmin']);
+  }
+
+  // Función para manejar el cambio de página
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.fetchData();
   }
 }

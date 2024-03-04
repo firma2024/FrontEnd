@@ -52,6 +52,10 @@
         <!-- Filas de datos -->
         <tr mat-row *matRowDef="let row; columns: [ 'numeroRadicado','despacho', 'tipoProceso', 'fechaRadicacion']" style="cursor: pointer;" (click)="redirectToOtherComponent(row)"></tr>
       </table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons style="justify-content: center; "></mat-paginator>
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        (page)="onPageChange($event)">
+      </mat-paginator>
       
     </div>

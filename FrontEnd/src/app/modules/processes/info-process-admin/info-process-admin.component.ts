@@ -1,13 +1,12 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ProcessService } from '../../../services/process.service';
 import { ProcessJefeFilter } from '../../../shared/model/process/proceso.jefe.filter';
 import { UserService } from '../../../services/user.service';
 import { UserProcesess } from '../../../shared/model/user/user.procesos';
-import { ActuacionResponse } from '../../../shared/model/actuaciones/actuacion.req';
 import { ActionService } from '../../../services/action.service';
 import { Pageable } from '../../../shared/model/pageable';
 import { ActuacionJefeFilter } from '../../../shared/model/actuaciones/actuacion.jefe.filter';
@@ -16,7 +15,7 @@ import { ProcesoStatus } from '../../../shared/model/process/proceso.estado';
 @Component({
   selector: 'app-info-process-admin',
   templateUrl: './info-process-admin.component.html',
-  styleUrl: './info-process-admin.component.css',
+  styleUrls: ['./info-process-admin.component.css'],
 })
 export class InfoProcessAdminComponent {
   nRadicado: string = 'Valor para nRadicado';
@@ -30,6 +29,10 @@ export class InfoProcessAdminComponent {
   IdSelectedProcess!: string;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  pageSize = 5;
+  pageIndex = 0;
+  totalItems = 0;
 
   constructor(
     private changeDetectorRefs: ChangeDetectorRef,
@@ -47,15 +50,14 @@ export class InfoProcessAdminComponent {
   opcionesState: { valor: string; texto: string }[] = [];
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator!;
     this.changeDetectorRefs.detectChanges();
   }
 
-  redirectToOtherComponent(row: any) {
-    console.log('Redireccionando a otro componente:', row);
-    this.router.navigate(['/infoaction/:1']);
-  }
   ngOnInit() {
+    this.fetchData();
+  }
+
+  fetchData() {
     const idProcess = localStorage.getItem('selectedIdProcessAdmin')!;
     this.processService
       .getProcesoPorIdJefe(idProcess)
@@ -75,15 +77,10 @@ export class InfoProcessAdminComponent {
         this.selectedState = process.estado;
         this.IdSelectedProcess = process.id.toString();
 
-        this.actionService
-          .getActuacionesFilter(process.id /*Add pagination */)
-          .subscribe((actions: Pageable<ActuacionJefeFilter>) => {
-            console.log(actions);
-            this.dataSource.data = actions.data;
-          });
+        this.loadPageData();
       });
     this.userService
-      .getAllAbogadosNames(parseInt(localStorage.getItem('firmaId')!))
+      .getAllAbogadosNames(parseInt(localStorage.getItem('firmaId')!, 10))
       .subscribe(
         (lawyers: UserProcesess[]) => {
           lawyers.forEach((lawyer: UserProcesess) => {
@@ -102,8 +99,7 @@ export class InfoProcessAdminComponent {
                   ? { valor: lawyer.id.toString(), texto: lawyer.nombres }
                   : opcion
               );
-              this.selectedLawyer  = lawyer.id.toString();
-           
+              this.selectedLawyer = lawyer.id.toString();
             }
           });
         },
@@ -126,10 +122,8 @@ export class InfoProcessAdminComponent {
         });
       });
   }
+
   updateProcess() {
-    console.log(this.selectedLawyer);
-  
-    // Preguntar al usuario si desea actualizar el proceso
     Swal.fire({
       title: '¿Estás seguro?',
       text: '¿Quieres actualizar el proceso?',
@@ -139,10 +133,9 @@ export class InfoProcessAdminComponent {
       cancelButtonText: 'No',
       confirmButtonColor: '#AA2535',
       cancelButtonColor: '#AA2535',
-      iconColor:'#AA2535'
+      iconColor: '#AA2535',
     }).then((result) => {
       if (result.isConfirmed) {
-        // Usuario confirmó la actualización, proceder
         this.processService
           .actualizarProceso(
             this.IdSelectedProcess,
@@ -158,7 +151,7 @@ export class InfoProcessAdminComponent {
                 text: 'Proceso actualizado satisfactoriamente.',
                 confirmButtonText: 'Aceptar',
                 confirmButtonColor: '#AA2535',
-                iconColor:'#AA2535'
+                iconColor: '#AA2535',
               }).then(() => {
                 location.reload();
               });
@@ -168,22 +161,39 @@ export class InfoProcessAdminComponent {
               Swal.fire({
                 icon: 'error',
                 title: '¡Error!',
-                text: 'Error al actualizar el proceso. Por favor, inténtalo de nuevo.',
+                text:
+                  'Error al actualizar el proceso. Por favor, inténtalo de nuevo.',
                 confirmButtonText: 'Aceptar',
                 confirmButtonColor: '#AA2535',
-                iconColor:'#AA2535'
+                iconColor: '#AA2535',
               });
             }
           );
       }
     });
   }
-  
-  
-  
-  
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.loadPageData();
+  }
+
+  loadPageData() {
+    const idProcess = parseInt(localStorage.getItem('selectedIdProcessAdmin')!);
+    const size = this.pageSize;
+    const page = this.pageIndex;
+
+    this.actionService
+      .getActuacionesFilter(idProcess, page, size)
+      .subscribe((actions: Pageable<ActuacionJefeFilter>) => {
+        console.log(actions);
+        this.dataSource.data = actions.data;
+        this.totalItems = actions.totalItems;
+      });
+  }
 
   ngOnDestroy() {
-    //localStorage.removeItem('selectedIdProcessAdmin');
+    localStorage.removeItem('selectedIdProcessAdmin');
   }
 }

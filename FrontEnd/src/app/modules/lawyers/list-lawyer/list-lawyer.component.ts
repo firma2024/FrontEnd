@@ -1,10 +1,9 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { UserProcesess } from '../../../shared/model/user/user.procesos';
-import { StorageService } from '../../../services/storage.service';
 import { Pageable } from '../../../shared/model/pageable';
 
 @Component({
@@ -24,27 +23,45 @@ export class ListLawyerComponent {
   ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  pageSize = 5;
+  pageIndex = 0;
+  totalItems = 0;
+
   constructor(
     private changeDetectorRefs: ChangeDetectorRef,
     private userService: UserService,
-    private router: Router,
-    private storageService: StorageService
+    private router: Router
   ) {
     this.dataSource = new MatTableDataSource<UserProcesess>([]);
-    // Define el filtro personalizado para la columna 'nombres'
-    this.dataSource.filterPredicate = (data: UserProcesess, filter: string) => {
-      return data.nombres.toLowerCase().includes(filter);
-    };
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.fetchData();
+    });
+  }
+
+  fetchData() {
+    const firmaId = parseInt(localStorage.getItem('firmaId')!);
+    const fechaInicioStr = ""; // Cambiado a número
+    const fechaFinStr = ""; // Cambiado a número
+    const especialidades: string[] = [];
+    const page = this.pageIndex;
+  
+
     this.userService
-      .getAbogadosFilter(parseInt(localStorage.getItem('firmaId')!))
+      .getAbogadosFilter(
+        firmaId,
+        especialidades, 
+        fechaFinStr,
+        fechaInicioStr, 
+        page,
+        this.pageSize)
       .subscribe(
         (data: Pageable<UserProcesess>) => {
           this.dataSource.data = data.data;
-          this.dataSource.paginator = this.paginator;
-          console.log(data.data)
+          this.totalItems = data.totalItems;
+          console.log(data.data);
         },
         (error) => {
           console.error(error);
@@ -52,18 +69,17 @@ export class ListLawyerComponent {
       );
   }
 
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.fetchData();
+  }
+
   // Método para aplicar el filtro en tiempo real
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    // Aplica el filtro solo a la columna 'nombres'
+    // Aplicar el filtro solo a la columna 'nombres'
     this.dataSource.filter = filterValue;
-  }
-
-  getImageUrl(userProcesess: UserProcesess): string {
-    if (userProcesess && userProcesess.photo) {
-      return URL.createObjectURL(userProcesess.photo);
-    }
-    return 'assets/defaultProfile.png';
   }
 
   deleteUser(row: UserProcesess) {

@@ -12,17 +12,21 @@
 .columns {
     display: flex; 
     margin-left: 10px;
+    min-height: 48px;
 
 }
 .column1{
     padding: 10px;
+    flex: 1;
     margin-right: 5%;
     width: 10vw;
+    min-height: 48px;
 }
 .column2{
     padding: 10px;
     margin-right: 5%;
     width: 25vw;
+    flex: 1;
 }
 .infoLawyer{
     margin-top: 30px;
