@@ -6,6 +6,8 @@ import { environment } from '../environments/environments';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../shared/model/auth/user';
 import { tap } from 'rxjs/operators';
+import { TipoDocumento } from '../shared/model/doc.tipo';
+import { TipoAbogado } from '../shared/model/user/user.tipo';
 @Injectable({
   providedIn: 'root',
 })
@@ -41,8 +43,8 @@ export class AuthService {
     password: string,
     telefono: string,
     identificacion: string,
-    tipoDocumento: string,
-    especialidades: string[],
+    tipoDocumento: TipoDocumento,
+    especialidades: TipoAbogado[],
     firmaId: number
   ): Observable<any> {
     const user: User = {

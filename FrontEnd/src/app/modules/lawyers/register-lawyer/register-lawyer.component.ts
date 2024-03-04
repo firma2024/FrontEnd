@@ -5,6 +5,7 @@ import { TipoAbogado } from '../../../shared/model/user/user.tipo';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MensajeResponse } from '../../../shared/model/message';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../../services/auth.service';
 @Component({
   selector: 'app-register-lawyer',
   templateUrl: './register-lawyer.component.html',
@@ -20,7 +21,7 @@ export class RegisterLawyerComponent {
 
   selectedTypeDoc: TipoDocumento | null = null;
   selectedSpecialization: TipoAbogado | null = null;
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService,private authService:AuthService) {}
 
   opcionesIdentification: { valor: TipoDocumento | null; texto: string }[] = [];
   opcionesSpecialty: { valor: TipoAbogado | null; texto: string }[] = [];
@@ -76,8 +77,8 @@ export class RegisterLawyerComponent {
         parseInt(localStorage.getItem('firmaId')!)
       )
       .subscribe(
-        (response: MensajeResponse) => {
-          console.log('Abogado agregado correctamente:', response);
+        (response) => {
+          //this.authService.createAbogado()
         },
         (error: HttpErrorResponse) => {
           if (error.status === 409) {
