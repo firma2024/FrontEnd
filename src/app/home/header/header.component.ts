@@ -15,8 +15,8 @@ export class HeaderComponent {
 
   openDialog() {
     const dialogRef = this.dialog.open(InfoAdminComponent, {
-      width: '750px',
-      height: '620px',
+      width: '650px',
+      height: '600px',
       panelClass: 'custom-dialog-container',
       position: {
         top: '4px',

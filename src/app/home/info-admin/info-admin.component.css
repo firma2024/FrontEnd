@@ -36,7 +36,7 @@
     height: 60px;
     display:flex;
     
-    margin-top: 10%;
+    margin-top: 2%;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
@@ -67,14 +67,15 @@
     display: flex;
 }
 .nombrePerfil{
-    padding-left: 15px;
+    padding-left: 20px;
+    margin-left: 20px;
     color: #AA2535;
     font-family: Arial, Helvetica, sans-serif;
     font-style: bold;
 }
 .imagenPerfil{ 
     padding-top: 20px;
-    width: 50%;
+    width: 40%;
     display: block;
     justify-content: center;
     align-items: center;
@@ -87,8 +88,9 @@
     display: flex;
     width: 170px;
     height: 170px;
-    padding-left: 10px;
+    padding-left: 40px;
     padding-top: 5px;
+    margin-bottom: 5%;
 }
 .datosPerfil{
     width: 370px;
@@ -98,6 +100,7 @@
     align-items: center;
     padding-top: 20px;
     padding-left: 150px;
+    padding-bottom: 2%;
 }
 .form-group{
     padding-left: 30px;
@@ -112,3 +115,9 @@
 label {
     color: #595a5a;
 }
+.rounded-image {
+    border-radius: 50%;
+    width: 150px; /* Ajusta el ancho según tus necesidades */
+    height: 150px; /* Ajusta la altura según tus necesidades */
+    object-fit: cover;
+  }

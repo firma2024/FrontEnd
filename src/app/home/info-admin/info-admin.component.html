@@ -7,8 +7,7 @@
             <h1>Mi Cuenta</h1>
         </div>
         <div class="foto">
-            <!-- Aquí podrías mostrar la foto del usuario si lo deseas -->
-            <!-- <img [src]="usuario.photo" alt="Foto de perfil"> -->
+                <img [src]="imageUrl" alt="Foto" class="rounded-image">
         </div>
         <div class="nombrePerfil">
             <h2 class="nombrePerfil" [(ngModel)]="usuarioName"> 
@@ -33,6 +32,14 @@
             <label for="Telefono">Teléfono: </label>
             <input type="text" class="form-control custom-input" id="Telefono" name="Telefono" [(ngModel)]="usuario.telefono">
         </div>
+        <div class="form-group" *ngIf="rol === 'ABOGADO'">
+            <label for="especialidades">Especialidades: </label>
+            <select class="form-control custom-input" id="especialidades" name="especialidades" [(ngModel)]="selectedSpecialty">
+                <option *ngFor="let especialidad of listaEspecialidades" [value]="especialidad.nombre">{{ especialidad.nombre }}</option>
+            </select>
+        </div>
+        
+        
     </div>
 </div>
 <div class="botonActualizar">
