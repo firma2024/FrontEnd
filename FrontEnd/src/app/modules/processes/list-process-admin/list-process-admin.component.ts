@@ -56,7 +56,7 @@ export class ListProcessAdminComponent {
     const fechaFinStr = '';
     const estadosProceso: string[] = [];
     const tipoProceso = '';
-    const page = this.pageIndex; // Ajuste del índice de página
+    const page = this.pageIndex;
   
     this.processService
       .getProcesosByFirmaFilter(

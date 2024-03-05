@@ -33,16 +33,12 @@ export class ListProcessLawyerComponent {
   }
 
   ngAfterViewInit() {
-    this.fetchData(); // Cargar datos al iniciar la vista
+    this.fetchData();
   }
-
-  // Función para redirigir a otro componente al hacer clic en una fila
   redirectToOtherComponent(row: any) {
-    console.log('Redireccionando a otro componente:', row);
-    this.router.navigate(['/infolawyer']);
+    localStorage.setItem("selectedIdProcessLawyer", row.id.toString())
+    this.router.navigate(['/infoprocesslawyer']);
   }
-
-  // Función para cargar datos con paginación
   fetchData() {
     const fechaInicioStr = '';
     const fechaFinStr = '';
@@ -62,7 +58,7 @@ export class ListProcessLawyerComponent {
     ).subscribe(
       (data: Pageable<ProcesoLawyerFilter>) => {
         this.dataSource.data = data.data;
-        this.totalItems = data.totalItems; // Actualizamos totalItems con el valor devuelto por el servicio
+        this.totalItems = data.totalItems; 
         console.log(data.data);
       },
       (error) => {

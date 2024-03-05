@@ -1,25 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <!-- Carga SweetAlert2 desde el CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
-    <!-- Mueve el script arriba del botón -->
-    <script>
-        function showAlert() {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Éxito!',
-                text: 'Esta es una alerta de prueba.',
-                confirmButtonText: 'Aceptar'
-            });
-        }
-    </script>
+<div class="titleinfoLawyer">
+    <h1><strong> Información del Proceso</strong></h1>
+</div>
 
-    <button onclick="showAlert()">Mostrar Alerta</button>
-</body>
-</html>
+<div class="columns">
+    <div class="column">
+        <div class="half-column1">
+            <p><strong>N° radicado</strong></p>
+            <p><strong>Fecha radicación</strong></p>
+        </div>
+        <div class="half-column2">
+            <p>{{nRadicado}}</p>
+            <p>{{date}}</p>
+        </div>
+    </div>
+    <div class="column">
+        <div class="half-column1">
+            <p><strong>Tipo de proceso</strong></p>
+            <p><strong>Despacho </strong></p>
+        </div>
+        <div class="half-column2">
+            <p>{{typeProcess}}</p>
+            <p>{{despacho}}</p>
+        </div>
+    </div>
+</div>
+<div class="sujetos">
+    <div class="column">
+        <div class="half-column4">
+            <p class="sujetos"><strong>Sujetos</strong></p>
+        </div>
+        <div class="half-column3">
+            <li *ngFor="let item of listaSujetos">{{ item }}</li>
+        </div>
+    </div>
+</div>
+<div class="enlaceAudiencias">
+    <p><strong>Enlaces de Audiencias</strong></p>
+    <button class="buttonAdd"><span class="icon-pull-right fas fa-add"> </span></button>
+</div>
+<div class="listAudiencia">
+    <li *ngFor="let item of listAudience">{{ item }}</li>
+
+</div>
+
+<div class="table">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="fechaActuacion">
+        <th mat-header-cell *matHeaderCellDef>Fecha de Actuación</th>
+        <td mat-cell *matCellDef="let element">{{ element.fechaActuacion }}</td>
+      </ng-container>
+      <ng-container matColumnDef="nombreActuacion">
+        <th mat-header-cell *matHeaderCellDef>Nombre de Actuación</th>
+        <td mat-cell *matCellDef="let element">{{ element.nombreActuacion }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="anotacion">
+        <th mat-header-cell *matHeaderCellDef>Anotación</th>
+        <td mat-cell *matCellDef="let element">{{ element.anotacion }}</td>
+      </ng-container>
+      <ng-container matColumnDef="fechaRegistro">
+        <th mat-header-cell *matHeaderCellDef>Fecha de Registro</th>
+        <td mat-cell *matCellDef="let element">{{ element.fechaRegistro }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="existDocument">
+        <th mat-header-cell *matHeaderCellDef>Documento</th>
+        <td mat-cell *matCellDef="let element">
+          <img *ngIf="element.existDocument" [src]="documentImageUrl" alt="Documento" [ngStyle]="{'color': 'red', 'font-size': '2.5em'}">
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="estado">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [ngStyle]="{ color: 'rgba(170,37,53,255)' }"
+        >
+          {{ element.estado }}
+        </td>
+      </ng-container>
+  
+      <!-- Definición de las filas de la tabla -->
+      <tr
+        mat-header-row
+        *matHeaderRowDef="[
+          'fechaActuacion',
+          'nombreActuacion',
+          'anotacion',
+          'fechaRegistro',
+          'existDocument'
+        ]"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="
+          let row;
+          columns: [
+            'fechaActuacion',
+            'nombreActuacion',
+            'anotacion',
+            'fechaRegistro',
+            'existDocument'
+          ]
+        "
+      ></tr>
+    </table>
+  
+    <mat-paginator
+      [length]="totalItems"
+      [pageSize]="pageSize"
+      (page)="onPageChange($event)"
+    >
+    </mat-paginator>
+  </div>

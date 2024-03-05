@@ -18,15 +18,14 @@ export class ActionService {
   //Get actions filtered by boss.
   getActuacionesFilter(
     procesoId: number,
-    page: number ,
+    page: number,
     size: number,
     fechaInicioStr?: string,
     fechaFinStr?: string,
-    estadoActuacion?: string,
-    
+    estadoActuacion?: string
   ): Observable<Pageable<ActuacionJefeFilter>> {
     let params = new HttpParams().set('procesoId', procesoId.toString());
-  
+
     if (fechaInicioStr) {
       params = params.set('fechaInicioStr', fechaInicioStr);
     }
@@ -42,24 +41,43 @@ export class ActionService {
     if (size !== undefined) {
       params = params.set('size', size.toString());
     }
-  
-    return this.http.get<Pageable<ActuacionJefeFilter>>(`${environment.actionsURL}/jefe/get/all/filter`, {
-      params,
-    });
+
+    return this.http.get<Pageable<ActuacionJefeFilter>>(
+      `${environment.actionsURL}/jefe/get/all/filter`,
+      {
+        params,
+      }
+    );
   }
-  
-  //FIXME CORRECT THIS
-  //Get actions filtered by lawyer.
+
   getAllActuacionesByProcesoAbogado(
     procesoId: number,
-    fechaInicioStr: string,
-    fechaFinStr: string,
-    existeDoc: boolean,
-    page: number,
-    size: number
+    fechaInicioStr?: string,
+    fechaFinStr?: string,
+    existeDoc?: boolean,
+    page: number = 0,
+    size: number = 5
   ): Observable<Pageable<ActuacionResponse>> {
-    const url = `${environment.actionsURL}/get/all/abogado/filter?procesoId=${procesoId}&fechaInicioStr=${fechaInicioStr}&fechaFinStr=${fechaFinStr}&existeDoc=${existeDoc}&page=${page}&size=${size}`;
-    return this.http.get<Pageable<ActuacionResponse>>(url);
+    let params = new HttpParams().set('procesoId', procesoId.toString());
+
+    if (fechaInicioStr) {
+      params = params.set('fechaInicioStr', fechaInicioStr);
+    }
+
+    if (fechaFinStr) {
+      params = params.set('fechaFinStr', fechaFinStr);
+    }
+
+    if (existeDoc != null) {
+      params = params.set('existeDoc', existeDoc.toString());
+    }
+
+    params = params.set('page', page.toString()).set('size', size.toString());
+
+    return this.http.get<Pageable<ActuacionResponse>>(
+      `${environment.actionsURL}/get/all/abogado/filter`,
+      { params }
+    );
   }
   //Update state of visualization
   actualizarEstadoVisualizacionActuacion(actionId: number): Observable<any> {

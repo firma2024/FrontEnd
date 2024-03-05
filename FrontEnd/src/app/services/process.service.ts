@@ -174,7 +174,7 @@ export class ProcessService {
     return this.http.put<string>(`${environment.processURL}/update`, proceso);
   }
   //Get process by lawyer id.
-  getProcesoPorIdAbogado(processId: number): Observable<ProcesoLawyer> {
+  getProcesoPorId(processId: number): Observable<ProcesoLawyer> {
     return this.http.get<ProcesoLawyer>(
       `${environment.processURL}/get/abogado?processId=${processId}`
     );
