@@ -1,3 +1,6 @@
+import { TipoDocumento } from "../doc.tipo";
+import { TipoAbogado } from "../user/user.tipo";
+
 export interface User {
     id?: string;
     firstName: string;
@@ -7,8 +10,8 @@ export interface User {
     password: string;
     telefono: string;
     identificacion: string;
-    tipoDocumento: string;
-    especialidades: string[];
+    tipoDocumento: TipoDocumento,
+    especialidades: TipoAbogado[],
     firmaId: number;
   }
   
