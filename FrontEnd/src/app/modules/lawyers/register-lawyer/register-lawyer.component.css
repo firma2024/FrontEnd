@@ -68,8 +68,34 @@ select{
     border-color: #BFBBBB;
     text-align: center;
 }
-.botonBack{
-    margin-bottom: 10px;
+.botonBack {
+    display: inline-block;
+    position: relative;
+    padding: 15px 30px;
+    background-color: #AA2535;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.botonBack:hover {
+    background-color: #5d1a22;
+}
+
+.botonBack input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.botonBack span {
+    display: inline-block;
+    vertical-align: middle;
 }
 h6{
     color: #BFBBBB;

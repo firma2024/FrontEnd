@@ -65,36 +65,48 @@ export class RegisterLawyerComponent {
   }
 
   crearAbogado() {
-    this.userService
-      .validarAgregarAbogado(
-        this.nombreUsuario,
-        this.correoElectronico,
-        parseInt(this.telefono),
-        parseInt(this.identificacion),
-        this.nombreUsuario,
-        this.selectedTypeDoc!,
-        [this.selectedSpecialization!],
-        parseInt(localStorage.getItem('firmaId')!)
-      )
-      .subscribe(
-        (response) => {
-          //this.authService.createAbogado()
-        },
-        (error: HttpErrorResponse) => {
-          if (error.status === 409) {
-            Swal.fire({
-              icon: 'error',
-              iconColor:'#AA2535',
-              title: 'Error',
-              confirmButtonColor: '#AA2535',
-              confirmButtonText: 'Okay',
-              text: 'El abogado no puede ser ingresado porque la identificación o el nombre de usuario ya existen.',
-            });
-          }
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: '¿Deseas crear este abogado?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, crear abogado',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            this.userService
+                .validarAgregarAbogado(
+                    this.nombreUsuario,
+                    this.correoElectronico,
+                    parseInt(this.telefono),
+                    parseInt(this.identificacion),
+                    this.nombreUsuario,
+                    this.selectedTypeDoc!,
+                    [this.selectedSpecialization!],
+                    parseInt(localStorage.getItem('firmaId')!)
+                )
+                .subscribe(
+                    (response) => {
+                        //this.authService.createAbogado()
+                    },
+                    (error: HttpErrorResponse) => {
+                        if (error.status === 409) {
+                            Swal.fire({
+                                icon: 'error',
+                                iconColor: '#AA2535',
+                                title: 'Error',
+                                confirmButtonColor: '#AA2535',
+                                confirmButtonText: 'Okay',
+                                text: 'El abogado no puede ser ingresado porque la identificación o el nombre de usuario ya existen.',
+                            });
+                        }
+                    }
+                );
         }
-      );
-  }
-
+    });
+}
   onSpecializationChange($event: any) {}
   onTypeDocChange($event: any) {}
   onFileSelected(event: any) {
