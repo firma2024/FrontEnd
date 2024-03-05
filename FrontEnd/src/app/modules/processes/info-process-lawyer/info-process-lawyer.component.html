@@ -30,7 +30,7 @@
             <p class="sujetos"><strong>Sujetos</strong></p>
         </div>
         <div class="half-column3">
-            <li *ngFor="let item of listaItems">{{ item }}</li>
+            <li *ngFor="let item of listaSujetos">{{ item }}</li>
         </div>
     </div>
 </div>
@@ -66,12 +66,7 @@
       <ng-container matColumnDef="existDocument">
         <th mat-header-cell *matHeaderCellDef>Documento</th>
         <td mat-cell *matCellDef="let element">
-          <img
-            *ngIf="element.existDocument"
-            [src]="documentImageUrl"
-            alt="Documento"
-            [ngStyle]="{ color: 'red', 'font-size': '2.5em' }"
-          />
+          <img *ngIf="element.existDocument" [src]="documentImageUrl" alt="Documento" [ngStyle]="{'color': 'red', 'font-size': '2.5em'}">
         </td>
       </ng-container>
   

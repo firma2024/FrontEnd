@@ -2,11 +2,16 @@ import { Component } from '@angular/core';
 
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { ActionService } from '../../../services/action.service';
+import { Pageable } from '../../../shared/model/pageable';
+import { ActuacionResponse } from '../../../shared/model/actuaciones/actuacion.lawyer.filter';
+import { ProcessService } from '../../../services/process.service';
+import { ProcesoLawyer } from '../../../shared/model/process/proceso.abogado';
 
 @Component({
   selector: 'app-info-process-lawyer',
   templateUrl: './info-process-lawyer.component.html',
-  styleUrl: './info-process-lawyer.component.css'
+  styleUrl: './info-process-lawyer.component.css',
 })
 export class InfoProcessLawyerComponent {
   despacho: string = 'Valor del despacho';
@@ -14,39 +19,65 @@ export class InfoProcessLawyerComponent {
   nRadicado: string = 'Valor del radicado';
   typeProcess: string = 'Valor del tipo de proceso';
 
-  id: string | null = null; // Inicializa id como string o null
+  fechaFinStr = '';
+  fechaInicioStr = '';
+  existeDoc: boolean | undefined;
 
-  ngOnInit(): void {
-  
-  }
+  pageSize = 5;
+  pageIndex = 0;
+  totalItems = 0;
+  id: string | null = null;
 
-  listaItems: string[] = [
-    'BBVA SEGUROS DE VIDA COLOMBIA S.A.',
-    'DIEGO ALFONSO REYES MURCIA',
-    'DIEGO ALFONSO REYES MURCIA'
-  ];
-  listAudience: string[] = [
-    'Primera audiencia',
-    'Segunda audiencia'
-  ];
-  dataSource = new MatTableDataSource<any>(); // Puedes reemplazar 'any' con el tipo de datos adecuado
-  totalItems: number = 0;
-  pageSize: number = 10; // Puedes ajustar el tamaño de página según tus necesidades
+  ngOnInit(): void {}
 
-  documentImageUrl: string = 'url_de_la_imagen'; // Debes proporcionar la URL correcta aquí
+  listaSujetos: string[] = [];
+  listAudience: string[] = [];
+  dataSource = new MatTableDataSource<ActuacionResponse>();
 
-  constructor() {
-    // Aquí debes cargar los datos en dataSource, por ejemplo:
+  documentImageUrl: string = 'assets/document.png';
+
+  constructor(
+    private actionService: ActionService,
+    private processService: ProcessService
+  ) {
     this.loadData();
   }
 
   loadData() {
-    // Lógica para cargar los datos en la tabla, por ejemplo, desde una API
-    // Aquí podrías hacer algo como:
-    // this.myDataService.getData().subscribe(data => this.dataSource.data = data);
+    this.obtainActions();
+    this.obtainInfoProcess();
   }
-
+  obtainInfoProcess() {
+    const idProcess = localStorage.getItem('selectedIdProcessLawyer')!;
+    this.processService.getProcesoPorId(parseInt(idProcess)).subscribe((data:ProcesoLawyer) => {
+      console.log(data)
+        this.despacho = data.despacho;
+        this.date = data.fechaRadicacion;
+        this.nRadicado = data.numeroRadicado;
+        this.typeProcess = data.tipoProceso;
+        this.listaSujetos = data.sujetos.split("|")
+        this.listAudience = data.audiencias.map(audiencia => audiencia.nombre);
+    })
+  }
+  obtainActions() {
+    const idProcess = localStorage.getItem('selectedIdProcessLawyer')!;
+    this.actionService
+      .getAllActuacionesByProcesoAbogado(
+        parseInt(idProcess),
+        this.fechaInicioStr,
+        this.fechaFinStr,
+        this.existeDoc,
+        this.pageIndex,
+        this.pageSize
+      )
+      .subscribe((data: Pageable<ActuacionResponse>) => {
+        this.dataSource.data = data.data;
+        this.totalItems = data.totalItems;
+      });
+  }
   onPageChange(event: any) {
-    // Lógica para manejar el cambio de página, por ejemplo, cargar datos para la página seleccionada
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.loadData();
   }
 }

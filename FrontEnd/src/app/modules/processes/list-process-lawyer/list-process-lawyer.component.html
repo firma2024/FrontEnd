@@ -37,7 +37,8 @@
   
     <!-- Columnas de la tabla -->
     <tr mat-header-row *matHeaderRowDef="['numeroRadicado', 'despacho', 'tipoProceso', 'fechaRadicacion']"></tr>
-<tr mat-row *matRowDef="let row; columns: ['numeroRadicado', 'despacho', 'tipoProceso', 'fechaRadicacion'];"></tr>
+<tr mat-row *matRowDef="let row; columns: ['numeroRadicado', 'despacho', 'tipoProceso', 'fechaRadicacion'];"style="cursor: pointer;" (click)="redirectToOtherComponent(row)"></tr>
+
 
   </table>
   

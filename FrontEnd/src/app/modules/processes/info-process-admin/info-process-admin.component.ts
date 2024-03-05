@@ -187,7 +187,6 @@ export class InfoProcessAdminComponent {
     this.actionService
       .getActuacionesFilter(idProcess, page, size)
       .subscribe((actions: Pageable<ActuacionJefeFilter>) => {
-        console.log(actions);
         this.dataSource.data = actions.data;
         this.totalItems = actions.totalItems;
       });
