@@ -41,4 +41,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
-**./*.vscode
+**/*.vscode
+**/*.node_modules
+**/*.angular
