@@ -181,7 +181,7 @@ export class UserService {
     );
   }
   getAbogado(userName: string): Observable<UserProcesess> {
-    const url = `${environment.userURL}/get/abogado?userName=${userName}`;
+    const url = `${environment.userURL}/get/info/abogado?userName=${userName}`;
     return this.http.get<UserProcesess>(url);
   }
   getActiveAbogados(firmaId: number): Observable<number> {
