@@ -2,14 +2,13 @@ import { TipoDocumento } from "../doc.tipo";
 import { TipoAbogado } from "../user/user.tipo";
 
 export interface User {
-    id?: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    userName: string;
+    id?: string | null;
+    nombres: string;
+    correo: string;
+    telefono: number;
+    identificacion: number;
+    username: string;
     password: string;
-    telefono: string;
-    identificacion: string;
     tipoDocumento: TipoDocumento,
     especialidades: TipoAbogado[],
     firmaId: number;

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '../../services/user.service';
 import { UserProcesess } from '../../shared/model/user/user.procesos';
+import { StorageService } from '../../services/storage.service';
+import { Speciality } from '../../shared/model/user/speciality';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-info-admin',
@@ -11,34 +14,44 @@ import { UserProcesess } from '../../shared/model/user/user.procesos';
 export class InfoAdminComponent implements OnInit {
   usuario: UserProcesess = {} as UserProcesess;
   usuarioName: string = '';
+  imageUrl: string = 'assets/defaultProfile.png';
+  listaEspecialidades: Speciality[] = [];
+  selectedSpecialty: string = '';
+  rol: string = '';
+
   constructor(
     private dialogRef: MatDialogRef<InfoAdminComponent>,
-    private userService: UserService
+    private userService: UserService,
+    private storageService: StorageService
   ) {}
 
   ngOnInit() {
-    this.obtaintUserInfo()
+    this.rol = localStorage.getItem('role') || '';
+    this.obtaintUserInfo();
+    this.getImageUrlByUserId();
+    this.getAllTipoAbogado();
   }
+
   obtaintUserInfo(){
     const role = localStorage.getItem('role');
     const userName = localStorage.getItem('username')!;
-    if (role === 'ADMIN') {
+    if (role === 'JEFE' ) {
       this.userService.obtenerInformacionJefe(userName).subscribe(
         (data: UserProcesess) => {
           this.usuario = data;
           this.usuarioName = this.usuario.nombres;
+          localStorage.setItem('userId',this.usuario.id.toString());
         },
         (error) => {
           console.error('Error al obtener la información del usuario:', error);
         }
       );
     } else {
-      this.userService.getLawyerByUsername(userName).subscribe(
+      this.userService.getAbogado(userName).subscribe(
         (data: UserProcesess) => {
-          //ESTE NO SIRVE POR QUE TOCA ESPERAR QUE EL PATO DE DANIEL PONGA QUE RETORNE TODO EN VEZ DE SOLO EL ID Y NOMBRE
           this.usuario = data;
-          console.log(data)
           this.usuarioName = this.usuario.nombres;
+          localStorage.setItem('userId',this.usuario.id.toString());
         },
         (error) => {
           console.error('Error al obtener la información del usuario:', error);
@@ -46,25 +59,56 @@ export class InfoAdminComponent implements OnInit {
       );
     }
   }
+
   updateProfile() {
-    console.log(this.usuario.nombres);
-    this.userService
-      .actualizarInfoJefe(
-        this.usuario.id,
-        this.usuario.nombres,
-        this.usuario.correo,
-        this.usuario.telefono.toString(),
-        this.usuario.identificacion.toString()
-      )
-      .subscribe(
-        () => {
-          console.log('Información actualizada exitosamente');
-        },
-        (error) => {
-          console.error('Error al actualizar la información:', error);
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: '¿Deseas actualizar tu perfil?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, actualizar perfil',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            console.log(this.usuario.nombres);
+            this.userService
+                .actualizarInfoJefe(
+                    this.usuario.id,
+                    this.usuario.nombres,
+                    this.usuario.correo,
+                    this.usuario.telefono.toString(),
+                    this.usuario.identificacion.toString()
+                )
+                .subscribe(
+                    () => {
+                        console.log('Información actualizada exitosamente');
+                    },
+                    (error) => {
+                        console.error('Error al actualizar la información:', error);
+                    }
+                );
         }
-      );
+    });
+}
+
+getImageUrlByUserId(): void {
+  const userId = localStorage.getItem('userId');
+  if (userId) {
+    const userIdNumber = parseInt(userId);
+    this.storageService.descargarFoto(userIdNumber).subscribe((photo: Blob) => {
+      this.imageUrl = URL.createObjectURL(photo);
+    });
   }
+}
+
+getAllTipoAbogado(): void {
+  this.userService.getAllTipoAbogado().subscribe((tipos: Speciality[]) => {
+    this.listaEspecialidades = tipos;
+  });
+}
+
   goBack() {
     this.dialogRef.close();
   }
