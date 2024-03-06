@@ -9,9 +9,9 @@ export class StorageService {
   constructor(private http: HttpClient) {}
   subirFoto(usuarioId: number, file: File): Observable<any> {
     const formData = new FormData();
-    formData.append('image', file, file.name);
-
-    const url = `${environment.storageURL}/upload/photo?usuarioId=${usuarioId}`;
+    formData.append('image', file);
+    formData.append('usuarioId', usuarioId.toString());
+    const url = `${environment.storageURL}/upload/photo`;
     return this.http.post(url, formData);
   }
   descargarFoto(usuarioId: number): Observable<Blob> {

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { UserProcesess } from '../../../shared/model/user/user.procesos';
 import { Pageable } from '../../../shared/model/pageable';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-lawyer',
@@ -43,20 +44,20 @@ export class ListLawyerComponent {
 
   fetchData() {
     const firmaId = parseInt(localStorage.getItem('firmaId')!);
-    const fechaInicioStr = ""; // Cambiado a número
-    const fechaFinStr = ""; // Cambiado a número
+    const fechaInicioStr = ''; // Cambiado a número
+    const fechaFinStr = ''; // Cambiado a número
     const especialidades: string[] = [];
     const page = this.pageIndex;
-  
 
     this.userService
       .getAbogadosFilter(
         firmaId,
-        especialidades, 
+        especialidades,
         fechaFinStr,
-        fechaInicioStr, 
+        fechaInicioStr,
         page,
-        this.pageSize)
+        this.pageSize
+      )
       .subscribe(
         (data: Pageable<UserProcesess>) => {
           this.dataSource.data = data.data;
@@ -77,23 +78,40 @@ export class ListLawyerComponent {
 
   // Método para aplicar el filtro en tiempo real
   applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value
+      .trim()
+      .toLowerCase();
     // Aplicar el filtro solo a la columna 'nombres'
     this.dataSource.filter = filterValue;
   }
 
   deleteUser(row: UserProcesess) {
     event!.stopPropagation();
-    this.userService.deleteUser(row.id).subscribe(
-      (message) => {
-        alert(message);
-      },
-      (error) => {
-        console.error('Error al eliminar usuario:', error);
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Quieres eliminar este abogado?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No',
+      confirmButtonColor: '#AA2535',
+      cancelButtonColor: '#AA2535',
+      iconColor: '#AA2535',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.deleteUser(row.id).subscribe(
+          (message) => {
+            console.log('Usuario eliminado:', message);
+            this.fetchData();
+          },
+          (error) => {
+            console.error('Error al eliminar usuario:', error);
+          }
+        );
       }
-    );
+    });
   }
-  
+
   redirectToOtherComponent(row: UserProcesess) {
     localStorage.setItem('selectedIdLawyer', row.id.toString());
     localStorage.setItem('selectedLawyer', JSON.stringify(row));

@@ -1,3 +1,4 @@
 export interface MensajeResponse{
-    message:string
+    message:string,
+    value:number
 }
