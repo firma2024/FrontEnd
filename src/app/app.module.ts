@@ -30,6 +30,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { MainMenuLawyerComponent } from './modules/main-menu/main-menu-lawyer/main-menu-lawyer.component';
 import { MainMenuAdminComponent } from './modules/main-menu/main-menu-admin/main-menu-admin.component';
+import { BrokerActionComponent } from './modules/actions/broker-action/broker-action.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { MainMenuAdminComponent } from './modules/main-menu/main-menu-admin/main
     InfoActionWebComponent,
     InfoActionComponent,
     MainMenuLawyerComponent,
-    MainMenuAdminComponent
+    MainMenuAdminComponent,
+    BrokerActionComponent
   ],
   imports: [
     BrowserModule,

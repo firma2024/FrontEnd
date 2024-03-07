@@ -36,8 +36,9 @@ export class ListProcessLawyerComponent {
     this.fetchData();
   }
   redirectToOtherComponent(row: any) {
+    const queryParams = { processId: row.id.toString() };
     localStorage.setItem("selectedIdProcessLawyer", row.id.toString())
-    this.router.navigate(['/infoprocesslawyer']);
+    this.router.navigate(['/infoprocesslawyer'],{queryParams:queryParams});
   }
   fetchData() {
     const fechaInicioStr = '';
