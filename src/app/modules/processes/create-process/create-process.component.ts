@@ -20,6 +20,7 @@ export class CreateProcessComponent {
   listaItems: string[] = [];
   selectedLawyer: number | null = null;
   opciones: { valor: number; texto: string }[] = [];
+  router: any;
 
   constructor(
     private userService: UserService,
@@ -27,14 +28,42 @@ export class CreateProcessComponent {
   ) {}
   onSelectedLawyer($event:any){}
   crearProceso() {
+    Swal.fire({
+      title:
+        'Espere mientras se guarda el proceso....',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+        const container = Swal.getHtmlContainer();
+        if (container) {
+          const loader = container.querySelector('.swal2-loader');
+          if (loader instanceof HTMLElement) {
+            loader.style.color = '#AA2535';
+          }
+        }
+      },
+    });
     this.processService
       .addProcess(this.nRadicado, this.selectedLawyer!)
       .subscribe(
         (data) => {
+          Swal.close();
+          Swal.fire({
+            icon: 'success',
+            iconColor: '#AA2535',
+            title: 'Proceso creado',
+            confirmButtonText: 'Okay',
+            confirmButtonColor: '#AA2535',
+            didClose: () => {
+              this.router.navigate(['/listprocessadmin']);
+            }
+          
+          });
           console.log('Proceso creado:', data);
         },
         (error: HttpErrorResponse) => {
-          if (error.status === 409) {
+          Swal.close();
+          if (error.status === 409 ) {
             Swal.fire({
               icon: 'error',
               iconColor: '#AA2535',
@@ -42,6 +71,16 @@ export class CreateProcessComponent {
               confirmButtonColor: '#AA2535',
               confirmButtonText: 'Okay',
               text: 'El proceso ya se encuentra registrado en la plataforma.',
+            });
+          }
+          else if(error.status === 500) {
+            Swal.fire({
+              icon: 'error',
+              iconColor: '#AA2535',
+              title: 'Error',
+              confirmButtonColor: '#AA2535',
+              confirmButtonText: 'Okay',
+              text: 'El proceso es privado',
             });
           }
         }
