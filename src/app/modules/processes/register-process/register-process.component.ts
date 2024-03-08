@@ -87,7 +87,9 @@ export class RegisterProcessComponent {
       }
     }
     if (Object.keys(dict).length !== 0) {
+      this.filingNumberInput=this.filingNumberInput.replace(/\s/g, "");
       this.utilService.raiseInvalidFields(dict);
+     
       return false;
     } else {
       return true;
