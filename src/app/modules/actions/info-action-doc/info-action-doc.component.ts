@@ -1,38 +1,64 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ActionService } from '../../../services/action.service';
+import { ActuacionResponse } from '../../../shared/model/actuaciones/actuacion.req';
+import { HttpClient } from '@angular/common/http';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { StorageService } from '../../../services/storage.service';
 
 @Component({
   selector: 'app-info-action-doc',
   templateUrl: './info-action-doc.component.html',
-  styleUrl: './info-action-doc.component.css'
+  styleUrl: './info-action-doc.component.css',
 })
-export class InfoActionDocComponent implements OnInit  {
+export class InfoActionDocComponent implements OnInit {
   despacho: string = 'Valor del despacho';
   date: string = 'Valor de la fecha';
   annotation: string = 'Valor de la anotación';
   typeProcess: string = 'Valor del tipo de proceso';
   action: string = 'Valor de la acción';
   dateRegister: string = 'Valor de la fecha de registro';
-  
-  id: string | null = null; // Inicializa id como string o null
 
-  constructor(private route: ActivatedRoute) {}
+  id: string = '';
+  listaSujetos: string[] = [];
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private actionService: ActionService,
+    private storageService: StorageService
+  ) {}
 
   ngOnInit(): void {
-    // Obtener el ID de la ruta
-    const idFromRoute = this.route.snapshot.paramMap.get('id');
-    // Verificar si el ID está presente
-    if (idFromRoute !== null) {
-      this.id = idFromRoute; // Asigna el ID si no es null
-      console.log('ID recibido en la ruta:', this.id);
-    } else {
-      console.error('No se encontró el ID en la ruta.');
-    }
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.id = params['id'];
+    });
+    this.loadActionInfo();
   }
-  listaItems: string[] = [
-    'BBVA SEGUROS DE VIDA COLOMBIA S.A.',
-    'DIEGO ALFONSO REYES MURCIA',
-    'DIEGO ALFONSO REYES MURCIA'
-  ];
+  loadActionInfo() {
+    this.actionService
+      .getActuacion(this.id)
+      .subscribe((data: ActuacionResponse) => {
+        this.despacho = data.despacho;
+        this.date = data.fechaActuacion;
+        this.annotation = data.anotacion;
+        this.typeProcess = data.tipoProceso;
+        this.action = data.actuacion;
+        this.dateRegister = data.fechaRegistro;
+        this.listaSujetos = data.sujetos.split('|');
+        this.downloadAndShowPDF();
+      });
+  }
 
+  downloadAndShowPDF() {
+    this.storageService
+      .descargarDocumento(this.id)
+      .subscribe((response: Blob) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        console.log(response);
+        const iframe = document.querySelector(
+          '.description iframe'
+        ) as HTMLIFrameElement;
+        iframe.src = url;
+      });
+  }
 }

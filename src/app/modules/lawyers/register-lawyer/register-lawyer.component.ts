@@ -50,7 +50,7 @@ export class RegisterLawyerComponent {
             texto: tipoDocumento.nombre,
           });
         });
-        console.log(this.opcionesIdentification);
+        
       },
       (error) => {
         console.error('Error al obtener tipos de documento:', error);

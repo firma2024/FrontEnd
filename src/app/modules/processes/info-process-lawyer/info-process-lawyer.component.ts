@@ -4,9 +4,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ActionService } from '../../../services/action.service';
 import { Pageable } from '../../../shared/model/pageable';
-import { ActuacionResponse } from '../../../shared/model/actuaciones/actuacion.lawyer.filter';
+import { ActuacionAbogadoFilter } from '../../../shared/model/actuaciones/actuacion.lawyer.filter';
 import { ProcessService } from '../../../services/process.service';
 import { ProcesoLawyer } from '../../../shared/model/process/proceso.abogado';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-info-process-lawyer',
@@ -28,19 +29,28 @@ export class InfoProcessLawyerComponent {
   totalItems = 0;
   id: string | null = null;
 
-  ngOnInit(): void {}
+  idProcess: string = "";
+  ngOnInit(): void {
+
+    this.activatedRoute.queryParams.subscribe(params => {
+        this.idProcess = params['processId'];
+    });
+    this.loadData();
+  }
 
   listaSujetos: string[] = [];
   listAudience: string[] = [];
-  dataSource = new MatTableDataSource<ActuacionResponse>();
+  dataSource = new MatTableDataSource<ActuacionAbogadoFilter>();
 
   documentImageUrl: string = 'assets/document.png';
 
   constructor(
     private actionService: ActionService,
-    private processService: ProcessService
+    private processService: ProcessService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
-    this.loadData();
+    
   }
 
   loadData() {
@@ -48,8 +58,7 @@ export class InfoProcessLawyerComponent {
     this.obtainInfoProcess();
   }
   obtainInfoProcess() {
-    const idProcess = localStorage.getItem('selectedIdProcessLawyer')!;
-    this.processService.getProcesoPorId(parseInt(idProcess)).subscribe((data:ProcesoLawyer) => {
+    this.processService.getProcesoPorId(parseInt(this.idProcess)).subscribe((data:ProcesoLawyer) => {
       console.log(data)
         this.despacho = data.despacho;
         this.date = data.fechaRadicacion;
@@ -60,24 +69,28 @@ export class InfoProcessLawyerComponent {
     })
   }
   obtainActions() {
-    const idProcess = localStorage.getItem('selectedIdProcessLawyer')!;
     this.actionService
       .getAllActuacionesByProcesoAbogado(
-        parseInt(idProcess),
+        parseInt(this.idProcess),
         this.fechaInicioStr,
         this.fechaFinStr,
         this.existeDoc,
         this.pageIndex,
         this.pageSize
       )
-      .subscribe((data: Pageable<ActuacionResponse>) => {
+      .subscribe((data: Pageable<ActuacionAbogadoFilter>) => {
         this.dataSource.data = data.data;
         this.totalItems = data.totalItems;
+        console.log(data)
       });
   }
   onPageChange(event: any) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.loadData();
+  }
+  redirectToOtherComponent(element:ActuacionAbogadoFilter){
+    const queryParams = { id: element.id.toString() };
+    this.router.navigate(['/infoactionbroker'],{queryParams:queryParams});
   }
 }

@@ -1,4 +1,4 @@
-export interface ActuacionResponse {
+export interface ActuacionAbogadoFilter {
   id: number;
   anotacion: string;
   actuacion: string;

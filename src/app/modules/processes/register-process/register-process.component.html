@@ -1,21 +1,21 @@
 <div class="searchProcess">
-    <h1><strong> Buscar Proceso</strong></h1>
-    <h4 class="description">Ingrese el numero de radicado del proceso este se buscará en la plataforma CONSULTA DE PROCESOS NACIONAL UNIFICADA</h4>
+  <h1><strong> Buscar Proceso</strong></h1>
+  <h4 class="description">
+    Ingrese el numero de radicado del proceso este se buscará en la plataforma
+    CONSULTA DE PROCESOS NACIONAL UNIFICADA
+  </h4>
 </div>
 <div class="input">
-    <input [(ngModel)]="filingNumberInput" 
-           type="text" 
-           id="filingNumber" 
-           name="filingNumber" 
-           maxlength="23"
-           (input)="filterNonNumericCharacters()">
+  <input
+    [(ngModel)]="filingNumberInput"
+    type="text"
+    id="filingNumber"
+    name="filingNumber"
+    maxlength="23"
+    (keypress)="OnlyNumbersAllowed($event)"
+  />
 </div>
 
 <div class="buttonBuscar">
-    <button (click)="searchProceso()">Buscar Proceso</button>
+  <button (click)="searchProceso()">Buscar Proceso</button>
 </div>
-
-
-
-
-

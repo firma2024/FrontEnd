@@ -37,6 +37,7 @@ export class ListProcessLawyerComponent {
   }
   redirectToOtherComponent(row: any) {
     const queryParams = { processId: row.id.toString() };
+    console.log("AA"+queryParams["processId"])
     localStorage.setItem("selectedIdProcessLawyer", row.id.toString())
     this.router.navigate(['/infoprocesslawyer'],{queryParams:queryParams});
   }

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ActionService } from '../../../services/action.service';
+import { ActuacionResponse } from '../../../shared/model/actuaciones/actuacion.req';
 
 @Component({
   selector: 'app-info-action',
   templateUrl: './info-action.component.html',
-  styleUrls: ['./info-action.component.css']
+  styleUrls: ['./info-action.component.css'],
 })
 export class InfoActionComponent implements OnInit {
   despacho: string = 'Valor del despacho';
@@ -14,23 +16,29 @@ export class InfoActionComponent implements OnInit {
   action: string = 'Valor de la acción';
   dateRegister: string = 'Valor de la fecha de registro';
 
-  id: string | null = null; // Inicializa id como string o null
+  id: string = '';
 
-  constructor(private route: ActivatedRoute) {}
-
+  constructor(
+    private actionService: ActionService,
+    private activatedRoute: ActivatedRoute
+  ) {}
   ngOnInit(): void {
-    const idFromRoute = this.route.snapshot.paramMap.get('id');
-    if (idFromRoute !== null) {
-      this.id = idFromRoute; // Asigna el ID si no es null
-      console.log('ID recibido en la ruta:', this.id);
-    } else {
-      console.error('No se encontró el ID en la ruta.');
-    }
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.id = params['id'];
+  });
+    this.loadActionInfo();
   }
-
-  listaItems: string[] = [
-    'BBVA SEGUROS DE VIDA COLOMBIA S.A.',
-    'DIEGO ALFONSO REYES MURCIA',
-    'DIEGO ALFONSO REYES MURCIA'
-  ];
+  loadActionInfo(){
+    this.actionService.getActuacion(this.id).subscribe((data:ActuacionResponse) => {
+      console.log(data)
+      this.despacho = data.despacho;
+      this.date = data.fechaActuacion;
+      this.annotation = data.anotacion;
+      this.typeProcess = data.tipoProceso;
+      this.action = data.actuacion;
+      this.dateRegister = data.fechaRegistro;
+      this.listaSujetos = data.sujetos.split('|');
+    });
+  }
+  listaSujetos: string[] = [];
 }

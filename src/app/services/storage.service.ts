@@ -26,7 +26,7 @@ export class StorageService {
     const url = `${environment.storageURL}/upload/document?actuacionId=${actuacionId}`;
     return this.http.post(url, formData);
   }
-  descargarDocumento(actuacionId: number): Observable<Blob> {
+  descargarDocumento(actuacionId: string): Observable<Blob> {
     const headers = new HttpHeaders().set('Accept', 'application/pdf');
     const url = `${environment.storageURL}/download/document?actuacionId=${actuacionId}`;
     return this.http.get(url, { responseType: 'blob', headers });

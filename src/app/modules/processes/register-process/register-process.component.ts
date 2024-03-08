@@ -18,10 +18,10 @@ export class RegisterProcessComponent {
     private processService: ProcessService,
     private router: Router
   ) {}
-
+    
   searchProceso() {
     Swal.fire({
-      title: 'Espere por favor mientras se carga la información de su proceso...',
+      title: 'Espere mientras se obtiene la información de Consulta Nacional de Procesos Unificada...',
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -45,11 +45,11 @@ export class RegisterProcessComponent {
       (error) => {
         Swal.close();
 
-        if (error.status === 400) {
+        if (error.status === 404) {
           Swal.fire({
             icon: 'error',
             title: 'Proceso no encontrado',
-            text: 'No se encontró ningún proceso con el número ingresado.',
+            text: 'No se encontró ningún proceso con el número ingresado, valide el numero de radicado.',
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#AA2535',
             iconColor:'#AA2535'
@@ -67,9 +67,5 @@ export class RegisterProcessComponent {
         }
       }
     );
-  }
-
-  filterNonNumericCharacters() {
-    this.filingNumberInput = this.filingNumberInput.replace(/[^\d]/g, '').substr(0, 23);
   }
 }

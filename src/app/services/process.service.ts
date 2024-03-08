@@ -34,7 +34,7 @@ export class ProcessService {
       idAbogado: idAbogado,
     };
     return this.http
-      .post<any>(`${environment.processURL}/add/process`, process)
+      .post<any>(`${environment.processURL}/save`, process)
       .pipe(
         catchError((error) => {
           throw error;
