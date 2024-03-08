@@ -3,14 +3,19 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Observer } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
+import { UtilService } from '../../../services/util.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private utilService: UtilService
+  ) {}
 
   username: string = '';
   password: string = '';
@@ -21,7 +26,7 @@ export class LoginComponent {
     400: 'Credenciales incorrectas',
     500: 'Error del servidor',
   };
-  
+
   loginObserver: Observer<any> = {
     next: (data: any) => {
       const rol = localStorage.getItem('role');
@@ -32,7 +37,9 @@ export class LoginComponent {
       }
     },
     error: (error: any) => {
-      let code: number | undefined = error.status ? Math.round(error.status / 100) * 100 : undefined;
+      let code: number | undefined = error.status
+        ? Math.round(error.status / 100) * 100
+        : undefined;
       if (code && code in this.error_dict) {
         this.error_message = this.error_dict[code];
       }
@@ -42,16 +49,35 @@ export class LoginComponent {
         title: 'Error al iniciar sesión',
         text: this.error_message,
         confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#AA2535'
+        confirmButtonColor: '#AA2535',
       });
     },
     complete: () => {
-      console.log("complete");
-    }
+      console.log('complete');
+    },
   };
+  areCorrectFields(): boolean {
+    let dict: { [key: string]: string } = {};
+    if (this.username === '') {
+      dict['Usuario'] = 'El nombre de usuario es requerido';
+    }
+    if (this.password === '') {
+      dict['Contraseña'] = 'La contraseña es requerida';
+    }
 
+    if (Object.keys(dict).length !== 0) {
+      this.utilService.raiseInvalidFields(dict);
+      return false;
+    } else {
+      return true;
+    }
+  }
   iniciarSesion(): void {
-    this.auth.login(this.username, this.password).subscribe(this.loginObserver)
-    localStorage.setItem('username', this.username)
+    if (this.areCorrectFields()) {
+      this.auth
+        .login(this.username, this.password)
+        .subscribe(this.loginObserver);
+      localStorage.setItem('username', this.username);
+    }
   }
 }

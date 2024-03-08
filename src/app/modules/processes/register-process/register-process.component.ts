@@ -53,7 +53,7 @@ export class RegisterProcessComponent {
             Swal.fire({
               icon: 'error',
               title: 'Proceso no encontrado',
-              text: 'No se encontró ningún proceso con el número ingresado, valide el numero de radicado.',
+              text: 'No se encontró ningún proceso con el número ingresado, valide el numero ingresado.',
               confirmButtonText: 'Aceptar',
               confirmButtonColor: '#AA2535',
               iconColor: '#AA2535',
@@ -77,19 +77,17 @@ export class RegisterProcessComponent {
     let dict: { [key: string]: string } = {};
 
     if (this.filingNumberInput.length !== 23) {
-      dict['Numero radicado'] =
-        'Debe tener exactamente 23 digitos';
+      dict['Numero radicado'] = 'Debe tener exactamente 23 digitos';
     }
     for (const campo of this.filingNumberInput) {
       if (!/^\d+$/.test(campo)) {
-        dict['Numero radicado'] =
-          'Solo debe contener digitos';
+        dict['Numero radicado'] = 'Solo debe contener digitos';
       }
     }
     if (Object.keys(dict).length !== 0) {
-      this.filingNumberInput=this.filingNumberInput.replace(/\s/g, "");
+      this.filingNumberInput = this.filingNumberInput.replace(/\s/g, '');
       this.utilService.raiseInvalidFields(dict);
-     
+
       return false;
     } else {
       return true;

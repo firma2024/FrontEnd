@@ -9,6 +9,7 @@ import { AuthService } from '../../../services/auth.service';
 import { last } from 'rxjs';
 import { StorageService } from '../../../services/storage.service';
 import { Router } from '@angular/router';
+import { UtilService } from '../../../services/util.service';
 @Component({
   selector: 'app-register-lawyer',
   templateUrl: './register-lawyer.component.html',
@@ -25,11 +26,11 @@ export class RegisterLawyerComponent {
   selectedTypeDoc: TipoDocumento | null = null;
   selectedSpecialization: TipoAbogado | null = null;
 
-  
   constructor(
     private userService: UserService,
     private authService: AuthService,
     private storageService: StorageService,
+    private utilsService: UtilService,
     private router: Router
   ) {}
 
@@ -50,7 +51,6 @@ export class RegisterLawyerComponent {
             texto: tipoDocumento.nombre,
           });
         });
-        
       },
       (error) => {
         console.error('Error al obtener tipos de documento:', error);
@@ -116,8 +116,7 @@ export class RegisterLawyerComponent {
             confirmButtonColor: '#AA2535',
             didClose: () => {
               this.router.navigate(['/listlawyer']);
-            }
-          
+            },
           });
         },
         (error: HttpErrorResponse) => {
@@ -149,7 +148,7 @@ export class RegisterLawyerComponent {
           this.crearAbogadoBusiness();
         },
         (error) => {
-          console.log(error)
+          console.log(error);
           Swal.fire({
             icon: 'error',
             iconColor: '#AA2535',
@@ -162,7 +161,6 @@ export class RegisterLawyerComponent {
       );
   }
   crearAbogado() {
-    
     Swal.fire({
       title: '¿Estás seguro?',
       text: '¿Deseas crear este abogado?',
@@ -174,51 +172,109 @@ export class RegisterLawyerComponent {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.userService
-          .validarAgregarAbogado(
-            this.nombreUsuario,
-            this.correoElectronico,
-            parseInt(this.telefono),
-            parseInt(this.identificacion),
-            this.nombreUsuario,
-            this.selectedTypeDoc!,
-            [this.selectedSpecialization!],
-            parseInt(localStorage.getItem('firmaId')!)
-          )
-          .subscribe(
-            (response: MensajeResponse) => {
-               Swal.fire({
-                title: 'Cargando información del abogado..',
-                allowOutsideClick: false,
-                didOpen: () => {
-                  Swal.showLoading();
-                  const container = Swal.getHtmlContainer();
-                  if (container) {
-                    const loader = container.querySelector('.swal2-loader');
-                    if (loader instanceof HTMLElement) {
-                      loader.style.color = '#AA2535'; 
-                    }
-                  }
-                }
-              });
-              this.crearAbogadoAuth();
-              
-            },
-            (error: HttpErrorResponse) => {
-              if (error.status === 409) {
+        if (this.areCorrectFields()) {
+          this.userService
+            .validarAgregarAbogado(
+              this.nombreUsuario,
+              this.correoElectronico,
+              parseInt(this.telefono),
+              parseInt(this.identificacion),
+              this.nombreUsuario,
+              this.selectedTypeDoc!,
+              [this.selectedSpecialization!],
+              parseInt(localStorage.getItem('firmaId')!)
+            )
+            .subscribe(
+              (response: MensajeResponse) => {
                 Swal.fire({
-                  icon: 'error',
-                  iconColor: '#AA2535',
-                  title: 'Error',
-                  confirmButtonColor: '#AA2535',
-                  confirmButtonText: 'Okay',
-                  text: 'El abogado no puede ser ingresado porque la identificación, el nombre de usuario o el correo ya se encuentra registrado con otro abogado.',
+                  title: 'Cargando información del abogado...',
+                  allowOutsideClick: false,
+                  didOpen: () => {
+                    Swal.showLoading();
+                    const container = Swal.getHtmlContainer();
+                    if (container) {
+                      const loader = container.querySelector('.swal2-loader');
+                      if (loader instanceof HTMLElement) {
+                        loader.style.color = '#AA2535';
+                      }
+                    }
+                  },
                 });
+                this.crearAbogadoAuth();
+              },
+              (error: HttpErrorResponse) => {
+                if (error.status === 409) {
+                  Swal.fire({
+                    icon: 'error',
+                    iconColor: '#AA2535',
+                    title: 'Error',
+                    confirmButtonColor: '#AA2535',
+                    confirmButtonText: 'Okay',
+                    text: 'El abogado no puede ser ingresado porque la identificación, el nombre de usuario o el correo ya se encuentra registrado con otro abogado.',
+                  });
+                }
               }
-            }
-          );
+            );
+        }
       }
     });
+  }
+  areCorrectFields(): boolean {
+    let dict: { [key: string]: string } = {};
+    // Username validation
+    if (this.nombreUsuario === '') {
+      dict['Nombre de usuario'] = 'No puede estar vacio';
+    }
+    if (this.nombreUsuario.includes(' ')) {
+      dict['Nombre de usuario'] = 'No puede tener espacios';
+    }
+
+    //Name validation
+    if (this.nombreCompleto === '') {
+      dict['Nombre completo'] = 'No puede estar vacio';
+    }
+
+    //Email validation
+    if (this.correoElectronico === '') {
+      dict['Correo electronico'] = 'No puede estar vacio';
+    }
+    const expression: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (!expression.test(this.correoElectronico)) {
+      dict['Correo electronico'] = 'No es un correo valido';
+    }
+
+    //Type of document validation
+    if (this.selectedTypeDoc === null) {
+      dict['Tipo de documento'] =
+        'Debe seleccionar un tipo de documento valido';
+    }
+
+    //Identification validation
+    if (this.identificacion === '') {
+      dict['Identificacion'] = 'No puede estar vacio';
+    }
+    if (!/^\d+$/.test(this.identificacion)) {
+      dict['Identificacion'] = 'Solo debe contener numeros';
+    }
+
+    //Phone validation
+    if (this.telefono === '') {
+      dict['Telefono'] = 'No puede estar vacio';
+    }
+    if (!/^\d+$/.test(this.telefono)) {
+      dict['Telefono'] = 'Solo debe contener numeros';
+    }
+
+    //Speciality validation
+    if (this.selectedSpecialization === null) {
+      dict['Especialidad'] = 'Debe seleccionar una especialidad valida';
+    }
+    if (Object.keys(dict).length !== 0) {
+      this.utilsService.raiseInvalidFields(dict);
+      return false;
+    } else {
+      return true;
+    }
   }
   onSpecializationChange($event: any) {}
   onTypeDocChange($event: any) {}
@@ -227,11 +283,10 @@ export class RegisterLawyerComponent {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-       this.imageUrlPresentation = e.target.result;
+        this.imageUrlPresentation = e.target.result;
       };
       this.selectedImage = file;
       reader.readAsDataURL(file);
-      
     }
   }
 }

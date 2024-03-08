@@ -22,7 +22,7 @@
         </div>
         <div class="form-group">
             <label for="Identificacion">Identificación: </label>
-            <input type="text" class="form-control custom-input" id="Identificacion" name="Identificacion" [(ngModel)]="usuario.identificacion">
+            <input type="text" class="form-control custom-input" id="Identificacion" name="Identificacion" [(ngModel)]="usuario.identificacion" maxlength="10">
         </div>
         <div class="form-group">
             <label for="Correo Electronico">Correo Electrónico: </label>
@@ -30,7 +30,7 @@
         </div>
         <div class="form-group">
             <label for="Telefono">Teléfono: </label>
-            <input type="text" class="form-control custom-input" id="Telefono" name="Telefono" [(ngModel)]="usuario.telefono">
+            <input type="text" class="form-control custom-input" id="Telefono" name="Telefono" [(ngModel)]="usuario.telefono" maxlength="10">
         </div>
         <div class="form-group" *ngIf="rol === 'ABOGADO'">
             <label for="especialidades">Especialidades: </label>

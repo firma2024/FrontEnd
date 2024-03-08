@@ -23,7 +23,6 @@ export class HeaderComponent {
         left: '750px',
       },
       data: {
-        /* Puedes pasar datos al componente del diálogo */
       },
     });
   }
