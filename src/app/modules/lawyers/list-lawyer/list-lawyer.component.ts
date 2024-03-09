@@ -26,7 +26,7 @@ export class ListLawyerComponent {
   ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  pageSize = 5;
+  pageSize = 7;
   pageIndex = 0;
   totalItems = 0;
 
