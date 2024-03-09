@@ -9,14 +9,13 @@ import { Pageable } from '../../../shared/model/pageable';
 @Component({
   selector: 'app-list-process-lawyer',
   templateUrl: './list-process-lawyer.component.html',
-  styleUrls: ['./list-process-lawyer.component.css']
+  styleUrls: ['./list-process-lawyer.component.css'],
 })
 export class ListProcessLawyerComponent {
-
-  processSearch: string = ''; 
+  processSearch: string = '';
 
   dataSource: MatTableDataSource<ProcesoLawyerFilter>;
-  columnNames: string[] = ['Radicado', 'Despacho','Tipo', 'Fecha'];
+  columnNames: string[] = ['Radicado', 'Despacho', 'Tipo', 'Fecha'];
   displayedColumns: string[] = ['Radicado', 'Despacho', 'Tipo', 'Fecha'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -36,35 +35,38 @@ export class ListProcessLawyerComponent {
     this.fetchData();
   }
   redirectToOtherComponent(row: any) {
-    localStorage.setItem("selectedIdProcessLawyer", row.id.toString())
-    this.router.navigate(['/infoprocesslawyer']);
+    const queryParams = { processId: row.id.toString() };
+    localStorage.setItem('selectedIdProcessLawyer', row.id.toString());
+    this.router.navigate(['/infoprocesslawyer'], { queryParams: queryParams });
   }
   fetchData() {
     const fechaInicioStr = '';
     const fechaFinStr = '';
     const estadosProceso: string[] = [];
     const tipoProceso = '';
-    const lawyerId = parseInt(localStorage.getItem("lawyerId")!);
-    const page = this.pageIndex; 
+    const lawyerId = parseInt(localStorage.getItem('lawyerId')!);
+    const page = this.pageIndex;
 
-    this.processService.getProcesosByAbogadoFilter(
-      fechaInicioStr,
-      lawyerId,
-      fechaFinStr,
-      estadosProceso,
-      tipoProceso,
-      page,
-      this.pageSize
-    ).subscribe(
-      (data: Pageable<ProcesoLawyerFilter>) => {
-        this.dataSource.data = data.data;
-        this.totalItems = data.totalItems; 
-        console.log(data.data);
-      },
-      (error) => {
-        console.error('Error al obtener los datos:', error);
-      }
-    );
+    this.processService
+      .getProcesosByAbogadoFilter(
+        fechaInicioStr,
+        lawyerId,
+        fechaFinStr,
+        estadosProceso,
+        tipoProceso,
+        page,
+        this.pageSize
+      )
+      .subscribe(
+        (data: Pageable<ProcesoLawyerFilter>) => {
+          this.dataSource.data = data.data;
+          this.totalItems = data.totalItems;
+          console.log(data.data);
+        },
+        (error) => {
+          console.error('Error al obtener los datos:', error);
+        }
+      );
   }
 
   // Función para manejar el cambio de página

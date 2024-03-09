@@ -42,6 +42,7 @@
     <li *ngFor="let item of listAudience">{{ item }}</li>
 
 </div>
+<img src="assets/downloadAllDocs.png" (click)="downloadAllDocs()" title="Descargar todas las providencias" style="float: right; margin-top: -40px; margin-right: 20px; cursor: pointer;">
 
 <div class="table">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -51,7 +52,7 @@
       </ng-container>
       <ng-container matColumnDef="nombreActuacion">
         <th mat-header-cell *matHeaderCellDef>Nombre de Actuación</th>
-        <td mat-cell *matCellDef="let element">{{ element.nombreActuacion }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.actuacion }}</td>
       </ng-container>
   
       <ng-container matColumnDef="anotacion">
@@ -66,7 +67,7 @@
       <ng-container matColumnDef="existDocument">
         <th mat-header-cell *matHeaderCellDef>Documento</th>
         <td mat-cell *matCellDef="let element">
-          <img *ngIf="element.existDocument" [src]="documentImageUrl" alt="Documento" [ngStyle]="{'color': 'red', 'font-size': '2.5em'}">
+          <img *ngIf="element.existeDocumento" [src]="documentImageUrl" alt="Documento" [ngStyle]="{'color': 'red', 'font-size': '2.5em'}">
         </td>
       </ng-container>
   
@@ -94,8 +95,9 @@
       ></tr>
       <tr
         mat-row
+        style="cursor: pointer;"
         *matRowDef="
-          let row;
+          let element;
           columns: [
             'fechaActuacion',
             'nombreActuacion',
@@ -104,6 +106,7 @@
             'existDocument'
           ]
         "
+        (click)="redirectToOtherComponent(element)"
       ></tr>
     </table>
   

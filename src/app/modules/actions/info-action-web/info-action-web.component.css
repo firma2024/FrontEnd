@@ -61,7 +61,15 @@
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
-
+.iframe-link-doc {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: rgb(197, 5, 5);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
 .iframe-link:hover {
     background-color: #72252e;
 }

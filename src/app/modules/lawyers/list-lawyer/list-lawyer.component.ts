@@ -6,6 +6,8 @@ import { UserService } from '../../../services/user.service';
 import { UserProcesess } from '../../../shared/model/user/user.procesos';
 import { Pageable } from '../../../shared/model/pageable';
 import Swal from 'sweetalert2';
+import { MensajeResponse } from '../../../shared/model/message';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-list-lawyer',
@@ -104,8 +106,15 @@ export class ListLawyerComponent {
             console.log('Usuario eliminado:', message);
             this.fetchData();
           },
-          (error) => {
-            console.error('Error al eliminar usuario:', error);
+          (error:HttpErrorResponse) => {
+            console.log(error)
+           Swal.fire({
+              icon: 'error',
+              title: 'Error al eliminar el usuario',
+              text: error.error.message,
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#AA2535',
+           })
           }
         );
       }

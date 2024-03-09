@@ -46,12 +46,12 @@
             <div class="column1">
                 <div class="inputContainer">
                     <label for="identification">Identificación:</label>
-                    <input type="text" id="identification" name="identification" placeholder="Ingrese el número de identificación" [(ngModel)]="identificacion" pattern="[0-9]{1,}">
+                    <input type="text" id="identification" name="identification" placeholder="Ingrese el número de identificación" [(ngModel)]="identificacion" maxlength="10">
                 </div>
                 
                 <div class="inputContainer">
                     <label for="numberPhone">Teléfono:</label>
-                    <input type="tel" id="numberPhone" name="numberPhone" placeholder="Ingrese el número de teléfono" [(ngModel)]="telefono" pattern="[0-9]{10}">
+                    <input type="tel" id="numberPhone" name="numberPhone" placeholder="Ingrese el número de teléfono" [(ngModel)]="telefono" maxlength="10">
                 </div>
                 
                 <div class="inputContainer">
