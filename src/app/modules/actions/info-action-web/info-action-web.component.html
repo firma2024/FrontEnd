@@ -41,7 +41,18 @@
 </div>
 
 <div class="description">
-    <h6>Para acceder a la página en la que encontrará el documento, haga clic en el siguiente botón.</h6>
+    <p>Para acceder a la página en la que encontrará el documento, haga clic en el siguiente botón.</p>
     <a [href]="officeURL" target="_blank" class="iframe-link">Ir al sitio web</a>
+    <br><br>
+    <p>Para cargar la providencia de click en:</p>
+    <form (submit)="uploadDoc($event)" enctype="multipart/form-data">
+        <input class="iframe-link-doc" type="file" (change)="selectDoc($event)" accept=".pdf">
+        <button type="submit" class="iframe-link-doc">Cargar providencia</button>
+    </form>
+    
+    
 </div>
 
+<div class="description">
+    
+</div>

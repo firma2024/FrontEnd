@@ -8,6 +8,7 @@ import { ActuacionAbogadoFilter } from '../../../shared/model/actuaciones/actuac
 import { ProcessService } from '../../../services/process.service';
 import { ProcesoLawyer } from '../../../shared/model/process/proceso.abogado';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StorageService } from '../../../services/storage.service';
 
 @Component({
   selector: 'app-info-process-lawyer',
@@ -29,11 +30,10 @@ export class InfoProcessLawyerComponent {
   totalItems = 0;
   id: string | null = null;
 
-  idProcess: string = "";
+  idProcess: string = '';
   ngOnInit(): void {
-
-    this.activatedRoute.queryParams.subscribe(params => {
-        this.idProcess = params['processId'];
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.idProcess = params['processId'];
     });
     this.loadData();
   }
@@ -48,25 +48,28 @@ export class InfoProcessLawyerComponent {
     private actionService: ActionService,
     private processService: ProcessService,
     private activatedRoute: ActivatedRoute,
+    private storageService: StorageService,
     private router: Router
-  ) {
-    
-  }
+  ) {}
 
   loadData() {
     this.obtainActions();
     this.obtainInfoProcess();
   }
   obtainInfoProcess() {
-    this.processService.getProcesoPorId(parseInt(this.idProcess)).subscribe((data:ProcesoLawyer) => {
-      console.log(data)
+    this.processService
+      .getProcesoPorId(parseInt(this.idProcess))
+      .subscribe((data: ProcesoLawyer) => {
+        console.log(data);
         this.despacho = data.despacho;
         this.date = data.fechaRadicacion;
         this.nRadicado = data.numeroRadicado;
         this.typeProcess = data.tipoProceso;
-        this.listaSujetos = data.sujetos.split("|")
-        this.listAudience = data.audiencias.map(audiencia => audiencia.nombre);
-    })
+        this.listaSujetos = data.sujetos.split('|');
+        this.listAudience = data.audiencias.map(
+          (audiencia) => audiencia.nombre
+        );
+      });
   }
   obtainActions() {
     this.actionService
@@ -81,7 +84,7 @@ export class InfoProcessLawyerComponent {
       .subscribe((data: Pageable<ActuacionAbogadoFilter>) => {
         this.dataSource.data = data.data;
         this.totalItems = data.totalItems;
-        console.log(data)
+        console.log(data);
       });
   }
   onPageChange(event: any) {
@@ -89,8 +92,29 @@ export class InfoProcessLawyerComponent {
     this.pageSize = event.pageSize;
     this.loadData();
   }
-  redirectToOtherComponent(element:ActuacionAbogadoFilter){
+  redirectToOtherComponent(element: ActuacionAbogadoFilter) {
     const queryParams = { id: element.id.toString() };
-    this.router.navigate(['/infoactionbroker'],{queryParams:queryParams});
+    this.router.navigate(['/infoactionbroker'], { queryParams: queryParams });
+  }
+  downloadAllDocs() {
+    this.storageService.descargarTodosLosDocumentos(this.idProcess).subscribe(
+      (value: { fileName: string; blob: Blob; }) => {
+        const blob = new Blob([value.blob], {
+          type: 'application/zip',
+        });
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = url;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+        console.log("AA"+value.fileName)
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

@@ -42,6 +42,7 @@
     <li *ngFor="let item of listAudience">{{ item }}</li>
 
 </div>
+<img src="assets/downloadAllDocs.png" (click)="downloadAllDocs()" title="Descargar todas las providencias" style="float: right; margin-top: -40px; margin-right: 20px; cursor: pointer;">
 
 <div class="table">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
