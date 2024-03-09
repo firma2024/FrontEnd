@@ -33,6 +33,7 @@ import { MainMenuAdminComponent } from './modules/main-menu/main-menu-admin/main
 import { BrokerActionComponent } from './modules/actions/broker-action/broker-action.component';
 import { CreateLinkAudienceComponent } from './modules/processes/create-link-audience/create-link-audience.component';
 import { EditLinkAudienceComponent } from './modules/processes/edit-link-audience/edit-link-audience.component';
+import { InfoUserComponent } from './home/info-user/info-user.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { EditLinkAudienceComponent } from './modules/processes/edit-link-audienc
     MainMenuAdminComponent,
     BrokerActionComponent,
     CreateLinkAudienceComponent,
-    EditLinkAudienceComponent
+    EditLinkAudienceComponent,
+    InfoUserComponent
   ],
   imports: [
     BrowserModule,

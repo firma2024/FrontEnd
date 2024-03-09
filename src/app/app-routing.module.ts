@@ -23,6 +23,7 @@ import { MainMenuLawyerComponent } from './modules/main-menu/main-menu-lawyer/ma
 import { BrokerActionComponent } from './modules/actions/broker-action/broker-action.component';
 import { CreateLinkAudienceComponent } from './modules/processes/create-link-audience/create-link-audience.component';
 import { EditLinkAudienceComponent } from './modules/processes/edit-link-audience/edit-link-audience.component';
+import { InfoUserComponent } from './home/info-user/info-user.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,7 @@ const routes: Routes = [
   {path: 'main',component: MainMenuAdminComponent, canActivate:[AuthGuard], data: { roles: ['JEFE'] }},
   {path: 'main-lawyer',component: MainMenuLawyerComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }},
   {path: 'infoadmin',component: InfoAdminComponent, canActivate:[AuthGuard], data: { roles: ['JEFE'] }},
+  {path: 'infouser',component:InfoUserComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }},
   {path: 'registerlawyer',component: RegisterLawyerComponent, canActivate:[AuthGuard], data: { roles: ['JEFE'] }},
   {path: 'listlawyer',component: ListLawyerComponent, canActivate:[AuthGuard], data: { roles: ['JEFE'] }},
   {path: 'infolawyer',component: InfoLawyerComponent, canActivate:[AuthGuard], data: { roles: ['JEFE'] }},

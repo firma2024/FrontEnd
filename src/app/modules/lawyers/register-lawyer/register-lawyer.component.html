@@ -54,12 +54,16 @@
                     <input type="tel" id="numberPhone" name="numberPhone" placeholder="Ingrese el número de teléfono" [(ngModel)]="telefono" maxlength="10">
                 </div>
                 
-                <div class="inputContainer">
-                    <label for="specialty">Especialidad:</label>
-                    <select id="opciones" name="opciones" [(ngModel)]="selectedSpecialization" (ngModelChange)="onSpecializationChange($event)">
-                        <option *ngFor="let opcion of opcionesSpecialty" [ngValue]="opcion.valor">{{ opcion.texto }}</option>
-                    </select>
+                <div class="checkboxes">
+                    <label>Especialidades:</label>
+                    <div *ngFor="let opcion of opcionesSpecialty" class="checkbox-option">
+                        <input class="checkbox" type="checkbox" id="{{ opcion.valor }}" name="{{ opcion.texto }}" [(ngModel)]="opcion.checked" (change)="onSpecializationChange(opcion)">
+                        <label for="{{ opcion.valor }}">{{ opcion.texto }}</label>
+                    </div>
                 </div>
+                
+                
+                
                 
             </div>
         </div>

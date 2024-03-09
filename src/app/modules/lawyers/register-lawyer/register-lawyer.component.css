@@ -48,14 +48,6 @@ label{
     display: block;
     color: #6C6C6C;
 }
-input{
-    width: 280px;
-    height: 40px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    border: 1px solid #BFBBBB; 
-    text-align: center;
-}
 ::placeholder {
     color: #BFBBBB; /* Cambia el color del texto de marcador de posición */
 }
@@ -100,3 +92,30 @@ select{
 h6{
     color: #BFBBBB;
 }
+/* Estilos para los checkboxes */
+.checkbox {
+    transform: scale(1.5);
+    margin-right: 5px;
+  }
+  
+  /* Estilos para otros inputs que no sean checkboxes */
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 280px;
+    height: 40px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #BFBBBB;
+    text-align: center;
+  }
+.checkbox-option {
+    display: flex; 
+    align-items: center;
+    margin-right: 10px;
+  }
+  .checkbox {
+    margin-right: 5px; 
+  }
+  
+  
