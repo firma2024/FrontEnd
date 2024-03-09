@@ -19,6 +19,26 @@ export class AppComponent {
 
   isSpecialPage(): boolean {
     const currentUrl = this.router.url;
-    return currentUrl === '/login' || currentUrl === '/recover';
-  }
+    const loginUrl = '/login';
+    const recoverUrl = '/recover';
+
+    // Verificar si la ruta actual es "/login" o "/recover"
+    if (currentUrl === loginUrl || currentUrl === recoverUrl) {
+        return true;
+    }
+
+    // Verificar si la ruta contiene "/login" con parámetros de consulta específicos
+    if (currentUrl.includes(loginUrl)) {
+        const urlTree = this.router.parseUrl(currentUrl);
+        const queryParams = urlTree.queryParams;
+        // Verificar si existen parámetros de consulta y si tienen el valor correcto
+        if (queryParams['returnUrl'] && queryParams['returnUrl'].startsWith('/')) {
+          return true;
+      }
+      
+    }
+
+    return false;
+}
+
 }

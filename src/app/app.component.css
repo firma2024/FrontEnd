@@ -1,7 +1,7 @@
 
 .container {
   display: flex;
-  height: 100vh;
+  height: fit-content;
   margin: 0;
   padding: 0;
 }
@@ -32,9 +32,13 @@ app-header{
   top: -1px;
   margin-left: 5%;
 }
+
+router-outlet{
+  height: fit-content;
+}
 .container.special-page {
-  width: 100vw;
-  height: 100%;
+  width: fit-content;
+  height: fit-content;
   margin-top: -100px;
   margin-left: -220px;
 }
@@ -44,6 +48,7 @@ app-header{
   margin-left: 10%;
   width: 75vw;
   padding-bottom: 5%;
+  height: fit-content;
 }
 
 

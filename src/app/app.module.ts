@@ -31,6 +31,8 @@ import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { MainMenuLawyerComponent } from './modules/main-menu/main-menu-lawyer/main-menu-lawyer.component';
 import { MainMenuAdminComponent } from './modules/main-menu/main-menu-admin/main-menu-admin.component';
 import { BrokerActionComponent } from './modules/actions/broker-action/broker-action.component';
+import { CreateLinkAudienceComponent } from './modules/processes/create-link-audience/create-link-audience.component';
+import { EditLinkAudienceComponent } from './modules/processes/edit-link-audience/edit-link-audience.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { BrokerActionComponent } from './modules/actions/broker-action/broker-ac
     InfoActionComponent,
     MainMenuLawyerComponent,
     MainMenuAdminComponent,
-    BrokerActionComponent
+    BrokerActionComponent,
+    CreateLinkAudienceComponent,
+    EditLinkAudienceComponent
   ],
   imports: [
     BrowserModule,

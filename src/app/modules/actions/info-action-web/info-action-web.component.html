@@ -41,13 +41,17 @@
 </div>
 
 <div class="description">
-    <p>Para acceder a la página en la que encontrará el documento, haga clic en el siguiente botón.</p>
+    <p>Para acceder a la página en la que encontrará el documento, haga clic en el siguiente botón:</p>
     <a [href]="officeURL" target="_blank" class="iframe-link">Ir al micrositio</a>
     <br><br>
-    <p>Para cargar la providencia de click en:</p>
-    <form (submit)="uploadDoc($event)" enctype="multipart/form-data">
-        <input class="iframe-link-doc" type="file" (change)="selectDoc($event)" accept=".pdf">
-        <button type="submit" class="iframe-link-doc">Cargar providencia</button>
+    <p>Para cargar la providencia de click en el siguiente boton::</p>
+    <form class="uploaddocument" (submit)="uploadDoc($event)" enctype="multipart/form-data">
+        <div>
+            <input class="iframe-linkdoc" type="file" (change)="selectDoc($event)" accept=".pdf">
+        </div>
+        <div>
+            <button type="submit" class="iframe-link-doc">Cargar providencia</button>
+        </div>
     </form>
     
     
