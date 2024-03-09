@@ -9,6 +9,7 @@ import { ProcessService } from '../../../services/process.service';
 import { ProcesoLawyer } from '../../../shared/model/process/proceso.abogado';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from '../../../services/storage.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-info-process-lawyer',
@@ -97,24 +98,21 @@ export class InfoProcessLawyerComponent {
     this.router.navigate(['/infoactionbroker'], { queryParams: queryParams });
   }
   downloadAllDocs() {
-    this.storageService.descargarTodosLosDocumentos(this.idProcess).subscribe(
-      (value: { fileName: string; blob: Blob; }) => {
-        const blob = new Blob([value.blob], {
-          type: 'application/zip',
-        });
-        const url = window.URL.createObjectURL(blob);
-
+    this.storageService
+      .descargarTodosLosDocumentos(this.idProcess)
+      .subscribe((data: HttpResponse<Blob>) => {
+        const file = new Blob([data.body!], { type: 'application/zip' });
+        const url = window.URL.createObjectURL(file);
         const a = document.createElement('a');
         a.href = url;
+
+        a.download = `providencias_${this.nRadicado}.zip`;
+
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
+
         document.body.removeChild(a);
-        console.log("AA"+value.fileName)
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      });
   }
 }
