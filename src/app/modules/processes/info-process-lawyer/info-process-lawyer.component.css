@@ -67,3 +67,14 @@
     width: 70vw;
     margin-bottom: 3%;
 }
+.buttondownload{
+    font-size: 30px;
+    background-color:transparent;
+    border-color: transparent;
+    color: #AA2535;
+}
+.download{
+    display: flex;
+    justify-content: end;
+    margin-right: 10%;
+}

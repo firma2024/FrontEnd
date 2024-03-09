@@ -17,7 +17,8 @@ export class InfoActionWebComponent implements OnInit {
   annotation: string = 'Valor de la anotación';
   typeProcess: string = 'Valor del tipo de proceso';
   action: string = 'Valor de la acción';
-  dateRegister: string = 'Valor de la fecha de registro';
+  datestart: string = 'Valor de la fecha de registro';
+  dateend: string = 'Valor de la fecha de registro';
   selectedFile: File | null = null;
   id: string = '';
   listaSujetos: string[] = [];
@@ -45,7 +46,7 @@ export class InfoActionWebComponent implements OnInit {
         this.annotation = data.anotacion;
         this.typeProcess = data.tipoProceso;
         this.action = data.actuacion;
-        this.dateRegister = data.fechaRegistro;
+        this.datestart = data.fechaRegistro;
         this.listaSujetos = data.sujetos.split('|');
         this.officeURL = data.link;
       });

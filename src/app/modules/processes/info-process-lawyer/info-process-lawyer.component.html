@@ -46,10 +46,13 @@
     </li>
   </ul>
 </div>
-<img src="assets/downloadAllDocs.png" (click)="downloadAllDocs()" title="Descargar todas las providencias" style="float: right; margin-top: -40px; margin-right: 20px; cursor: pointer;">
+<div class="download">
+  <button class="buttondownload"  (click)="downloadAllDocs()"><span class="icon-pull-right fas fa-cloud-arrow-down"> </span></button>
+</div>
+
 
 <div class="table">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" >
       <ng-container matColumnDef="fechaActuacion">
         <th mat-header-cell *matHeaderCellDef>Fecha de Actuación</th>
         <td mat-cell *matCellDef="let element">{{ element.fechaActuacion }}</td>
@@ -120,4 +123,4 @@
       (page)="onPageChange($event)"
     >
     </mat-paginator>
-  </div>
+</div>
