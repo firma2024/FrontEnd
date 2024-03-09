@@ -85,14 +85,14 @@ export class CreateProcessComponent {
                 confirmButtonText: 'Okay',
                 text: 'El proceso ya se encuentra registrado en la plataforma.',
               });
-            } else if (error.status === 500) {
+            } else if (error.status === 503) {
               Swal.fire({
                 icon: 'error',
                 iconColor: '#AA2535',
                 title: 'Error',
                 confirmButtonColor: '#AA2535',
                 confirmButtonText: 'Okay',
-                text: 'El proceso es privado',
+                text: 'Error de conexion con Consulta Nacional de Procesos Unificada. Intente mas tarde',
               });
             }
           }
