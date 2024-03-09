@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrl: './edit-link-audience.component.css'
 })
 export class EditLinkAudienceComponent {
+  link: string = ''; 
+  name: string = ''; 
 
+  constructor() {}
+
+  crearAudiencia(){
+    
+  }
 }

@@ -36,11 +36,15 @@
 </div>
 <div class="enlaceAudiencias">
     <p><strong>Enlaces de Audiencias</strong></p>
-    <button class="buttonAdd"><span class="icon-pull-right fas fa-add"> </span></button>
+    <button class="buttonAdd"  (click)="openDialog()"><span class="icon-pull-right fas fa-add"> </span></button>
 </div>
 <div class="listAudiencia">
-    <li *ngFor="let item of listAudience">{{ item }}</li>
-
+  <ul>
+    <li *ngFor="let item of listAudience">
+      {{ item }}
+      <button (click)="openDialogEdit()" class="icon-pull-right fas fa-edit">Botón</button>
+    </li>
+  </ul>
 </div>
 <img src="assets/downloadAllDocs.png" (click)="downloadAllDocs()" title="Descargar todas las providencias" style="float: right; margin-top: -40px; margin-right: 20px; cursor: pointer;">
 

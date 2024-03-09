@@ -21,6 +21,10 @@ import { AuthGuard } from './shared/auth/auth.guard';
 import { MainMenuAdminComponent } from './modules/main-menu/main-menu-admin/main-menu-admin.component';
 import { MainMenuLawyerComponent } from './modules/main-menu/main-menu-lawyer/main-menu-lawyer.component';
 import { BrokerActionComponent } from './modules/actions/broker-action/broker-action.component';
+import { CreateLinkAudienceComponent } from './modules/processes/create-link-audience/create-link-audience.component';
+import { EditLinkAudienceComponent } from './modules/processes/edit-link-audience/edit-link-audience.component';
+
+
 const routes: Routes = [
   {path:'', redirectTo:'login',pathMatch:'full'},
   {path: 'login',component: LoginComponent},
@@ -39,11 +43,12 @@ const routes: Routes = [
   {path: 'listprocesslawyer',component: ListProcessLawyerComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }},
   {path: 'infoprocesslawyer',component: InfoProcessLawyerComponent},
   {path: 'header',component: HeaderComponent},
-
   {path: 'infoaction',component: InfoActionComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }},
   {path: 'infoactionweb',component: InfoActionWebComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }},
   {path: 'infoactiondoc',component: InfoActionDocComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }},
   {path: 'infoactionbroker',component: BrokerActionComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }},
+  {path: 'createlink',component: CreateLinkAudienceComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }},
+  {path: 'editlink',component: EditLinkAudienceComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }}
 ];
 
 @NgModule({

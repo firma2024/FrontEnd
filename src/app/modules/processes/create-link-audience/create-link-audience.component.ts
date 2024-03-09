@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-link-audience',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrl: './create-link-audience.component.css'
 })
 export class CreateLinkAudienceComponent {
+  link: string = ''; 
+  name: string = ''; 
 
+  constructor(public dialog: MatDialog) {}
+
+  crearAudiencia(){
+    
+  }
 }

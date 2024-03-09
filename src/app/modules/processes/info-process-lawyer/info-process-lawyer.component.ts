@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-
+import { CreateLinkAudienceComponent } from '../create-link-audience/create-link-audience.component';
+import { EditLinkAudienceComponent } from '../edit-link-audience/edit-link-audience.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ActionService } from '../../../services/action.service';
@@ -10,6 +11,7 @@ import { ProcesoLawyer } from '../../../shared/model/process/proceso.abogado';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from '../../../services/storage.service';
 import { HttpResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-info-process-lawyer',
@@ -50,7 +52,8 @@ export class InfoProcessLawyerComponent {
     private processService: ProcessService,
     private activatedRoute: ActivatedRoute,
     private storageService: StorageService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {}
 
   loadData() {
@@ -114,5 +117,33 @@ export class InfoProcessLawyerComponent {
 
         document.body.removeChild(a);
       });
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(CreateLinkAudienceComponent, {
+      width: '350px',
+      height: '300px',
+      panelClass: 'custom-dialog-container',
+      position: {
+        top: '200px',
+        left: '400px',
+      },
+      data: {
+      },
+    });
+  }
+
+  openDialogEdit() {
+    const dialogRef = this.dialog.open(EditLinkAudienceComponent, {
+      width: '350px',
+      height: '300px',
+      panelClass: 'custom-dialog-container',
+      position: {
+        top: '200px',
+        left: '400px',
+      },
+      data: {
+      },
+    });
   }
 }
