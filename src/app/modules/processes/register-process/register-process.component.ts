@@ -58,7 +58,27 @@ export class RegisterProcessComponent {
               confirmButtonColor: '#AA2535',
               iconColor: '#AA2535',
             });
-          } else {
+          } else if (error.status == 400){
+            Swal.fire({
+              icon: 'error',
+              iconColor: '#AA2535',
+              title: 'Error',
+              confirmButtonColor: '#AA2535',
+              confirmButtonText: 'Okay',
+              text: 'El proceso es privado',
+            });
+          }
+          else if (error.status == 503){
+            Swal.fire({
+              icon: 'error',
+              iconColor: '#AA2535',
+              title: 'Error',
+              confirmButtonColor: '#AA2535',
+              confirmButtonText: 'Okay',
+              text: 'Error de conexion con Consulta Nacional de Procesos Unificada. Intente mas tarde',
+            });
+          }
+          else {
             console.error('Error al consultar el proceso:', error);
             Swal.fire({
               icon: 'error',
