@@ -32,12 +32,6 @@
             <label for="Telefono">Teléfono: </label>
             <input type="text" class="form-control custom-input" id="Telefono" name="Telefono" [(ngModel)]="usuario.telefono" maxlength="10">
         </div>
-        <div class="form-group" *ngIf="rol === 'ABOGADO'">
-            <label for="especialidades">Especialidades: </label>
-            <select class="form-control custom-input" id="especialidades" name="especialidades" [(ngModel)]="selectedSpecialty">
-                <option *ngFor="let especialidad of listaEspecialidades" [value]="especialidad.nombre">{{ especialidad.nombre }}</option>
-            </select>
-        </div>
         
         
     </div>

@@ -32,16 +32,6 @@
             <label for="Telefono">Teléfono: </label>
             <input type="text" class="form-control custom-input" id="Telefono" name="Telefono" [(ngModel)]="usuario.telefono" maxlength="10">
         </div>
-        <div class="form-group" *ngIf="rol === 'ABOGADO'">
-            <label>Especialidades:</label>
-            <div class="checkbox-options">
-                <div *ngFor="let especialidad of listaEspecialidades">
-                    <input type="checkbox" id="{{ especialidad.nombre }}" name="{{ especialidad.nombre }}" [(ngModel)]="especialidad.checked" (change)="onSpecialtyChange(especialidad)">
-                    <label for="{{ especialidad.nombre }}">{{ especialidad.nombre }}</label>
-                </div>
-            </div>
-        </div>
-        
         
         
     </div>

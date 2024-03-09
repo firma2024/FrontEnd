@@ -15,14 +15,12 @@ import { Route, Router } from '@angular/router';
   styleUrls: ['./info-user.component.css']
 })
 export class InfoUserComponent implements OnInit {
-  
   usuario: UserProcesess = {} as UserProcesess;
   usuarioName: string = '';
   imageUrl: string = 'assets/defaultProfile.png';
   listaEspecialidades: Speciality[] = [];
+  selectedSpecialty: string = '';
   rol: string = '';
-  opcionesSpecialty: { valor: TipoAbogado; texto: string; checked: boolean }[] = [];
-
 
   constructor(
     private dialogRef: MatDialogRef<InfoUserComponent>,
@@ -152,17 +150,10 @@ export class InfoUserComponent implements OnInit {
   getAllTipoAbogado(): void {
     this.userService.getAllTipoAbogado().subscribe((tipos: Speciality[]) => {
       this.listaEspecialidades = tipos;
-      this.opcionesSpecialty = tipos.map(especialidad => ({ valor: especialidad, texto: especialidad.nombre, checked: false }));
-
     });
   }
 
   goBack() {
     this.dialogRef.close();
-  }
-
-  onSpecialtyChange(especialidad: TipoAbogado) {
-    // Manejar los cambios en los checkboxes aquí
-    console.log(especialidad);
   }
 }
