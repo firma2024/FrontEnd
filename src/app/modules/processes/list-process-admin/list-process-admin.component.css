@@ -1,71 +1,132 @@
-
-.head{
-    display: flex;
+.head {
+  display: flex;
 }
 
-.title{
-    width: 50%;
+.title {
+  width: 50%;
 }
 
-.options{
-    width: 50%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.options {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.buttonFilter{
-    color: #AA2535;
-    font-size: 30px;
-    border-color: transparent;
-    background-color: transparent;
+.buttonFilter {
+  color: #aa2535;
+  font-size: 30px;
+  border-color: transparent;
+  background-color: transparent;
 }
 
-.buttonCreate{
-    background-color: #AA2535 ;
-    color: white;
-    width: 40%;
-    height: 40px;
-    border-radius: 6px;
+.buttonCreate {
+  background-color: #aa2535;
+  color: white;
+  width: 40%;
+  height: 40px;
+  border-radius: 6px;
 }
 
 .input-icon {
-    position: absolute;
-    top: 123px;
-    transform: translateY(-50%);
-    left: 930px; /* Ajusta la posición del icono según sea necesario */
-    color: #999; /* Color del icono */
+  position: absolute;
+  top: 123px;
+  transform: translateY(-50%);
+  left: 930px; /* Ajusta la posición del icono según sea necesario */
+  color: #999; /* Color del icono */
 }
 
 .mat-elevation-z8 {
-    box-shadow: none;
+  box-shadow: none;
 }
-.table{
-    margin-top: 3%;
+.table {
+  margin-top: 3%;
+  width: 78%;
 }
-    
+.filter {
+  border: 2px solid #d3d0d0;
+  padding-left: 1%;
+  margin-left: 2%;
+  margin-top: 1%;
+  width:20%;
+  height: 100%;
+  padding: 2%;
+}
+.table-container {
+  display: flex;
+}
 
-input{
-    border: 1px solid #BFBBBB; 
-    border-radius: 5px;
-    width: 50%;
-    height: 40px;
-    color: #BFBBBB;
+.filter2 {
+  margin-top: 3%;
+};
+
+.checkbox {
+  transform: scale(2);
+  margin-right: 5px;
+  margin: 5%;
+}
+
+input[type="text"],
+textarea {
+  border: 1px solid #bfbbbb;
+  border-radius: 5px;
+  width: 50%;
+  height: 40px;
+  color: #bfbbbb;
+}
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+.checkbox {
+  margin-right: 5px;
+}
+
+.botonfiltro {
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.buttonfilterAplicate {
+  background-color: #aa2535;
+  color: white;
+  width: 40%;
+  height: 40px;
+  border-radius: 6px;
+  border-color: transparent;
 }
 .custom-button {
-    background-color: transparent;
-    border-color: transparent;
-    vertical-align: middle;
+  background-color: transparent;
+  border-color: transparent;
+  vertical-align: middle;
 }
 .mat-row:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .mat-mdc-paginator-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
-  
+.calendar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.butoncalendar{
+    height: fit-content;
+    border: transparent;
+    background-color: white;
+}
+.inputcalendar{
 
-  
+    width: 100%;
+    height: fit-content;
+}
+select{
+    width: 100%;
+    border-color: #d3d0d0;
+}

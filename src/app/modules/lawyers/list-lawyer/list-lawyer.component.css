@@ -1,66 +1,106 @@
-
-
-.head{
-    display: flex;
+.head {
+  display: flex;
 }
 
-.title{
-    width: 50%;
+.title {
+  width: 50%;
 }
 
-.options{
-    width: 50%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.options {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.buttonFilter{
-    color: #AA2535;
-    font-size: 30px;
-    border-color: transparent;
-    background-color: transparent;
+.buttonFilter {
+  color: #aa2535;
+  font-size: 30px;
+  border-color: transparent;
+  background-color: transparent;
 }
 
-.buttonCreate{
-    background-color: #AA2535 ;
-    color: white;
-    width: 40%;
-    height: 40px;
-    border-radius: 6px;
+.buttonCreate {
+  background-color: #aa2535;
+  color: white;
+  width: 40%;
+  height: 40px;
+  border-radius: 6px;
+  border-color: transparent;
 }
-
-.input-icon {
-    position: absolute;
-    top: 123px;
-    transform: translateY(-50%);
-    left: 930px; /* Ajusta la posición del icono según sea necesario */
-    color: #999; /* Color del icono */
+.buttonfilterAplicate {
+  background-color: #aa2535;
+  color: white;
+  width: 40%;
+  height: 40px;
+  border-radius: 6px;
+  border-color: transparent;
 }
 
 .mat-elevation-z8 {
-    box-shadow: none;
+  box-shadow: none;
 }
-.table{
-    margin-top: 3%;
+.table {
+  margin-top: 3%;
+  width: 80%;
 }
-    
+.botonfiltro {
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.filter {
+  border: 2px solid #d3d0d0;
+  padding-left: 1%;
+  margin-left: 2%;
+  margin-top: 2%;
+  width: 18%;
+  height: 100%;
+  padding: 2%;
+}
+.filter1 {
+  margin-top: 3%;
+}
+.filter2 {
+  margin-top: 3%;
+}
+h4 {
+  border-top: 2px solid #d3d0d0;
+  border-bottom: 2px solid #d3d0d0;
+}
+.checkbox {
+  transform: scale(2);
+  margin-right: 5px;
+  margin: 5%;
+}
 
-input{
-    border: 1px solid #BFBBBB; 
-    border-radius: 5px;
-    width: 50%;
-    height: 40px;
-    color: #BFBBBB;
+input[type="text"],
+textarea {
+  border: 1px solid #bfbbbb;
+  border-radius: 5px;
+  width: 50%;
+  height: 40px;
+  color: #bfbbbb;
 }
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+.checkbox {
+  margin-right: 5px;
+}
+
+.table-container {
+  display: flex;
+}
+
 .custom-button {
-    background-color: transparent;
-    border-color: transparent;
-    vertical-align: middle;
+  background-color: transparent;
+  border-color: transparent;
+  vertical-align: middle;
 }
 .mat-row:hover {
-    cursor: pointer;
-  }
-  
-
-  
+  cursor: pointer;
+}

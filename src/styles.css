@@ -1,9 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+body,
+html {
+  height: fit-content;
+  width: 80vw;
+  display: block;
+  justify-content: center;
+  align-items: center;
+}
 
-body, html {
-    height:fit-content;
-    width: 80vw;
-    display: block;
-    justify-content: center;
-    align-items: center;
+.mat-mdc-form-field-infix {
+  border-radius: 5px;
+  padding: 0;
+  min-height: 0%;
+  padding-top: 0%;
+  padding-bottom:0%;
+  /* Y cualquier otra propiedad CSS que desees modificar */
 }

@@ -24,6 +24,20 @@ export class ListLawyerComponent {
     'procesos',
     'button',
   ];
+  especialidadFilter: { valor: any; texto: string; checked: boolean }[] = [
+    { valor: 1, texto: 'Especialidad 1', checked: false },
+    { valor: 2, texto: 'Especialidad 2', checked: false },
+    { valor: 1, texto: 'Especialidad 1', checked: false },
+    { valor: 2, texto: 'Especialidad 2', checked: false },
+  ];
+  
+  processFilter: { valor: any; texto: string; checked: boolean }[] = [
+    { valor: 'A', texto: 'Proceso A', checked: false },
+    { valor: 'B', texto: 'Proceso B', checked: false },
+    { valor: 'A', texto: 'Proceso A', checked: false },
+    { valor: 'B', texto: 'Proceso B', checked: false },
+  ];
+  mostrarDiv: boolean = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   pageSize = 7;
@@ -78,7 +92,6 @@ export class ListLawyerComponent {
     this.fetchData();
   }
 
-  // Método para aplicar el filtro en tiempo real
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value
       .trim()
@@ -126,4 +139,13 @@ export class ListLawyerComponent {
     localStorage.setItem('selectedLawyer', JSON.stringify(row));
     this.router.navigate(['/infolawyer']);
   }
+
+  onCheckboxChange(opcion: { valor: any; texto: string; checked: boolean }, filterType: string): void {
+    // Maneja el cambio de checkbox aquí
+    console.log(`Opción ${opcion.texto} del filtro ${filterType} seleccionada: ${opcion.checked}`);
+  }
+  toggleDiv() {
+    this.mostrarDiv = !this.mostrarDiv;
+  }
+  
 }

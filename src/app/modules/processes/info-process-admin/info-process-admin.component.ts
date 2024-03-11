@@ -11,6 +11,7 @@ import { ActionService } from '../../../services/action.service';
 import { Pageable } from '../../../shared/model/pageable';
 import { ActuacionJefeFilter } from '../../../shared/model/actuaciones/actuacion.jefe.filter';
 import { ProcesoStatus } from '../../../shared/model/process/proceso.estado';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-info-process-admin',
@@ -34,13 +35,23 @@ export class InfoProcessAdminComponent {
   pageIndex = 0;
   totalItems = 0;
 
+  processFilter: { valor: any; texto: string; checked: boolean }[] = [
+    { valor: 'A', texto: 'Proceso A', checked: false },
+    { valor: 'B', texto: 'Proceso B', checked: false },
+  ];
+  
+  mostrarDiv: boolean = false;
+  selectedDate: Date;
+
   constructor(
     private changeDetectorRefs: ChangeDetectorRef,
     private router: Router,
     private processService: ProcessService,
     private userService: UserService,
-    private actionService: ActionService
+    private actionService: ActionService,
+    private dateAdapter: DateAdapter<Date>
   ) {
+    this.selectedDate = new Date();
     this.dataSource = new MatTableDataSource<ActuacionJefeFilter>([]);
   }
 
@@ -194,5 +205,17 @@ export class InfoProcessAdminComponent {
 
   ngOnDestroy() {
     localStorage.removeItem('selectedIdProcessAdmin');
+  }
+  onCheckboxChange(
+    opcion: { valor: any; texto: string; checked: boolean },
+    filterType: string
+  ): void {
+    // Maneja el cambio de checkbox aquí
+    console.log(
+      `Opción ${opcion.texto} del filtro ${filterType} seleccionada: ${opcion.checked}`
+    );
+  }
+  toggleDiv() {
+    this.mostrarDiv = !this.mostrarDiv;
   }
 }
