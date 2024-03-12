@@ -147,7 +147,7 @@ export class InfoProcessLawyerComponent {
   openDialogEdit(item: Audiencia) {
     const dialogRef = this.dialog.open(EditLinkAudienceComponent, {
       width: '350px',
-      height: '300px',
+      height: '200px',
       panelClass: 'custom-dialog-container',
       position: {
         top: '250px',
