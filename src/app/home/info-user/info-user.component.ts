@@ -139,9 +139,8 @@ export class InfoUserComponent implements OnInit {
   }
   getImageUrlByUserId(userId: string | null): void {
     if (userId !== null) {
-      const userIdNumber = parseInt(userId, 10);
       this.storageService
-        .descargarFoto(userIdNumber)
+        .descargarFoto(parseInt(userId))
         .subscribe((photo: Blob) => {
           this.imageUrl = URL.createObjectURL(photo);
         });
