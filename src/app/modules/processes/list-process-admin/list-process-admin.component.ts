@@ -32,20 +32,21 @@ export class ListProcessAdminComponent {
     'Estado',
   ];
   selectedOption: any; // Aquí almacenarás la opción seleccionada
-  options = [
+  selectTypeProcess = [
     { value: 'opcion1', label: 'Opción 1' },
     { value: 'opcion2', label: 'Opción 2' },
     { value: 'opcion3', label: 'Opción 3' }
   ];
 
-  processFilter: { valor: any; texto: string; checked: boolean }[] = [
+  stateFilter: { valor: any; texto: string; checked: boolean }[] = [
     { valor: 'A', texto: 'Proceso A', checked: false },
     { valor: 'B', texto: 'Proceso B', checked: false },
     { valor: 'A', texto: 'Proceso A', checked: false },
     { valor: 'B', texto: 'Proceso B', checked: false },
   ];
   mostrarDiv: boolean = false;
-  selectedDate: Date;
+  initDate: Date;
+  endDate: Date;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   pageSize = 5;
@@ -59,7 +60,8 @@ export class ListProcessAdminComponent {
     private processService: ProcessService,
     private dateAdapter: DateAdapter<Date>
   ) {
-    this.selectedDate = new Date();
+    this.initDate = new Date();
+    this.endDate = new Date();
     this.dataSource = new MatTableDataSource<ProcessJefeFilter>([]);
   }
 
