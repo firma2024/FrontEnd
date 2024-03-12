@@ -55,10 +55,10 @@
           mat-cell
           *matCellDef="let element"
           [ngStyle]="{
-            color: element.estadoVisto ? 'red' : 'rgba(170,37,53,255)'
+            color: element.estadoVisto ? 'rgba(170, 37, 53, 1)' : 'rgba(170, 37, 53, 1)'
           }"
         >
-          {{ element.estado ? "Actuaciones sin revisar" : "" }}
+          {{ element.estadoVisto ? "Actuaciones sin revisar" : "" }}
         </td>
       </ng-container>
 
