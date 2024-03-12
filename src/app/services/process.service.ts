@@ -78,40 +78,8 @@ export class ProcessService {
   }
   //Filter process information by lawyer
   getProcesosByAbogadoFilter(
-    fechaInicioStr: string,
-    abogadoId: number,
-    fechaFinStr: string,
-    estadosProceso: string[],
-    tipoProceso: string,
-    page: number,
-    size: number
+    params = new HttpParams()
   ): Observable<Pageable<ProcesoLawyerFilter>> {
-    let params = new HttpParams()
-    .set('abogadoId', abogadoId.toString())
-
-    if (fechaInicioStr) {
-      params = params.set('fechaInicioStr', fechaInicioStr);
-    }
-
-    if (fechaFinStr) {
-      params = params.set('fechaFinStr', fechaFinStr);
-    }
-
-    if (estadosProceso && estadosProceso.length > 0) {
-      params = params.set('estadosProceso', estadosProceso.join(','));
-    }
-
-    if (tipoProceso) {
-      params = params.set('tipoProceso', tipoProceso);
-    }
-
-    if (page) {
-      params = params.set('page', page.toString());
-    }
-
-    if (size) {
-      params = params.set('size', size.toString());
-    }
 
     return this.http.get<Pageable<ProcesoLawyerFilter>>(
       `${environment.processURL}/get/all/abogado/filter`,

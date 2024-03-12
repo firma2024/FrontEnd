@@ -10,6 +10,7 @@ import { ProcesoStatus } from '../../../shared/model/process/proceso.estado';
 import { ProcesoType } from '../../../shared/model/process/proceso.tipo';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormGroup, FormControl } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 @Component({
   selector: 'app-list-process-lawyer',
   templateUrl: './list-process-lawyer.component.html',
@@ -21,9 +22,7 @@ export class ListProcessLawyerComponent {
   dataSource: MatTableDataSource<ProcesoLawyerFilter>;
   columnNames: string[] = ['Radicado', 'Despacho', 'Tipo', 'Fecha'];
   displayedColumns: string[] = ['Radicado', 'Despacho', 'Tipo', 'Fecha'];
-  selectedProcessType: { valor: ProcesoType | null; texto: string }[] = [
-    { valor: null, texto: '' },
-  ];
+  selectedProcessType: { valor: ProcesoType | null; texto: string } | undefined;
   processTypeFilter: { valor: ProcesoType | null; texto: string }[] = [
     { valor: null, texto: 'Seleccionar' },
   ];
@@ -83,18 +82,45 @@ export class ListProcessLawyerComponent {
     this.router.navigate(['/infoprocesslawyer'], { queryParams: queryParams });
   }
   ngOnInit() {
-    this.fetchData();
     this.loadFilterParams();
-    this.selectedProcessType = [
-      { valor: this.processTypeFilter[0].valor, texto: '' },
-    ];
+    this.applyFilters();
   }
-  fetchData() {
-    const lawyerId = parseInt(localStorage.getItem('lawyerId')!);
-    const page = this.pageIndex;
+  applyFilters() {
+    let params = new HttpParams().set(
+      'abogadoId',
+      parseInt(localStorage.getItem('lawyerId')!)
+    );
+    params = params.set('page', this.pageIndex.toString());
 
+    params = params.set('size', this.pageSize.toString());
+
+    let startDateStr = '';
+    let endDateStr = '';
+    const lawyerId = parseInt(localStorage.getItem('lawyerId')!);
+    if (this.startDate) {
+      startDateStr = this.obtaintDate(this.startDate);
+      params = params.set('fechaInicioStr', startDateStr);
+    }
+    if (this.endDate) {
+      endDateStr = this.obtaintDate(this.endDate);
+      params = params.set('fechaFinStr', endDateStr);
+    }
+
+    const processStatus = this.processStatusFilter.filter(
+      (filtro) => filtro.checked
+    );
+    if (processStatus.length > 0) {
+      for (let statusProcess of processStatus) {
+        params = params.append('estadosProceso', statusProcess.texto);
+      }
+    }
+
+    console.log(params);
+    if (this.selectedProcessType?.valor) {
+      params = params.set('tipoProceso', this.selectedProcessType.valor.nombre);
+    }
     this.processService
-      .getProcesosByAbogadoFilter('', lawyerId, '', [], '', page, this.pageSize)
+      .getProcesosByAbogadoFilter(params)
       .subscribe(
         (data: Pageable<ProcesoLawyerFilter>) => {
           this.dataSource.data = data.data;
@@ -105,28 +131,6 @@ export class ListProcessLawyerComponent {
         }
       );
   }
-  applyFilters() {
-    let startDateStr = '';
-    let endDateStr = '';
-    const lawyerId = parseInt(localStorage.getItem('lawyerId')!);
-    if (this.startDate) {
-      startDateStr = this.obtaintDate(this.startDate);
-    }
-    if (this.endDate) {
-      endDateStr = this.obtaintDate(this.endDate);
-    }
-
-    const processStatus = this.processStatusFilter.filter(
-      (filtro) => filtro.checked
-    );
-    if (processStatus.length > 0) {
-      console.log(processStatus);
-    }
-    if (this.selectedProcessType) {
-      console.log('selectedProcessType:', this.selectedProcessType);
-    }
-}
-
 
   obtaintDate(date: Date) {
     let year = date.getFullYear();
@@ -138,7 +142,7 @@ export class ListProcessLawyerComponent {
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.fetchData();
+    this.applyFilters();
   }
   onSelected(value: ProcesoType): void {
     console.log('AAAAAAA', value);

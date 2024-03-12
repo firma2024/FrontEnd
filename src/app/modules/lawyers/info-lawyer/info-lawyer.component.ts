@@ -9,6 +9,7 @@ import { ProcessService } from '../../../services/process.service';
 import { Pageable } from '../../../shared/model/pageable';
 import { ProcesoLawyerFilter } from '../../../shared/model/process/process.abogado.filter';
 import { UserService } from '../../../services/user.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-info-lawyer',
@@ -54,21 +55,16 @@ export class InfoLawyerComponent {
   }
 
   fetchData() {
-    const fechaInicioStr = '';
-    const fechaFinStr = '';
-    const estadosProceso: string[] = [];
-    const tipoProceso = '';
     const lawyerId = parseInt(localStorage.getItem('selectedIdLawyer')!);
-    const page = this.pageIndex;
+
+    let params = new HttpParams()
+    params = params.set('page', this.pageIndex.toString());
+
+    params = params.set('size', this.pageSize.toString());
+    params = params.set('abogadoId', lawyerId);
     this.processService
       .getProcesosByAbogadoFilter(
-        fechaInicioStr,
-        lawyerId,
-        fechaFinStr,
-        estadosProceso,
-        tipoProceso,
-        page,
-        this.pageSize
+        params
       )
       .subscribe(
         (data: Pageable<ProcesoLawyerFilter>) => {
