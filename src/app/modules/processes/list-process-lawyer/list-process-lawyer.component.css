@@ -59,7 +59,19 @@
 .filter2 {
   margin-top: 3%;
 }
+.custom-form-field .mat-form-field-flex {
+  display: flex;
+}
 
+.custom-form-field .mat-form-field-flex .mat-form-field-infix {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.custom-form-field .mat-form-field-flex .mat-input-element {
+  flex: 1;
+  min-width: 0; /* Allow input to shrink */
+}
 .checkbox {
   transform: scale(2);
   margin-right: 5px;
