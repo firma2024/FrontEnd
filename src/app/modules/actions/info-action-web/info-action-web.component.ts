@@ -46,7 +46,8 @@ export class InfoActionWebComponent implements OnInit {
         this.annotation = data.anotacion;
         this.typeProcess = data.tipoProceso;
         this.action = data.actuacion;
-        this.datestart = data.fechaRegistro;
+        this.datestart = data.fechaInicia;
+        this.dateend = data.fechaFinaliza
         this.listaSujetos = data.sujetos.split('|');
         this.officeURL = data.link;
       });

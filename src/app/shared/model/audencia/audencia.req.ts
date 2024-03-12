@@ -1,5 +1,5 @@
 export interface AudienciaRequest {
     enlace:string,
-    procesoId:number,
+    procesoid:string,
     nombre:string
 }

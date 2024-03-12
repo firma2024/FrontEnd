@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from '../../../services/storage.service';
 import { HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { Audiencia } from '../../../shared/model/audencia/audiencia';
 
 @Component({
   selector: 'app-info-process-lawyer',
@@ -42,7 +43,7 @@ export class InfoProcessLawyerComponent {
   }
 
   listaSujetos: string[] = [];
-  listAudience: string[] = [];
+  listAudience: Audiencia[] = [];
   dataSource = new MatTableDataSource<ActuacionAbogadoFilter>();
 
   documentImageUrl: string = 'assets/document.png';
@@ -70,9 +71,8 @@ export class InfoProcessLawyerComponent {
         this.nRadicado = data.numeroRadicado;
         this.typeProcess = data.tipoProceso;
         this.listaSujetos = data.sujetos.split('|');
-        this.listAudience = data.audiencias.map(
-          (audiencia) => audiencia.nombre
-        );
+        this.listAudience = data.audiencias
+        
       });
   }
   obtainActions() {
@@ -120,6 +120,7 @@ export class InfoProcessLawyerComponent {
   }
 
   openDialog() {
+    
     const dialogRef = this.dialog.open(CreateLinkAudienceComponent, {
       width: '350px',
       height: '300px',
@@ -129,11 +130,12 @@ export class InfoProcessLawyerComponent {
         left: '400px',
       },
       data: {
+        idProcess:this.idProcess
       },
     });
   }
 
-  openDialogEdit() {
+  openDialogEdit(item: Audiencia) {
     const dialogRef = this.dialog.open(EditLinkAudienceComponent, {
       width: '350px',
       height: '300px',
@@ -143,6 +145,7 @@ export class InfoProcessLawyerComponent {
         left: '400px',
       },
       data: {
+        audience: item
       },
     });
   }

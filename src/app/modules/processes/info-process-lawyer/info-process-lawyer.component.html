@@ -41,8 +41,8 @@
 <div class="listAudiencia">
   <ul>
     <li *ngFor="let item of listAudience">
-      {{ item }}
-      <button (click)="openDialogEdit()" class="icon-pull-right fas fa-edit">Botón</button>
+      {{ item.nombre }}
+      <button (click)="openDialogEdit(item)" class="icon-pull-right fas fa-edit">Botón</button>
     </li>
   </ul>
 </div>
