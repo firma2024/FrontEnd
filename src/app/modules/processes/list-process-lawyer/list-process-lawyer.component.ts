@@ -8,7 +8,7 @@ import { Pageable } from '../../../shared/model/pageable';
 import { DateAdapter } from '@angular/material/core';
 import { ProcesoStatus } from '../../../shared/model/process/proceso.estado';
 import { ProcesoType } from '../../../shared/model/process/proceso.tipo';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormGroup, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-list-process-lawyer',
@@ -28,14 +28,13 @@ export class ListProcessLawyerComponent {
 
   processStatusFilter: { valor: any; texto: string; checked: boolean }[] = [];
   mostrarDiv: boolean = false;
-  initDate: Date | null = null;
+  startDate: Date | null = null;
   endDate: Date | null = null;
   maxDate: Date;
   range = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
   });
-  isDateSelected: boolean = true;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   pageSize = 5;
   pageIndex = 0;
@@ -50,18 +49,7 @@ export class ListProcessLawyerComponent {
     this.maxDate = new Date();
     this.dataSource = new MatTableDataSource<ProcesoLawyerFilter>([]);
   }
-  
-  dateChanged() {
-    if (this.initDate && this.endDate) {
-      console.log(this.initDate! > this.endDate!);
-      if (this.initDate.getTime() > this.endDate.getTime()) {
-        this.endDate = this.initDate;
-      }
-    } else {
-      this.initDate = new Date();
-      this.endDate = new Date();
-    }
-  }
+
   loadFilterParams() {
     //Obtain process status
     this.processService
@@ -79,10 +67,10 @@ export class ListProcessLawyerComponent {
     this.processService
       .getAllTipoProcesos()
       .subscribe((data: ProcesoType[]) => {
-        for (let statusProcess of data) {
+        for (let typeProcess of data) {
           this.processTypeFilter.push({
-            valor: statusProcess,
-            texto: statusProcess.nombre,
+            valor: typeProcess,
+            texto: typeProcess.nombre,
           });
         }
       });
@@ -114,17 +102,26 @@ export class ListProcessLawyerComponent {
       );
   }
   applyFilters() {
-    let initDateStr = '';
+    let startDateStr = '';
     let endDateStr = '';
     const lawyerId = parseInt(localStorage.getItem('lawyerId')!);
-    if (this.initDate) {
-      initDateStr = this.obtaintDate(this.initDate);
+    if (this.startDate) {
+      startDateStr = this.obtaintDate(this.startDate);
     }
     if (this.endDate) {
       endDateStr = this.obtaintDate(this.endDate);
     }
-    const processStatus = this.processStatusFilter.filter(filtro => filtro.checked);
-    console.log(this.selectedProcessType!.nombre)
+
+    const processStatus = this.processStatusFilter.filter(
+      (filtro) => filtro.checked
+    );
+    if (processStatus.length > 0) {
+      console.log(processStatus);
+    }
+    if (this.selectedProcessType) {
+      console.log(this.processTypeFilter);
+      console.log(this.selectedProcessType);
+    }
   }
   obtaintDate(date: Date) {
     let year = date.getFullYear();
@@ -132,14 +129,14 @@ export class ListProcessLawyerComponent {
     let day = date.getDate();
     return year + '-' + month + '-' + day;
   }
-  // Función para manejar el cambio de página
+
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.fetchData(); // Recargar datos con la paginación actualizada
+    this.fetchData();
   }
-  onTypeProcessChange(event:any){
-
+  onSelected(value: ProcesoType): void {
+    console.log('AAAAAAA', value);
   }
   onCheckboxChange(
     opcion: { valor: any; texto: string; checked: boolean },

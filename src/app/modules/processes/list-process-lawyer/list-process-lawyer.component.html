@@ -81,48 +81,20 @@
     <h4>FILTRAR</h4>
     <div class="filter1">
       <h5>Rango de fechas</h5>
+      
       <div class="calendar">
-        <h6>Fecha inicio</h6>
-        <mat-form-field style="height: 78px">
-          <input
-            class="inputcalendar"
-            [matDatepicker]="picker"
-            placeholder="Selecciona una fecha"
-            [(ngModel)]="initDate"
-            [max]="maxDate"
-            (dateChange)="dateChanged()"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+        <mat-form-field class="custom-form-field">
+          <mat-label>Ingrese rango</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date" [(ngModel)]="startDate">
+            <input matEndDate placeholder="End date" [(ngModel)]="endDate">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
-        <button class="butoncalendar" (click)="picker.open()">
-          <span class="fa-solid fa-calendar-days"></span>
-        </button>
       </div>
-      <div class="calendar">
-        <h6>Fecha final</h6>
-        <mat-form-field style="height: 78px; padding: 0%">
-          <input
-            class="inputcalendar"
-            [matDatepicker]="picker2"
-            placeholder="Selecciona una fecha"
-            [(ngModel)]="endDate"
-            [max]="maxDate"
-            (dateChange)="dateChanged()"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker2"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker2></mat-datepicker>
-        </mat-form-field>
-        <button class="butoncalendar" (click)="picker2.open()">
-          <span class="fa-solid fa-calendar-days"></span>
-        </button>
-      </div>
+      
+      
     </div>
     <div class="filter2">
       <h5>Estado proceso</h5>
@@ -138,7 +110,7 @@
     </div>
     <div class="selectfilter">
       <h5>Tipo de proceso</h5>
-      <select id="options" [(ngModel)]="selectedProcessType" (ngModelChange)="onTypeProcessChange($event)">
+      <select id="options" [(ngModel)]="selectedProcessType" >
         <option *ngFor="let option of processTypeFilter" [value]="option.valor">
           {{ option.texto }}
         </option>
