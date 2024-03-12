@@ -76,7 +76,8 @@
       [pageSize]="pageSize"
       (page)="onPageChange($event)"
     ></mat-paginator>
-  </div><div *ngIf="mostrarDiv" class="filter">
+  </div>
+  <div *ngIf="mostrarDiv" class="filter">
     <h4>FILTRAR</h4>
     <div class="filter1">
       <h5>Rango de fechas</h5>
@@ -87,7 +88,9 @@
             class="inputcalendar"
             [matDatepicker]="picker"
             placeholder="Selecciona una fecha"
-            [(ngModel)]="selectedDate"
+            [(ngModel)]="initDate"
+            [max]="maxDate"
+            (dateChange)="dateChanged()"
           />
           <mat-datepicker-toggle
             matSuffix
@@ -104,41 +107,47 @@
         <mat-form-field style="height: 78px; padding: 0%">
           <input
             class="inputcalendar"
-            [matDatepicker]="picker"
+            [matDatepicker]="picker2"
             placeholder="Selecciona una fecha"
-            [(ngModel)]="selectedDate"
+            [(ngModel)]="endDate"
+            [max]="maxDate"
+            (dateChange)="dateChanged()"
           />
           <mat-datepicker-toggle
             matSuffix
-            [for]="picker"
+            [for]="picker2"
           ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
-        <button class="butoncalendar" (click)="picker.open()">
+        <button class="butoncalendar" (click)="picker2.open()">
           <span class="fa-solid fa-calendar-days"></span>
         </button>
       </div>
     </div>
     <div class="filter2">
       <h5>Estado proceso</h5>
-      <div *ngFor="let opcion of processFilter">
+      <div *ngFor="let opcion of processStatusFilter">
         <input
           class="checkbox"
           type="checkbox"
           [checked]="opcion.checked"
-          (change)="onCheckboxChange(opcion, 'processFilter')"
+          (change)="onCheckboxChange(opcion, 'processStatusFilter')"
         />
         {{ opcion.texto }}
       </div>
     </div>
     <div class="selectfilter">
       <h5>Tipo de proceso</h5>
-      <select id="options" [(ngModel)]="selectedOption">
-        <option *ngFor="let option of options" [value]="option.value">{{ option.label }}</option>
+      <select id="options" [(ngModel)]="selectedProcessType" (ngModelChange)="onTypeProcessChange($event)">
+        <option *ngFor="let option of processTypeFilter" [value]="option.valor">
+          {{ option.texto }}
+        </option>
       </select>
-    </div>    
+    </div>
     <div class="botonfiltro">
-      <button class="buttonfilterAplicate">Aplicar</button>
+      <button class="buttonfilterAplicate" (click)="applyFilters()">
+        Aplicar
+      </button>
     </div>
   </div>
 </div>
