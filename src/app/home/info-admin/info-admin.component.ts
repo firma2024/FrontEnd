@@ -16,10 +16,11 @@ import { Route, Router } from '@angular/router';
 export class InfoAdminComponent implements OnInit {
   usuario: UserProcesess = {} as UserProcesess;
   usuarioName: string = '';
-  imageUrl: string = 'assets/defaultProfile.png';
+  imageUrl: string = '';
   listaEspecialidades: Speciality[] = [];
   selectedSpecialty: string = '';
   rol: string = '';
+  userId: string= '';
 
   constructor(
     private dialogRef: MatDialogRef<InfoAdminComponent>,
@@ -31,10 +32,11 @@ export class InfoAdminComponent implements OnInit {
 
   ngOnInit() {
     this.rol = localStorage.getItem('role') || '';
+    const userId = localStorage.getItem('userId');
     this.obtaintUserInfo();
-    this.getImageUrlByUserId();
     this.getAllTipoAbogado();
   }
+  
 
   obtaintUserInfo() {
     const userName = localStorage.getItem('username')!;
@@ -42,14 +44,16 @@ export class InfoAdminComponent implements OnInit {
       (data: UserProcesess) => {
         this.usuario = data;
         this.usuarioName = this.usuario.nombres;
-        console.log(this.usuario.telefono)
+        console.log(this.usuario.telefono);
         localStorage.setItem('userId', this.usuario.id.toString());
+        this.getImageUrlByUserId(this.userId);
       },
       (error) => {
         console.error('Error al obtener la información del usuario:', error);
       }
     );
   }
+  
 
   updateProfile() {
     Swal.fire({
@@ -134,17 +138,26 @@ export class InfoAdminComponent implements OnInit {
       return true;
     }
   }
-  getImageUrlByUserId(): void {
-    const userId = localStorage.getItem('userId');
+
+  getImageUrlByUserId(userId: string | null): void {
     if (userId) {
       const userIdNumber = parseInt(userId);
       this.storageService
         .descargarFoto(userIdNumber)
         .subscribe((photo: Blob) => {
-          this.imageUrl = URL.createObjectURL(photo);
+          if (photo.size > 0) {
+            this.imageUrl = URL.createObjectURL(photo);
+          } else {
+            // Si la foto está vacía, asignar la imagen por defecto
+            this.imageUrl = 'assets/defaultProfile.png';
+          }
         });
+    } else {
+      // Si no hay userId, asignar la imagen por defecto
+      this.imageUrl = 'assets/defaultProfile.png';
     }
   }
+  
 
   getAllTipoAbogado(): void {
     this.userService.getAllTipoAbogado().subscribe((tipos: Speciality[]) => {
