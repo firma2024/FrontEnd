@@ -40,7 +40,8 @@ export class InfoProcessLawyerComponent {
   ];
 
   mostrarDiv: boolean = false;
-  selectedDate: Date;
+  initDate: Date;
+  endDate: Date;
 
   idProcess: string = '';
   ngOnInit(): void {
@@ -65,7 +66,8 @@ export class InfoProcessLawyerComponent {
     public dialog: MatDialog,
     private dateAdapter: DateAdapter<Date>
   ) {
-    this.selectedDate = new Date();
+    this.initDate = new Date();
+    this.endDate = new Date();
   }
 
   loadData() {
