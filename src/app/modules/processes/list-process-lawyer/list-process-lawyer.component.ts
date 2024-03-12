@@ -21,7 +21,9 @@ export class ListProcessLawyerComponent {
   dataSource: MatTableDataSource<ProcesoLawyerFilter>;
   columnNames: string[] = ['Radicado', 'Despacho', 'Tipo', 'Fecha'];
   displayedColumns: string[] = ['Radicado', 'Despacho', 'Tipo', 'Fecha'];
-  selectedProcessType: ProcesoType | null = null;
+  selectedProcessType: { valor: ProcesoType | null; texto: string }[] = [
+    { valor: null, texto: '' },
+  ];
   processTypeFilter: { valor: ProcesoType | null; texto: string }[] = [
     { valor: null, texto: 'Seleccionar' },
   ];
@@ -83,7 +85,9 @@ export class ListProcessLawyerComponent {
   ngOnInit() {
     this.fetchData();
     this.loadFilterParams();
-    this.selectedProcessType = this.processTypeFilter[0].valor;
+    this.selectedProcessType = [
+      { valor: this.processTypeFilter[0].valor, texto: '' },
+    ];
   }
   fetchData() {
     const lawyerId = parseInt(localStorage.getItem('lawyerId')!);
@@ -119,10 +123,11 @@ export class ListProcessLawyerComponent {
       console.log(processStatus);
     }
     if (this.selectedProcessType) {
-      console.log(this.processTypeFilter);
-      console.log(this.selectedProcessType);
+      console.log('selectedProcessType:', this.selectedProcessType);
     }
-  }
+}
+
+
   obtaintDate(date: Date) {
     let year = date.getFullYear();
     let month = date.getMonth() + 1;

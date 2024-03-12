@@ -111,7 +111,7 @@
     <div class="selectfilter">
       <h5>Tipo de proceso</h5>
       <select id="options" [(ngModel)]="selectedProcessType" >
-        <option *ngFor="let option of processTypeFilter" [value]="option.valor">
+        <option *ngFor="let option of processTypeFilter" [ngValue]="option">
           {{ option.texto }}
         </option>
       </select>
