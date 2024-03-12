@@ -12,6 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from '../../../services/storage.service';
 import { HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
+import { Audiencia } from '../../../shared/model/audencia/audiencia';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-info-process-lawyer',
@@ -32,6 +34,13 @@ export class InfoProcessLawyerComponent {
   pageIndex = 0;
   totalItems = 0;
   id: string | null = null;
+  processFilter: { valor: any; texto: string; checked: boolean }[] = [
+    { valor: 'A', texto: 'Proceso A', checked: false },
+    { valor: 'B', texto: 'Proceso B', checked: false },
+  ];
+
+  mostrarDiv: boolean = false;
+  selectedDate: Date;
 
   idProcess: string = '';
   ngOnInit(): void {
@@ -42,7 +51,7 @@ export class InfoProcessLawyerComponent {
   }
 
   listaSujetos: string[] = [];
-  listAudience: string[] = [];
+  listAudience: Audiencia[] = [];
   dataSource = new MatTableDataSource<ActuacionAbogadoFilter>();
 
   documentImageUrl: string = 'assets/document.png';
@@ -53,8 +62,11 @@ export class InfoProcessLawyerComponent {
     private activatedRoute: ActivatedRoute,
     private storageService: StorageService,
     private router: Router,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    private dateAdapter: DateAdapter<Date>
+  ) {
+    this.selectedDate = new Date();
+  }
 
   loadData() {
     this.obtainActions();
@@ -70,9 +82,7 @@ export class InfoProcessLawyerComponent {
         this.nRadicado = data.numeroRadicado;
         this.typeProcess = data.tipoProceso;
         this.listaSujetos = data.sujetos.split('|');
-        this.listAudience = data.audiencias.map(
-          (audiencia) => audiencia.nombre
-        );
+        this.listAudience = data.audiencias;
       });
   }
   obtainActions() {
@@ -129,21 +139,35 @@ export class InfoProcessLawyerComponent {
         left: '400px',
       },
       data: {
+        idProcess: this.idProcess,
       },
     });
   }
 
-  openDialogEdit() {
+  openDialogEdit(item: Audiencia) {
     const dialogRef = this.dialog.open(EditLinkAudienceComponent, {
       width: '350px',
       height: '300px',
       panelClass: 'custom-dialog-container',
       position: {
-        top: '200px',
-        left: '400px',
+        top: '250px',
+        left: '600px',
       },
       data: {
+        audience: item,
       },
     });
+  }
+  onCheckboxChange(
+    opcion: { valor: any; texto: string; checked: boolean },
+    filterType: string
+  ): void {
+    // Maneja el cambio de checkbox aquí
+    console.log(
+      `Opción ${opcion.texto} del filtro ${filterType} seleccionada: ${opcion.checked}`
+    );
+  }
+  toggleDiv() {
+    this.mostrarDiv = !this.mostrarDiv;
   }
 }

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ProcessService } from '../../../services/process.service';
 import { ProcesoLawyerFilter } from '../../../shared/model/process/process.abogado.filter';
 import { Pageable } from '../../../shared/model/pageable';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-list-process-lawyer',
@@ -17,6 +18,21 @@ export class ListProcessLawyerComponent {
   dataSource: MatTableDataSource<ProcesoLawyerFilter>;
   columnNames: string[] = ['Radicado', 'Despacho', 'Tipo', 'Fecha'];
   displayedColumns: string[] = ['Radicado', 'Despacho', 'Tipo', 'Fecha'];
+  selectedOption: any; // Aquí almacenarás la opción seleccionada
+  options = [
+    { value: 'opcion1', label: 'Opción 1' },
+    { value: 'opcion2', label: 'Opción 2' },
+    { value: 'opcion3', label: 'Opción 3' }
+  ];
+
+  processFilter: { valor: any; texto: string; checked: boolean }[] = [
+    { valor: 'A', texto: 'Proceso A', checked: false },
+    { valor: 'B', texto: 'Proceso B', checked: false },
+    { valor: 'A', texto: 'Proceso A', checked: false },
+    { valor: 'B', texto: 'Proceso B', checked: false },
+  ];
+  mostrarDiv: boolean = false;
+  selectedDate: Date;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   pageSize = 5;
@@ -26,8 +42,10 @@ export class ListProcessLawyerComponent {
   constructor(
     private changeDetectorRefs: ChangeDetectorRef,
     private router: Router,
-    private processService: ProcessService
+    private processService: ProcessService,
+    private dateAdapter: DateAdapter<Date>
   ) {
+    this.selectedDate = new Date();
     this.dataSource = new MatTableDataSource<ProcesoLawyerFilter>([]);
   }
 
@@ -74,5 +92,17 @@ export class ListProcessLawyerComponent {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.fetchData(); // Recargar datos con la paginación actualizada
+  }
+  onCheckboxChange(
+    opcion: { valor: any; texto: string; checked: boolean },
+    filterType: string
+  ): void {
+    // Maneja el cambio de checkbox aquí
+    console.log(
+      `Opción ${opcion.texto} del filtro ${filterType} seleccionada: ${opcion.checked}`
+    );
+  }
+  toggleDiv() {
+    this.mostrarDiv = !this.mostrarDiv;
   }
 }

@@ -13,6 +13,7 @@ import { ProcesoLawyer } from '../shared/model/process/proceso.abogado';
 import { ProcesoStatus } from '../shared/model/process/proceso.estado';
 import { ProcesoType } from '../shared/model/process/proceso.tipo';
 import { AudienciaRequest } from '../shared/model/audencia/audencia.req';
+import { MensajeResponse } from '../shared/model/message';
 
 @Injectable({
   providedIn: 'root',
@@ -191,23 +192,23 @@ export class ProcessService {
       `${environment.processURL}/tipoProceso/get/all`
     );
   }
-  actualizarAudiencia(id: number, enlace: string): Observable<string> {
-    return this.http.put<string>(
+  actualizarAudiencia(id: number, enlace: string): Observable<MensajeResponse> {
+    return this.http.put<MensajeResponse>(
       `${environment.processURL}/audiencia/update?id=${id}&enlace=${enlace}`,
       {}
     );
   }
   agregarAudiencia(
     enlace: string,
-    procesoId: number,
+    procesoId: string,
     nombre: string
-  ): Observable<string> {
+  ): Observable<MensajeResponse> {
     const audenciaReq: AudienciaRequest={
       enlace:enlace,
-      procesoId:procesoId,
+      procesoid:procesoId,
       nombre:nombre
     }
-    return this.http.post<string>(
+    return this.http.post<MensajeResponse>(
       `${environment.processURL}/audiencia/add`,
       audenciaReq
     );
