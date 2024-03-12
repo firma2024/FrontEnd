@@ -16,7 +16,7 @@ import { Route, Router } from '@angular/router';
 export class InfoAdminComponent implements OnInit {
   usuario: UserProcesess = {} as UserProcesess;
   usuarioName: string = '';
-  imageUrl: string = '';
+  imageUrl: string = 'assets/defaultProfile.png';
   listaEspecialidades: Speciality[] = [];
   selectedSpecialty: string = '';
   rol: string = '';
@@ -34,6 +34,7 @@ export class InfoAdminComponent implements OnInit {
     this.rol = localStorage.getItem('role') || '';
     const userId = localStorage.getItem('userId');
     this.obtaintUserInfo();
+    this.getImageUrlByUserId(userId);
     this.getAllTipoAbogado();
   }
   
@@ -44,16 +45,14 @@ export class InfoAdminComponent implements OnInit {
       (data: UserProcesess) => {
         this.usuario = data;
         this.usuarioName = this.usuario.nombres;
-        console.log(this.usuario.telefono);
+        console.log(this.usuario.telefono)
         localStorage.setItem('userId', this.usuario.id.toString());
-        this.getImageUrlByUserId(this.userId);
       },
       (error) => {
         console.error('Error al obtener la información del usuario:', error);
       }
     );
   }
-  
 
   updateProfile() {
     Swal.fire({
@@ -140,24 +139,15 @@ export class InfoAdminComponent implements OnInit {
   }
 
   getImageUrlByUserId(userId: string | null): void {
-    if (userId) {
-      const userIdNumber = parseInt(userId);
+    if (userId !== null) {
+      const userIdNumber = parseInt(userId, 10);
       this.storageService
         .descargarFoto(userIdNumber)
         .subscribe((photo: Blob) => {
-          if (photo.size > 0) {
-            this.imageUrl = URL.createObjectURL(photo);
-          } else {
-            // Si la foto está vacía, asignar la imagen por defecto
-            this.imageUrl = 'assets/defaultProfile.png';
-          }
+          this.imageUrl = URL.createObjectURL(photo);
         });
-    } else {
-      // Si no hay userId, asignar la imagen por defecto
-      this.imageUrl = 'assets/defaultProfile.png';
     }
   }
-  
 
   getAllTipoAbogado(): void {
     this.userService.getAllTipoAbogado().subscribe((tipos: Speciality[]) => {

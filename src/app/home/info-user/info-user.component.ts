@@ -21,6 +21,7 @@ export class InfoUserComponent implements OnInit {
   listaEspecialidades: Speciality[] = [];
   selectedSpecialty: string = '';
   rol: string = '';
+  userId: string= '';
 
   constructor(
     private dialogRef: MatDialogRef<InfoUserComponent>,
@@ -32,8 +33,9 @@ export class InfoUserComponent implements OnInit {
 
   ngOnInit() {
     this.rol = localStorage.getItem('role') || '';
+    const userId = localStorage.getItem('userId');
     this.obtaintUserInfo();
-    this.getImageUrlByUserId();
+    this.getImageUrlByUserId(userId);
     this.getAllTipoAbogado();
   }
 
@@ -135,10 +137,9 @@ export class InfoUserComponent implements OnInit {
       return true;
     }
   }
-  getImageUrlByUserId(): void {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      const userIdNumber = parseInt(userId);
+  getImageUrlByUserId(userId: string | null): void {
+    if (userId !== null) {
+      const userIdNumber = parseInt(userId, 10);
       this.storageService
         .descargarFoto(userIdNumber)
         .subscribe((photo: Blob) => {
