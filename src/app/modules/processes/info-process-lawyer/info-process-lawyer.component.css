@@ -1,80 +1,162 @@
-.sujetos{
-    height: fit-content;
+.sujetos {
+  height: fit-content;
 }
 .columns {
-    display: flex;
+  display: flex;
 }
 
-.column { 
-    display: flex;
+.column {
+  display: flex;
 }
 .column p {
-    margin: 0;
-    padding: 8px 8px;
-    height: 80px;
+  margin: 0;
+  padding: 8px 8px;
+  height: 80px;
 }
 .column li {
-    margin: 0;
+  margin: 0;
 }
-.half-column1{
-    width: 150px;
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
+.half-column1 {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
 }
-.half-column2{
-    width: 250px;
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
+.half-column2 {
+  width: 250px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
 }
-.half-column3{
-    width: 450px;
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
-    list-style-type: none;
-    height: fit-content;
+.half-column3 {
+  width: 450px;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  list-style-type: none;
+  height: fit-content;
 }
-.half-column4{
-    width: 160px;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
+.half-column4 {
+  width: 160px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
 }
-.buttonAdd{
-    border-radius: 15px;
+.buttonAdd {
+  border-radius: 15px;
 }
-.enlaceAudiencias{
-    display: flex;
-    height: fit-content;
+.enlaceAudiencias {
+  display: flex;
+  height: fit-content;
 }
-.enlaceAudiencias p{
-    margin: 0%;
-    margin-right: 3%;
+.enlaceAudiencias p {
+  margin: 0%;
+  margin-right: 3%;
 }
-.listAudiencia li{
-    
-    width: fit-content;
-    border-bottom: 1px solid #ccc;
-    list-style-type: none;
+.listAudiencia li {
+  width: fit-content;
+  list-style-type: none;
 }
-.table{
+.table {
     margin-top: 1%;
-    width: 70vw;
+    width: 78%;
     margin-bottom: 3%;
-}
-.buttondownload{
-    font-size: 30px;
-    background-color:transparent;
-    border-color: transparent;
-    color: #AA2535;
-}
-.download{
+  }
+  .filter {
+    border: 2px solid #d3d0d0;
+    padding-left: 1%;
+    margin-left: 2%;
+    margin-top: 1%;
+    width: 20%;
+    height: 100%;
+    padding: 2%;
+  }
+  .table-container {
     display: flex;
-    justify-content: end;
-    margin-right: 10%;
+  }
+  
+  .filter2 {
+    margin-top: 3%;
+  }
+  
+  .checkbox {
+    transform: scale(2);
+    margin-right: 5px;
+    margin: 5%;
+  }
+  
+  input[type="text"],
+  textarea {
+    border: 1px solid #bfbbbb;
+    border-radius: 5px;
+    width: 50%;
+    height: 40px;
+    color: #bfbbbb;
+  }
+  .checkbox-option {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  .checkbox {
+    margin-right: 5px;
+  }
+  
+  .botonfiltro {
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .buttonfilterAplicate {
+    background-color: #aa2535;
+    color: white;
+    width: 40%;
+    height: 40px;
+    border-radius: 6px;
+    border-color: transparent;
+  }
+  .calendar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .butoncalendar {
+    height: fit-content;
+    border: transparent;
+    background-color: white;
+  }
+  .inputcalendar {
+    width: 100%;
+    height: fit-content;
+  }
+.buttondownload {
+  font-size: 30px;
+  background-color: transparent;
+  border-color: transparent;
+  color: #aa2535;
+}
+.download {
+  display: flex;
+  justify-content: end;
+  margin-right: 10%;
+  width: 60vw;
+  justify-content: space-between;
+}
+
+
+.listAudiencia .list-item {
+  display: flex; 
+  justify-content: space-between; 
+  width: 80px; 
+  padding-right: 20px; 
+}
+
+.listAudiencia button {
+  background-color: transparent; 
+  border: none; 
+  cursor: pointer; 
 }
