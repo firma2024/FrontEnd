@@ -125,4 +125,12 @@ export class ListProcessAdminComponent {
   toggleDiv() {
     this.mostrarDiv = !this.mostrarDiv;
   }
+  
+  aplicateFilter() {
+    // Obtener el valor seleccionado
+    console.log('Valor seleccionado:', this.selectedOption);
+    // Realizar otras acciones según el valor seleccionado
+  }
+  
+  
 }
