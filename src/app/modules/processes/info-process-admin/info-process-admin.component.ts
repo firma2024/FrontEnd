@@ -35,13 +35,14 @@ export class InfoProcessAdminComponent {
   pageIndex = 0;
   totalItems = 0;
 
-  processFilter: { valor: any; texto: string; checked: boolean }[] = [
+  stateFilter: { valor: any; texto: string; checked: boolean }[] = [
     { valor: 'A', texto: 'Proceso A', checked: false },
     { valor: 'B', texto: 'Proceso B', checked: false },
   ];
   
   mostrarDiv: boolean = false;
-  selectedDate: Date;
+  initDate: Date;
+  endDate: Date;
 
   constructor(
     private changeDetectorRefs: ChangeDetectorRef,
@@ -51,7 +52,8 @@ export class InfoProcessAdminComponent {
     private actionService: ActionService,
     private dateAdapter: DateAdapter<Date>
   ) {
-    this.selectedDate = new Date();
+    this.initDate = new Date();
+    this.endDate = new Date();
     this.dataSource = new MatTableDataSource<ActuacionJefeFilter>([]);
   }
 

@@ -41,14 +41,14 @@
 }
 .table {
   margin-top: 3%;
-  width: 78%;
+  width: 100%;
 }
 .filter {
   border: 2px solid #d3d0d0;
   padding-left: 1%;
   margin-left: 2%;
   margin-top: 1%;
-  width:20%;
+  width: 20%;
   height: 100%;
   padding: 2%;
 }
@@ -58,7 +58,7 @@
 
 .filter2 {
   margin-top: 3%;
-};
+}
 
 .checkbox {
   transform: scale(2);
@@ -111,22 +111,21 @@ textarea {
   justify-content: center;
 }
 
-.calendar{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.calendar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.butoncalendar{
-    height: fit-content;
-    border: transparent;
-    background-color: white;
+.butoncalendar {
+  height: fit-content;
+  border: transparent;
+  background-color: white;
 }
-.inputcalendar{
-
-    width: 100%;
-    height: fit-content;
+.inputcalendar {
+  width: 100%;
+  height: fit-content;
 }
-select{
-    width: 100%;
-    border-color: #d3d0d0;
+select {
+  width: 100%;
+  border-color: #d3d0d0;
 }

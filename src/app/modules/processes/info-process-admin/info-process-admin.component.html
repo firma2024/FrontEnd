@@ -132,7 +132,7 @@
             class="inputcalendar"
             [matDatepicker]="picker"
             placeholder="Selecciona una fecha"
-            [(ngModel)]="selectedDate"
+            [(ngModel)]="initDate"
           />
           <mat-datepicker-toggle
             matSuffix
@@ -151,7 +151,7 @@
             class="inputcalendar"
             [matDatepicker]="picker"
             placeholder="Selecciona una fecha"
-            [(ngModel)]="selectedDate"
+            [(ngModel)]="endDate"
           />
           <mat-datepicker-toggle
             matSuffix
@@ -166,12 +166,12 @@
     </div>
     <div class="filter2">
       <h5>Estado</h5>
-      <div *ngFor="let opcion of processFilter">
+      <div *ngFor="let opcion of stateFilter">
         <input
           class="checkbox"
           type="checkbox"
           [checked]="opcion.checked"
-          (change)="onCheckboxChange(opcion, 'processFilter')"
+          (change)="onCheckboxChange(opcion, 'stateFilter')"
         />
         {{ opcion.texto }}
       </div>

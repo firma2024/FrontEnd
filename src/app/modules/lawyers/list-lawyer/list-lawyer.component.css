@@ -28,6 +28,11 @@
   border-radius: 6px;
   border-color: transparent;
 }
+
+.mat-elevation-z8 {
+  box-shadow: none;
+}
+
 .buttonfilterAplicate {
   background-color: #aa2535;
   color: white;
@@ -36,13 +41,9 @@
   border-radius: 6px;
   border-color: transparent;
 }
-
-.mat-elevation-z8 {
-  box-shadow: none;
-}
 .table {
   margin-top: 3%;
-  width: 80%;
+  width: 100%;
 }
 .botonfiltro {
   margin-top: 5%;
@@ -55,7 +56,7 @@
   padding-left: 1%;
   margin-left: 2%;
   margin-top: 2%;
-  width: 18%;
+  width: 20%;
   height: 100%;
   padding: 2%;
 }

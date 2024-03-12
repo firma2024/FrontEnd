@@ -40,7 +40,8 @@ export class InfoProcessLawyerComponent {
   ];
 
   mostrarDiv: boolean = false;
-  selectedDate: Date;
+  initDate: Date;
+  endDate: Date;
 
   idProcess: string = '';
   ngOnInit(): void {
@@ -65,7 +66,8 @@ export class InfoProcessLawyerComponent {
     public dialog: MatDialog,
     private dateAdapter: DateAdapter<Date>
   ) {
-    this.selectedDate = new Date();
+    this.initDate = new Date();
+    this.endDate = new Date();
   }
 
   loadData() {
@@ -147,7 +149,7 @@ export class InfoProcessLawyerComponent {
   openDialogEdit(item: Audiencia) {
     const dialogRef = this.dialog.open(EditLinkAudienceComponent, {
       width: '350px',
-      height: '300px',
+      height: '200px',
       panelClass: 'custom-dialog-container',
       position: {
         top: '250px',
