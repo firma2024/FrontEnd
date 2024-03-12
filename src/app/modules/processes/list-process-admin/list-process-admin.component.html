@@ -155,12 +155,14 @@
     </div>
     <div class="selectfilter">
       <h5>Tipo de proceso</h5>
-      <select id="selectTypeProcess" [(ngModel)]="selectedOption">
-        <option *ngFor="let option of selectTypeProcess" [value]="option.value">{{ option.label }}</option>
-      </select>
+      <div>
+        <select [(ngModel)]="selectedOption" >
+          <option *ngFor="let option of selectTypeProcess" [value]="option.value">{{ option.label }}</option>
+        </select>
+      </div>      
     </div>    
     <div class="botonfiltro">
-      <button class="buttonfilterAplicate">Aplicar</button>
+      <button (click)="aplicateFilter()" class="buttonfilterAplicate">Aplicar</button>
     </div>
   </div>
 </div>
