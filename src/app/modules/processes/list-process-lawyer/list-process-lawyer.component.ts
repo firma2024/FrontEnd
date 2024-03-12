@@ -98,11 +98,11 @@ export class ListProcessLawyerComponent {
     let endDateStr = '';
     const lawyerId = parseInt(localStorage.getItem('lawyerId')!);
     if (this.startDate) {
-      startDateStr = this.obtaintDate(this.startDate);
+      startDateStr = this.startDate.toISOString().slice(0,10);
       params = params.set('fechaInicioStr', startDateStr);
     }
     if (this.endDate) {
-      endDateStr = this.obtaintDate(this.endDate);
+      endDateStr = this.endDate.toISOString().slice(0,10);
       params = params.set('fechaFinStr', endDateStr);
     }
 
@@ -130,13 +130,6 @@ export class ListProcessLawyerComponent {
           console.error('Error al obtener los datos:', error);
         }
       );
-  }
-
-  obtaintDate(date: Date) {
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    return year + '-' + month + '-' + day;
   }
 
   onPageChange(event: PageEvent) {
