@@ -6,13 +6,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MensajeResponse } from '../../../shared/model/message';
 import Swal from 'sweetalert2';
 import { AuthService } from '../../../services/auth.service';
-import { last } from 'rxjs';
 import { StorageService } from '../../../services/storage.service';
 import { Router } from '@angular/router';
+import { UtilService } from '../../../services/util.service';
+
 @Component({
   selector: 'app-register-lawyer',
   templateUrl: './register-lawyer.component.html',
-  styleUrl: './register-lawyer.component.css',
+  styleUrls: ['./register-lawyer.component.css'],
 })
 export class RegisterLawyerComponent {
   nombreUsuario: string = '';
@@ -25,21 +26,22 @@ export class RegisterLawyerComponent {
   selectedTypeDoc: TipoDocumento | null = null;
   selectedSpecialization: TipoAbogado | null = null;
 
-  
   constructor(
     private userService: UserService,
     private authService: AuthService,
     private storageService: StorageService,
+    private utilsService: UtilService,
     private router: Router
   ) {}
 
   opcionesIdentification: { valor: TipoDocumento | null; texto: string }[] = [];
-  opcionesSpecialty: { valor: TipoAbogado | null; texto: string }[] = [];
+  opcionesSpecialty: { valor: TipoAbogado | null; texto: string; checked: boolean }[] = [];
 
   ngOnInit() {
     this.obtaintTypeOfDoc();
     this.obtainLaywersInfo();
   }
+
   obtaintTypeOfDoc() {
     this.userService.getAllTipoDocumento().subscribe(
       (typeDoc: TipoDocumento[]) => {
@@ -50,21 +52,21 @@ export class RegisterLawyerComponent {
             texto: tipoDocumento.nombre,
           });
         });
-        console.log(this.opcionesIdentification);
       },
       (error) => {
         console.error('Error al obtener tipos de documento:', error);
       }
     );
   }
+
   obtainLaywersInfo() {
     this.userService.getAllTipoAbogado().subscribe(
       (typeDoc: TipoAbogado[]) => {
-        this.opcionesSpecialty.push({ valor: null, texto: 'Seleccionar' });
         typeDoc.forEach((tipoAbogado) => {
           this.opcionesSpecialty.push({
             valor: tipoAbogado,
             texto: tipoAbogado.nombre,
+            checked: false // Inicializar todos los checkboxes como no seleccionados
           });
         });
       },
@@ -73,6 +75,7 @@ export class RegisterLawyerComponent {
       }
     );
   }
+
   uploadLawyerPhoto(lawyerId: number) {
     this.storageService.subirFoto(lawyerId, this.selectedImage!).subscribe(
       (response) => {
@@ -90,6 +93,7 @@ export class RegisterLawyerComponent {
       }
     );
   }
+
   crearAbogadoBusiness() {
     this.userService
       .agregarAbogado(
@@ -116,8 +120,7 @@ export class RegisterLawyerComponent {
             confirmButtonColor: '#AA2535',
             didClose: () => {
               this.router.navigate(['/listlawyer']);
-            }
-          
+            },
           });
         },
         (error: HttpErrorResponse) => {
@@ -132,6 +135,7 @@ export class RegisterLawyerComponent {
         }
       );
   }
+
   crearAbogadoAuth() {
     this.authService
       .createAbogado(
@@ -149,7 +153,7 @@ export class RegisterLawyerComponent {
           this.crearAbogadoBusiness();
         },
         (error) => {
-          console.log(error)
+          console.log(error);
           Swal.fire({
             icon: 'error',
             iconColor: '#AA2535',
@@ -161,8 +165,8 @@ export class RegisterLawyerComponent {
         }
       );
   }
+
   crearAbogado() {
-    
     Swal.fire({
       title: '¿Estás seguro?',
       text: '¿Deseas crear este abogado?',
@@ -174,64 +178,97 @@ export class RegisterLawyerComponent {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.userService
-          .validarAgregarAbogado(
-            this.nombreUsuario,
-            this.correoElectronico,
-            parseInt(this.telefono),
-            parseInt(this.identificacion),
-            this.nombreUsuario,
-            this.selectedTypeDoc!,
-            [this.selectedSpecialization!],
-            parseInt(localStorage.getItem('firmaId')!)
-          )
-          .subscribe(
-            (response: MensajeResponse) => {
-               Swal.fire({
-                title: 'Cargando información del abogado..',
-                allowOutsideClick: false,
-                didOpen: () => {
-                  Swal.showLoading();
-                  const container = Swal.getHtmlContainer();
-                  if (container) {
-                    const loader = container.querySelector('.swal2-loader');
-                    if (loader instanceof HTMLElement) {
-                      loader.style.color = '#AA2535'; 
-                    }
-                  }
-                }
-              });
-              this.crearAbogadoAuth();
-              
-            },
-            (error: HttpErrorResponse) => {
-              if (error.status === 409) {
+        if (this.areCorrectFields()) {
+          this.userService
+            .validarAgregarAbogado(
+              this.nombreUsuario,
+              this.correoElectronico,
+              parseInt(this.telefono),
+              parseInt(this.identificacion),
+              this.nombreUsuario,
+              this.selectedTypeDoc!,
+              [this.selectedSpecialization!],
+              parseInt(localStorage.getItem('firmaId')!)
+            )
+            .subscribe(
+              (response: MensajeResponse) => {
                 Swal.fire({
-                  icon: 'error',
-                  iconColor: '#AA2535',
-                  title: 'Error',
-                  confirmButtonColor: '#AA2535',
-                  confirmButtonText: 'Okay',
-                  text: 'El abogado no puede ser ingresado porque la identificación, el nombre de usuario o el correo ya se encuentra registrado con otro abogado.',
+                  title: 'Cargando información del abogado...',
+                  allowOutsideClick: false,
+                  didOpen: () => {
+                    Swal.showLoading();
+                    const container = Swal.getHtmlContainer();
+                    if (container) {
+                      const loader = container.querySelector('.swal2-loader');
+                      if (loader instanceof HTMLElement) {
+                        loader.style.color = '#AA2535';
+                      }
+                    }
+                  },
                 });
+                this.crearAbogadoAuth();
+              },
+              (error: HttpErrorResponse) => {
+                if (error.status === 409) {
+                  Swal.fire({
+                    icon: 'error',
+                    iconColor: '#AA2535',
+                    title: 'Error',
+                    confirmButtonColor: '#AA2535',
+                    confirmButtonText: 'Okay',
+                    text: 'El abogado no puede ser ingresado porque la identificación, el nombre de usuario o el correo ya se encuentra registrado con otro abogado.',
+                  });
+                }
               }
-            }
-          );
+            );
+        }
       }
     });
   }
-  onSpecializationChange($event: any) {}
-  onTypeDocChange($event: any) {}
+
+  areCorrectFields(): boolean {
+    let dict: { [key: string]: string } = {};
+    // Validaciones existentes...
+
+    // Validación de especialidades seleccionadas
+    let specializationSelected = false;
+    for (let opcion of this.opcionesSpecialty) {
+      if (opcion.checked) {
+        specializationSelected = true;
+        break;
+      }
+    }
+    if (!specializationSelected) {
+      dict['Especialidad'] = 'Debe seleccionar al menos una especialidad.';
+    }
+
+    if (Object.keys(dict).length !== 0) {
+      this.utilsService.raiseInvalidFields(dict);
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  onSpecializationChange(opcion: any) {
+    // Manejar los cambios en los checkboxes de especialidades
+    console.log(opcion);
+  }
+
+  onTypeDocChange($event: any) {
+    // Manejar los cambios en el tipo de documento
+  }
+
   onFileSelected(event: any) {
+    // Manejar la selección de archivo de imagen
     const file: File = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
-       this.imageUrlPresentation = e.target.result;
+        this.imageUrlPresentation = e.target.result;
       };
       this.selectedImage = file;
       reader.readAsDataURL(file);
-      
     }
   }
 }

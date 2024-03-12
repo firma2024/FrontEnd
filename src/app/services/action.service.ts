@@ -11,7 +11,7 @@ import { ActuacionJefeFilter } from '../shared/model/actuaciones/actuacion.jefe.
 export class ActionService {
   constructor(private http: HttpClient) {}
   //Get action by id
-  getActuacion(id: number): Observable<ActuacionResponse> {
+  getActuacion(id: string): Observable<ActuacionResponse> {
     const url = `${environment.actionsURL}/get?id=${id}`;
     return this.http.get<ActuacionResponse>(url);
   }

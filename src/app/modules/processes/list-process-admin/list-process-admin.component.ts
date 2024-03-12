@@ -1,10 +1,11 @@
-import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { ProcessService } from '../../../services/process.service';
 import { ProcessJefeFilter } from '../../../shared/model/process/proceso.jefe.filter';
 import { Pageable } from '../../../shared/model/pageable';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-list-process-admin',
@@ -30,17 +31,35 @@ export class ListProcessAdminComponent {
     'Fecha',
     'Estado',
   ];
+  selectedOption: any; // Aquí almacenarás la opción seleccionada
+  options = [
+    { value: 'opcion1', label: 'Opción 1' },
+    { value: 'opcion2', label: 'Opción 2' },
+    { value: 'opcion3', label: 'Opción 3' }
+  ];
+
+  processFilter: { valor: any; texto: string; checked: boolean }[] = [
+    { valor: 'A', texto: 'Proceso A', checked: false },
+    { valor: 'B', texto: 'Proceso B', checked: false },
+    { valor: 'A', texto: 'Proceso A', checked: false },
+    { valor: 'B', texto: 'Proceso B', checked: false },
+  ];
+  mostrarDiv: boolean = false;
+  selectedDate: Date;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   pageSize = 5;
   pageIndex = 0;
   totalItems = 0;
 
+  
   constructor(
     private changeDetectorRefs: ChangeDetectorRef,
     private router: Router,
-    private processService: ProcessService
+    private processService: ProcessService,
+    private dateAdapter: DateAdapter<Date>
   ) {
+    this.selectedDate = new Date();
     this.dataSource = new MatTableDataSource<ProcessJefeFilter>([]);
   }
 
@@ -50,6 +69,8 @@ export class ListProcessAdminComponent {
     });
   }
 
+  
+
   fetchData() {
     const fechaInicioStr = '';
     const firmaId = parseInt(localStorage.getItem('firmaId')!);
@@ -57,7 +78,7 @@ export class ListProcessAdminComponent {
     const estadosProceso: string[] = [];
     const tipoProceso = '';
     const page = this.pageIndex;
-  
+
     this.processService
       .getProcesosByFirmaFilter(
         fechaInicioStr,
@@ -87,7 +108,19 @@ export class ListProcessAdminComponent {
   }
 
   redirectToOtherComponent(row: ProcessJefeFilter) {
-    localStorage.setItem("selectedIdProcessAdmin", row.id.toString())
+    localStorage.setItem('selectedIdProcessAdmin', row.id.toString());
     this.router.navigate(['/infoprocessadmin']);
+  }
+  onCheckboxChange(
+    opcion: { valor: any; texto: string; checked: boolean },
+    filterType: string
+  ): void {
+    // Maneja el cambio de checkbox aquí
+    console.log(
+      `Opción ${opcion.texto} del filtro ${filterType} seleccionada: ${opcion.checked}`
+    );
+  }
+  toggleDiv() {
+    this.mostrarDiv = !this.mostrarDiv;
   }
 }

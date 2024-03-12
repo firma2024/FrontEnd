@@ -22,7 +22,7 @@
 
 <div class="select">
     <h4 class="description">Seleccione el abogado que desea asignar a el proceso</h4>
-    <select id="opciones" name="opciones">
+    <select id="opciones" name="opciones" [(ngModel)]="selectedLawyer" (ngModelChange)="onSelectedLawyer($event)">
         <option *ngFor="let opcion of opciones" [value]="opcion.valor">{{ opcion.texto }}</option>
     </select>      
 </div>

@@ -62,3 +62,10 @@ input{
     display: flex;
     justify-content: center;
 }
+
+.rounded-image {
+    border-radius: 50%;
+    width: 150px; /* Ajusta el ancho según tus necesidades */
+    height: 150px; /* Ajusta la altura según tus necesidades */
+    object-fit: cover;
+  }

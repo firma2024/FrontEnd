@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
-
+import { CreateLinkAudienceComponent } from '../create-link-audience/create-link-audience.component';
+import { EditLinkAudienceComponent } from '../edit-link-audience/edit-link-audience.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ActionService } from '../../../services/action.service';
 import { Pageable } from '../../../shared/model/pageable';
-import { ActuacionResponse } from '../../../shared/model/actuaciones/actuacion.lawyer.filter';
+import { ActuacionAbogadoFilter } from '../../../shared/model/actuaciones/actuacion.lawyer.filter';
 import { ProcessService } from '../../../services/process.service';
 import { ProcesoLawyer } from '../../../shared/model/process/proceso.abogado';
+import { ActivatedRoute, Router } from '@angular/router';
+import { StorageService } from '../../../services/storage.service';
+import { HttpResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-info-process-lawyer',
@@ -28,56 +33,117 @@ export class InfoProcessLawyerComponent {
   totalItems = 0;
   id: string | null = null;
 
-  ngOnInit(): void {}
+  idProcess: string = '';
+  ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.idProcess = params['processId'];
+    });
+    this.loadData();
+  }
 
   listaSujetos: string[] = [];
   listAudience: string[] = [];
-  dataSource = new MatTableDataSource<ActuacionResponse>();
+  dataSource = new MatTableDataSource<ActuacionAbogadoFilter>();
 
   documentImageUrl: string = 'assets/document.png';
 
   constructor(
     private actionService: ActionService,
-    private processService: ProcessService
-  ) {
-    this.loadData();
-  }
+    private processService: ProcessService,
+    private activatedRoute: ActivatedRoute,
+    private storageService: StorageService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   loadData() {
     this.obtainActions();
     this.obtainInfoProcess();
   }
   obtainInfoProcess() {
-    const idProcess = localStorage.getItem('selectedIdProcessLawyer')!;
-    this.processService.getProcesoPorId(parseInt(idProcess)).subscribe((data:ProcesoLawyer) => {
-      console.log(data)
+    this.processService
+      .getProcesoPorId(parseInt(this.idProcess))
+      .subscribe((data: ProcesoLawyer) => {
+        console.log(data);
         this.despacho = data.despacho;
         this.date = data.fechaRadicacion;
         this.nRadicado = data.numeroRadicado;
         this.typeProcess = data.tipoProceso;
-        this.listaSujetos = data.sujetos.split("|")
-        this.listAudience = data.audiencias.map(audiencia => audiencia.nombre);
-    })
+        this.listaSujetos = data.sujetos.split('|');
+        this.listAudience = data.audiencias.map(
+          (audiencia) => audiencia.nombre
+        );
+      });
   }
   obtainActions() {
-    const idProcess = localStorage.getItem('selectedIdProcessLawyer')!;
     this.actionService
       .getAllActuacionesByProcesoAbogado(
-        parseInt(idProcess),
+        parseInt(this.idProcess),
         this.fechaInicioStr,
         this.fechaFinStr,
         this.existeDoc,
         this.pageIndex,
         this.pageSize
       )
-      .subscribe((data: Pageable<ActuacionResponse>) => {
+      .subscribe((data: Pageable<ActuacionAbogadoFilter>) => {
         this.dataSource.data = data.data;
         this.totalItems = data.totalItems;
+        console.log(data);
       });
   }
   onPageChange(event: any) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.loadData();
+  }
+  redirectToOtherComponent(element: ActuacionAbogadoFilter) {
+    const queryParams = { id: element.id.toString() };
+    this.router.navigate(['/infoactionbroker'], { queryParams: queryParams });
+  }
+  downloadAllDocs() {
+    this.storageService
+      .descargarTodosLosDocumentos(this.idProcess)
+      .subscribe((data: HttpResponse<Blob>) => {
+        const file = new Blob([data.body!], { type: 'application/zip' });
+        const url = window.URL.createObjectURL(file);
+        const a = document.createElement('a');
+        a.href = url;
+
+        a.download = `providencias_${this.nRadicado}.zip`;
+
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+
+        document.body.removeChild(a);
+      });
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(CreateLinkAudienceComponent, {
+      width: '350px',
+      height: '300px',
+      panelClass: 'custom-dialog-container',
+      position: {
+        top: '200px',
+        left: '400px',
+      },
+      data: {
+      },
+    });
+  }
+
+  openDialogEdit() {
+    const dialogRef = this.dialog.open(EditLinkAudienceComponent, {
+      width: '350px',
+      height: '300px',
+      panelClass: 'custom-dialog-container',
+      position: {
+        top: '200px',
+        left: '400px',
+      },
+      data: {
+      },
+    });
   }
 }

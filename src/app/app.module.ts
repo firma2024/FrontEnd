@@ -4,7 +4,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,6 +33,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { MainMenuLawyerComponent } from './modules/main-menu/main-menu-lawyer/main-menu-lawyer.component';
 import { MainMenuAdminComponent } from './modules/main-menu/main-menu-admin/main-menu-admin.component';
+import { BrokerActionComponent } from './modules/actions/broker-action/broker-action.component';
+import { CreateLinkAudienceComponent } from './modules/processes/create-link-audience/create-link-audience.component';
+import { EditLinkAudienceComponent } from './modules/processes/edit-link-audience/edit-link-audience.component';
+import { InfoUserComponent } from './home/info-user/info-user.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +60,11 @@ import { MainMenuAdminComponent } from './modules/main-menu/main-menu-admin/main
     InfoActionWebComponent,
     InfoActionComponent,
     MainMenuLawyerComponent,
-    MainMenuAdminComponent
+    MainMenuAdminComponent,
+    BrokerActionComponent,
+    CreateLinkAudienceComponent,
+    EditLinkAudienceComponent,
+    InfoUserComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +74,10 @@ import { MainMenuAdminComponent } from './modules/main-menu/main-menu-admin/main
     FormsModule,
     MatDialogModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
   providers: [
     provideAnimationsAsync(),

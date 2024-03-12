@@ -6,6 +6,8 @@ import { UserService } from '../../../services/user.service';
 import { UserProcesess } from '../../../shared/model/user/user.procesos';
 import { Pageable } from '../../../shared/model/pageable';
 import Swal from 'sweetalert2';
+import { MensajeResponse } from '../../../shared/model/message';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-list-lawyer',
@@ -22,9 +24,23 @@ export class ListLawyerComponent {
     'procesos',
     'button',
   ];
+  especialidadFilter: { valor: any; texto: string; checked: boolean }[] = [
+    { valor: 1, texto: 'Especialidad 1', checked: false },
+    { valor: 2, texto: 'Especialidad 2', checked: false },
+    { valor: 1, texto: 'Especialidad 1', checked: false },
+    { valor: 2, texto: 'Especialidad 2', checked: false },
+  ];
+  
+  processFilter: { valor: any; texto: string; checked: boolean }[] = [
+    { valor: 'A', texto: 'Proceso A', checked: false },
+    { valor: 'B', texto: 'Proceso B', checked: false },
+    { valor: 'A', texto: 'Proceso A', checked: false },
+    { valor: 'B', texto: 'Proceso B', checked: false },
+  ];
+  mostrarDiv: boolean = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  pageSize = 5;
+  pageSize = 7;
   pageIndex = 0;
   totalItems = 0;
 
@@ -76,7 +92,6 @@ export class ListLawyerComponent {
     this.fetchData();
   }
 
-  // Método para aplicar el filtro en tiempo real
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value
       .trim()
@@ -104,8 +119,15 @@ export class ListLawyerComponent {
             console.log('Usuario eliminado:', message);
             this.fetchData();
           },
-          (error) => {
-            console.error('Error al eliminar usuario:', error);
+          (error:HttpErrorResponse) => {
+            console.log(error)
+           Swal.fire({
+              icon: 'error',
+              title: 'Error al eliminar el usuario',
+              text: error.error.message,
+              confirmButtonText: 'Aceptar',
+              confirmButtonColor: '#AA2535',
+           })
           }
         );
       }
@@ -117,4 +139,13 @@ export class ListLawyerComponent {
     localStorage.setItem('selectedLawyer', JSON.stringify(row));
     this.router.navigate(['/infolawyer']);
   }
+
+  onCheckboxChange(opcion: { valor: any; texto: string; checked: boolean }, filterType: string): void {
+    // Maneja el cambio de checkbox aquí
+    console.log(`Opción ${opcion.texto} del filtro ${filterType} seleccionada: ${opcion.checked}`);
+  }
+  toggleDiv() {
+    this.mostrarDiv = !this.mostrarDiv;
+  }
+  
 }

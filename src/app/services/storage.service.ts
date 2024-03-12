@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
 import { environment } from '../environments/environments';
 @Injectable({
   providedIn: 'root',
@@ -19,21 +19,24 @@ export class StorageService {
     const url = `${environment.storageURL}/download/photo?usuarioId=${usuarioId}`;
     return this.http.get(url, { responseType: 'blob', headers });
   }
-  subirDocumento(actuacionId: number, file: File): Observable<any> {
+  subirDocumento(actuacionId: string, file: File): Observable<any> {
     const formData = new FormData();
     formData.append('document', file, file.name);
 
     const url = `${environment.storageURL}/upload/document?actuacionId=${actuacionId}`;
     return this.http.post(url, formData);
   }
-  descargarDocumento(actuacionId: number): Observable<Blob> {
+  descargarDocumento(actuacionId: string): Observable<Blob> {
     const headers = new HttpHeaders().set('Accept', 'application/pdf');
     const url = `${environment.storageURL}/download/document?actuacionId=${actuacionId}`;
     return this.http.get(url, { responseType: 'blob', headers });
   }
-  descargarTodosLosDocumentos(procesoId: number): Observable<Blob> {
+  descargarTodosLosDocumentos(
+    procesoId: string
+  ): Observable<HttpResponse<Blob>> {
     const headers = new HttpHeaders().set('Accept', 'application/zip');
     const url = `${environment.storageURL}/download/alldocuments?procesoId=${procesoId}`;
-    return this.http.get(url, { responseType: 'blob', headers });
+    
+    return this.http.get(url, { responseType: 'blob', observe: 'response', headers });
   }
 }

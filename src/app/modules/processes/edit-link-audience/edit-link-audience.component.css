@@ -1,0 +1,34 @@
+.form{
+    display: felx;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+.inputContainer{
+    display: block;
+}
+label{
+    display: block;
+    color: #6C6C6C;
+}
+input{
+    width: 280px;
+    height: 40px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #BFBBBB; 
+    text-align: center;
+}
+.buttonCreated{
+    background-color: #AA2535 ;
+    color: white;
+    border-color: transparent;
+    width: 80%;
+    height: 40px;
+    border-radius: 10px;
+}
+.buttonCreate{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

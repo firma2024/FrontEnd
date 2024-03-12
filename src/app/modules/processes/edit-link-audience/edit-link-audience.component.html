@@ -1,0 +1,9 @@
+<div class="form">
+    <div class="inputContainer">
+        <label for="link">Nuevo enlace:</label>
+        <input type="text" id="link" name="link" placeholder="Ingrese el link de la audiencia" [(ngModel)]="link" pattern="[0-9]{1,}">
+    </div>
+    <div class="buttonCreate">
+        <button class="buttonCreated" (click)="crearAudiencia()">Agregar</button>
+    </div>
+</div>

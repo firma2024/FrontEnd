@@ -19,12 +19,14 @@
         <div class="half-column1">
             <p><strong>Tipo de proceso</strong></p>
             <p><strong>Actuación </strong></p>
-            <p><strong>Fecha de Registro</strong></p>
+            <p><strong>Fecha inicia termino</strong></p>
+            <p><strong>Fecha finaliza termino</strong></p>
         </div>
         <div class="half-column2">
             <p>{{typeProcess}}</p>
             <p>{{action}}</p>
-            <p>{{dateRegister}}</p>
+            <p>{{datestart}}</p>
+            <p>{{dateend}}</p>
         </div>
     </div>
 </div>
@@ -35,12 +37,28 @@
             <p class="sujetos"><strong>Sujetos</strong></p>
         </div>
         <div class="half-column3">
-            <li *ngFor="let item of listaItems">{{ item }}</li>
+            <li *ngFor="let item of listaSujetos">{{ item }}</li>
         </div>
     </div>
 </div>
 
 <div class="description">
-    <h6>Para acceder a la pagina en la que encontrara el documento, de click en el siguiente boton.</h6>
-    <a href="https://www.ramajudicial.gov.co/web/juzgado-054-civil-municipal-de-bogota/149" target="_blank" class="iframe-link">Ir al sitio web</a>
+    <p>Para acceder a la página en la que encontrará el documento, haga clic en el siguiente botón:</p>
+    <a [href]="officeURL" target="_blank" class="iframe-link">Ir al micrositio</a>
+    <br><br>
+    <p>Para cargar la providencia de click en el siguiente boton::</p>
+    <form class="uploaddocument" (submit)="uploadDoc($event)" enctype="multipart/form-data">
+        <div>
+            <input class="iframe-linkdoc" type="file" (change)="selectDoc($event)" accept=".pdf">
+        </div>
+        <div>
+            <button type="submit" class="iframe-link-doc">Cargar providencia</button>
+        </div>
+    </form>
+    
+    
+</div>
+
+<div class="description">
+    
 </div>

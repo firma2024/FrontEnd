@@ -4,7 +4,6 @@
 }
 .sujetos{
     margin: 0;
-    border-bottom: 1px solid #ccc;
 }
 .columns {
     display: flex;
@@ -17,7 +16,6 @@
     margin: 0;
     padding: 10px 10px;
     height: 100px;
-    border-bottom: 1px solid #ccc;
 }
 .column li {
     margin: 0;

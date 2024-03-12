@@ -19,7 +19,7 @@
   
 .boton {
     color: #787676;
-    width: 200px; 
+    width: fit-content; 
     height: 70px;
     margin-bottom: 10px; 
     border: none; 
