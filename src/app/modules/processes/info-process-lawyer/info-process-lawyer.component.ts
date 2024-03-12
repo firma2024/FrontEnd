@@ -13,6 +13,7 @@ import { StorageService } from '../../../services/storage.service';
 import { HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { Audiencia } from '../../../shared/model/audencia/audiencia';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-info-process-lawyer',
@@ -33,6 +34,13 @@ export class InfoProcessLawyerComponent {
   pageIndex = 0;
   totalItems = 0;
   id: string | null = null;
+  processFilter: { valor: any; texto: string; checked: boolean }[] = [
+    { valor: 'A', texto: 'Proceso A', checked: false },
+    { valor: 'B', texto: 'Proceso B', checked: false },
+  ];
+
+  mostrarDiv: boolean = false;
+  selectedDate: Date;
 
   idProcess: string = '';
   ngOnInit(): void {
@@ -54,8 +62,11 @@ export class InfoProcessLawyerComponent {
     private activatedRoute: ActivatedRoute,
     private storageService: StorageService,
     private router: Router,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    private dateAdapter: DateAdapter<Date>
+  ) {
+    this.selectedDate = new Date();
+  }
 
   loadData() {
     this.obtainActions();
@@ -71,8 +82,7 @@ export class InfoProcessLawyerComponent {
         this.nRadicado = data.numeroRadicado;
         this.typeProcess = data.tipoProceso;
         this.listaSujetos = data.sujetos.split('|');
-        this.listAudience = data.audiencias
-        
+        this.listAudience = data.audiencias;
       });
   }
   obtainActions() {
@@ -120,7 +130,6 @@ export class InfoProcessLawyerComponent {
   }
 
   openDialog() {
-    
     const dialogRef = this.dialog.open(CreateLinkAudienceComponent, {
       width: '350px',
       height: '300px',
@@ -130,7 +139,7 @@ export class InfoProcessLawyerComponent {
         left: '400px',
       },
       data: {
-        idProcess:this.idProcess
+        idProcess: this.idProcess,
       },
     });
   }
@@ -145,8 +154,20 @@ export class InfoProcessLawyerComponent {
         left: '600px',
       },
       data: {
-        audience: item
+        audience: item,
       },
     });
+  }
+  onCheckboxChange(
+    opcion: { valor: any; texto: string; checked: boolean },
+    filterType: string
+  ): void {
+    // Maneja el cambio de checkbox aquí
+    console.log(
+      `Opción ${opcion.texto} del filtro ${filterType} seleccionada: ${opcion.checked}`
+    );
+  }
+  toggleDiv() {
+    this.mostrarDiv = !this.mostrarDiv;
   }
 }

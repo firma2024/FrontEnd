@@ -61,10 +61,78 @@
   list-style-type: none;
 }
 .table {
-  margin-top: 1%;
-  width: 70vw;
-  margin-bottom: 3%;
-}
+    margin-top: 1%;
+    width: 78%;
+    margin-bottom: 3%;
+  }
+  .filter {
+    border: 2px solid #d3d0d0;
+    padding-left: 1%;
+    margin-left: 2%;
+    margin-top: 1%;
+    width: 20%;
+    height: 100%;
+    padding: 2%;
+  }
+  .table-container {
+    display: flex;
+  }
+  
+  .filter2 {
+    margin-top: 3%;
+  }
+  
+  .checkbox {
+    transform: scale(2);
+    margin-right: 5px;
+    margin: 5%;
+  }
+  
+  input[type="text"],
+  textarea {
+    border: 1px solid #bfbbbb;
+    border-radius: 5px;
+    width: 50%;
+    height: 40px;
+    color: #bfbbbb;
+  }
+  .checkbox-option {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  .checkbox {
+    margin-right: 5px;
+  }
+  
+  .botonfiltro {
+    margin-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .buttonfilterAplicate {
+    background-color: #aa2535;
+    color: white;
+    width: 40%;
+    height: 40px;
+    border-radius: 6px;
+    border-color: transparent;
+  }
+  .calendar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .butoncalendar {
+    height: fit-content;
+    border: transparent;
+    background-color: white;
+  }
+  .inputcalendar {
+    width: 100%;
+    height: fit-content;
+  }
 .buttondownload {
   font-size: 30px;
   background-color: transparent;
@@ -75,6 +143,8 @@
   display: flex;
   justify-content: end;
   margin-right: 10%;
+  width: 60vw;
+  justify-content: space-between;
 }
 
 

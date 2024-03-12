@@ -1,58 +1,67 @@
 <div class="titleinfoLawyer">
-    <h1><strong> Información del Proceso</strong></h1>
+  <h1><strong> Información del Proceso</strong></h1>
 </div>
 
 <div class="columns">
-    <div class="column">
-        <div class="half-column1">
-            <p><strong>N° radicado</strong></p>
-            <p><strong>Fecha radicación</strong></p>
-        </div>
-        <div class="half-column2">
-            <p>{{nRadicado}}</p>
-            <p>{{date}}</p>
-        </div>
+  <div class="column">
+    <div class="half-column1">
+      <p><strong>N° radicado</strong></p>
+      <p><strong>Fecha radicación</strong></p>
     </div>
-    <div class="column">
-        <div class="half-column1">
-            <p><strong>Tipo de proceso</strong></p>
-            <p><strong>Despacho </strong></p>
-        </div>
-        <div class="half-column2">
-            <p>{{typeProcess}}</p>
-            <p>{{despacho}}</p>
-        </div>
+    <div class="half-column2">
+      <p>{{ nRadicado }}</p>
+      <p>{{ date }}</p>
     </div>
+  </div>
+  <div class="column">
+    <div class="half-column1">
+      <p><strong>Tipo de proceso</strong></p>
+      <p><strong>Despacho </strong></p>
+    </div>
+    <div class="half-column2">
+      <p>{{ typeProcess }}</p>
+      <p>{{ despacho }}</p>
+    </div>
+  </div>
 </div>
 <div class="sujetos">
-    <div class="column">
-        <div class="half-column4">
-            <p class="sujetos"><strong>Sujetos</strong></p>
-        </div>
-        <div class="half-column3">
-            <li *ngFor="let item of listaSujetos">{{ item }}</li>
-        </div>
+  <div class="column">
+    <div class="half-column4">
+      <p class="sujetos"><strong>Sujetos</strong></p>
     </div>
+    <div class="half-column3">
+      <li *ngFor="let item of listaSujetos">{{ item }}</li>
+    </div>
+  </div>
 </div>
 <div class="enlaceAudiencias">
-    <p><strong>Enlaces de Audiencias</strong></p>
-    <button class="buttonAdd"  (click)="openDialog()"><span class="icon-pull-right fas fa-add"> </span></button>
+  <p><strong>Enlaces de Audiencias</strong></p>
+  <button class="buttonAdd" (click)="openDialog()">
+    <span class="icon-pull-right fas fa-add"> </span>
+  </button>
 </div>
 <div class="listAudiencia">
   <ul>
     <li *ngFor="let item of listAudience">
       {{ item.nombre }}
-      <button (click)="openDialogEdit(item)" class="icon-pull-right fas fa-edit"></button>
+      <button
+        (click)="openDialogEdit(item)"
+        class="icon-pull-right fas fa-edit"
+      ></button>
     </li>
   </ul>
 </div>
 <div class="download">
-  <button class="buttondownload"  (click)="downloadAllDocs()"><span class="icon-pull-right fas fa-cloud-arrow-down"> </span></button>
+  <h1><strong>Actuaciones</strong></h1>
+  <button class="buttondownload" (click)="toggleDiv()"><span class="fa-solid fa-filter"></span></button>
+  <button class="buttondownload" (click)="downloadAllDocs()">
+    <span class="icon-pull-right fas fa-cloud-arrow-down"> </span>
+  </button>
 </div>
 
-
-<div class="table">
-    <table mat-table [dataSource]="dataSource" >
+<div class="table-container">
+  <div class="table">
+    <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="fechaActuacion">
         <th mat-header-cell *matHeaderCellDef>Fecha de Actuación</th>
         <td mat-cell *matCellDef="let element">{{ element.fechaActuacion }}</td>
@@ -61,7 +70,7 @@
         <th mat-header-cell *matHeaderCellDef>Nombre de Actuación</th>
         <td mat-cell *matCellDef="let element">{{ element.actuacion }}</td>
       </ng-container>
-  
+
       <ng-container matColumnDef="anotacion">
         <th mat-header-cell *matHeaderCellDef>Anotación</th>
         <td mat-cell *matCellDef="let element">{{ element.anotacion }}</td>
@@ -70,14 +79,19 @@
         <th mat-header-cell *matHeaderCellDef>Fecha de Registro</th>
         <td mat-cell *matCellDef="let element">{{ element.fechaRegistro }}</td>
       </ng-container>
-  
+
       <ng-container matColumnDef="existDocument">
         <th mat-header-cell *matHeaderCellDef>Documento</th>
         <td mat-cell *matCellDef="let element">
-          <img *ngIf="element.existeDocumento" [src]="documentImageUrl" alt="Documento" [ngStyle]="{'color': 'red', 'font-size': '2.5em'}">
+          <img
+            *ngIf="element.existeDocumento"
+            [src]="documentImageUrl"
+            alt="Documento"
+            [ngStyle]="{ color: 'red', 'font-size': '2.5em' }"
+          />
         </td>
       </ng-container>
-  
+
       <ng-container matColumnDef="estado">
         <th mat-header-cell *matHeaderCellDef>Estado</th>
         <td
@@ -88,7 +102,7 @@
           {{ element.estado }}
         </td>
       </ng-container>
-  
+
       <!-- Definición de las filas de la tabla -->
       <tr
         mat-header-row
@@ -102,7 +116,7 @@
       ></tr>
       <tr
         mat-row
-        style="cursor: pointer;"
+        style="cursor: pointer"
         *matRowDef="
           let element;
           columns: [
@@ -116,11 +130,71 @@
         (click)="redirectToOtherComponent(element)"
       ></tr>
     </table>
-  
+
     <mat-paginator
       [length]="totalItems"
       [pageSize]="pageSize"
       (page)="onPageChange($event)"
     >
     </mat-paginator>
+  </div>
+  <div *ngIf="mostrarDiv" class="filter">
+    <h4>FILTRAR</h4>
+    <div class="filter1">
+      <h5>Rango fecha</h5>
+      <div class="calendar">
+        <h6>Fecha inicio</h6>
+        <mat-form-field style="height: 78px">
+          <input
+            class="inputcalendar"
+            [matDatepicker]="picker"
+            placeholder="Selecciona una fecha"
+            [(ngModel)]="selectedDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <button class="butoncalendar" (click)="picker.open()">
+          <span class="fa-solid fa-calendar-days"></span>
+        </button>
+      </div>
+      <div class="calendar">
+        <h6>Fecha final</h6>
+        <mat-form-field style="height: 78px; padding: 0%">
+          <input
+            class="inputcalendar"
+            [matDatepicker]="picker"
+            placeholder="Selecciona una fecha"
+            [(ngModel)]="selectedDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <button class="butoncalendar" (click)="picker.open()">
+          <span class="fa-solid fa-calendar-days"></span>
+        </button>
+      </div>
+    </div>
+    <div class="filter2">
+      <h5>Estado</h5>
+      <div *ngFor="let opcion of processFilter">
+        <input
+          class="checkbox"
+          type="checkbox"
+          [checked]="opcion.checked"
+          (change)="onCheckboxChange(opcion, 'processFilter')"
+        />
+        {{ opcion.texto }}
+      </div>
+    </div>
+    <div class="botonfiltro">
+      <button class="buttonfilterAplicate">Aplicar</button>
+    </div>
+  </div>
 </div>
