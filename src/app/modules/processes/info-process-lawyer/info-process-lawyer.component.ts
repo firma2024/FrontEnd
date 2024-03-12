@@ -141,8 +141,8 @@ export class InfoProcessLawyerComponent {
       height: '300px',
       panelClass: 'custom-dialog-container',
       position: {
-        top: '200px',
-        left: '400px',
+        top: '250px',
+        left: '600px',
       },
       data: {
         audience: item
