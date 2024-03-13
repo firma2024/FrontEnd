@@ -14,7 +14,7 @@
 .mainContent {
   width: 80%;
   flex: 1; /* El contenido principal se expandirá para llenar el espacio restante */
-  margin-top: 80px;
+  margin-top: 50px;
   margin-left: 10%;
 }
 

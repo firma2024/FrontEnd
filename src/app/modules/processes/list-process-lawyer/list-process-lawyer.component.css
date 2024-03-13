@@ -1,5 +1,6 @@
 .head {
   display: flex;
+  margin-top: 40px;
 }
 
 .title {
@@ -59,19 +60,8 @@
 .filter2 {
   margin-top: 3%;
 }
-.custom-form-field .mat-form-field-flex {
-  display: flex;
-}
 
-.custom-form-field .mat-form-field-flex .mat-form-field-infix {
-  display: flex;
-  flex-wrap: wrap;
-}
 
-.custom-form-field .mat-form-field-flex .mat-input-element {
-  flex: 1;
-  min-width: 0; /* Allow input to shrink */
-}
 .checkbox {
   transform: scale(2);
   margin-right: 5px;
@@ -154,4 +144,20 @@ select {
 .mat-mdc-paginator-container {
   display: flex;
   justify-content: center;
+}
+
+.container-processes{
+  position: relative;
+}
+.container-filter{
+  padding: 2%;
+  border: 2px;
+  border-style: dashed;
+  border-color: black;
+  width: 40%;
+  height: 100vh;
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  top: 0;
+  right: 0;
 }
