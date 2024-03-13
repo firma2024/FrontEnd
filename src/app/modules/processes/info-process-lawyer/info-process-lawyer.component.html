@@ -43,7 +43,7 @@
 <div class="listAudiencia">
   <ul>
     <li *ngFor="let item of listAudience">
-      {{ item.nombre }}
+      <a  href="{{ item.enlace }}" class="enlace" target="_blank"> {{ item.nombre }}</a>
       <button
         (click)="openDialogEdit(item)"
         class="icon-pull-right fas fa-edit"
