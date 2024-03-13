@@ -143,38 +143,8 @@ export class UserService {
   }
 
   getAbogadosFilter(
-    firmaId: number,
-    especialidades?: string[],
-    numProcesosInicial?: string,
-    numProcesosFinal?: string,
-    page?: number,
-    size?: number
+    params = new HttpParams()
   ): Observable<Pageable<UserProcesess>> {
-    let params = new HttpParams()
-    .set('firmaId', firmaId.toString());
-
-    if (especialidades) {
-      especialidades.forEach((especialidad) => {
-        params = params.append('especialidades', especialidad);
-      });
-    }
-
-    if (numProcesosInicial != null) {
-      params = params.set('numProcesosInicial', numProcesosInicial.toString());
-    }
-
-    if (numProcesosFinal != null) {
-      params = params.set('numProcesosFinal', numProcesosFinal.toString());
-    }
-
-    if (page != null) {
-      params = params.set('page', page.toString());
-    }
-
-    if (size != null) {
-      params = params.set('size', size.toString());
-    }
-
     return this.http.get<Pageable<UserProcesess>>(
       `${environment.userURL}/jefe/abogados/filter`,
       { params: params }

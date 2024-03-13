@@ -5,7 +5,7 @@
   <div class="options">
     <input
       type="text"
-      (input)="applyFilter($event)"
+      (input)="applyFilterName($event)"
       placeholder="Buscar abogado..."
     />
     <button  class="buttonFilter" (click)="toggleDiv()">
@@ -116,34 +116,34 @@
   </div>
 
   <div *ngIf="mostrarDiv" class="filter">
-    <h3>Filtrar y Ordenar</h3>
+    <h3>Filtrar</h3>
     <div class="filter1">
-      <h4>Especialidad</h4>
+      <h6>Especialidad</h6>
       <div *ngFor="let opcion of especialidadFilter">
         <input
           class="checkbox"
           type="checkbox"
           [checked]="opcion.checked"
-          (change)="onCheckboxChange(opcion, 'especialidadFilter')"
+          (change)="onCheckboxChangeSpeciality(opcion, 'especialidadFilter')"
         />
         {{ opcion.texto }}
       </div>
     </div>
 
     <div class="filter2">
-      <h4>Proceso</h4>
-      <div *ngFor="let opcion of processFilter">
+      <h6>Procesos Asignados</h6>
+      <div *ngFor="let opcion of processCountFilter">
         <input
           class="checkbox"
           type="checkbox"
           [checked]="opcion.checked"
-          (change)="onCheckboxChange(opcion, 'processFilter')"
+          (change)="onCheckboxChangeCountProcess(opcion, 'processCountFilter')"
         />
         {{ opcion.texto }}
       </div>
     </div>
     <div class="botonfiltro">
-      <button class="buttonfilterAplicate">Aplicar</button>
+      <button (click)="applyFilters()"  class="buttonfilterAplicate">Aplicar</button>
     </div>
   </div>
 </div>

@@ -1,76 +1,133 @@
 <div class="registerLawyer">
-    <h1><strong> Crear Abogado</strong></h1>
-    <h2 class="description">Ingrese la siguiente información para crear un abogado</h2>
+  <h1><strong> Crear Abogado</strong></h1>
+  <h2 class="description">
+    Ingrese la siguiente información para crear un abogado
+  </h2>
 </div>
 
 <div class="form">
-    <div class="imageProfile">
-        <label class="botonBack">
-            <input type="file" style="display: none;" (change)="onFileSelected($event)" accept="image/*">
-            <span><i class="fa-solid fa-user"></i> Seleccionar archivo</span>
-          </label>
-          
+  <div class="imageProfile">
+    <label class="botonBack">
+      <input
+        type="file"
+        style="display: none"
+        (change)="onFileSelected($event)"
+        accept="image/*"
+      />
+      <span><i class="fa-solid fa-user"></i> Seleccionar archivo</span>
+    </label>
 
-        <h6>Haga click en el Boton para <br>
-            colocar su imagen de perfil!</h6>
-            <img *ngIf="imageUrlPresentation" [src]="imageUrlPresentation" alt="Imagen seleccionada" style="width: 200px; height: 200px;">
-    </div>
+    <h6>
+      Haga click en el Boton para <br />
+      colocar su imagen de perfil!
+    </h6>
+    <img
+      *ngIf="imageUrlPresentation"
+      [src]="imageUrlPresentation"
+      alt="Imagen seleccionada"
+      style="width: 200px; height: 200px"
+    />
+  </div>
 
-    <div class="formRegister">
-        <div class="columns">
-            <div class="column1">
-                <div class="inputContainer">
-                    <label for="username">Nombre de usuario:</label>
-                    <input type="text" id="username" name="username" placeholder="Ingrese el nombre de usuario" [(ngModel)]="nombreUsuario" pattern="[a-zA-Z0-9_-]{3,15}">
-                </div>
-                
-                <div class="inputContainer">
-                    <label for="name">Nombre completo:</label>
-                    <input type="text" id="name" name="name" placeholder="Ingrese el nombre completo" [(ngModel)]="nombreCompleto">
-                </div>
-                
-                <div class="inputContainer">
-                    <label for="email">Correo electrónico:</label>
-                    <input type="email" id="email" name="email" placeholder="Ingrese el correo electrónico" [(ngModel)]="correoElectronico" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
-                </div>
-                
-                
-                <div class="inputContainer">
-                    <label for="identification">Tipo de documento:</label>
-                    <select id="opciones" name="opciones" [(ngModel)]="selectedTypeDoc" (ngModelChange)="onTypeDocChange($event)">
-                      <option *ngFor="let opcion of opcionesIdentification" [ngValue]="opcion.valor">{{ opcion.texto }}</option>
-                    </select>
-                  </div>
-                
-            </div>
-            <div class="column1">
-                <div class="inputContainer">
-                    <label for="identification">Identificación:</label>
-                    <input type="text" id="identification" name="identification" placeholder="Ingrese el número de identificación" [(ngModel)]="identificacion" maxlength="10">
-                </div>
-                
-                <div class="inputContainer">
-                    <label for="numberPhone">Teléfono:</label>
-                    <input type="tel" id="numberPhone" name="numberPhone" placeholder="Ingrese el número de teléfono" [(ngModel)]="telefono" maxlength="10">
-                </div>
-                
-                <div class="checkboxes">
-                    <label>Especialidades:</label>
-                    <div *ngFor="let opcion of opcionesSpecialty" class="checkbox-option">
-                        <input class="checkbox" type="checkbox" id="{{ opcion.valor }}" name="{{ opcion.texto }}" [(ngModel)]="opcion.checked" (change)="onSpecializationChange(opcion)">
-                        <label for="{{ opcion.valor }}">{{ opcion.texto }}</label>
-                    </div>
-                </div>
-                
-                
-                
-                
-            </div>
+  <div class="formRegister">
+    <div class="columns">
+      <div class="column1">
+        <div class="inputContainer">
+          <label for="username">Nombre de usuario:</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Ingrese el nombre de usuario"
+            [(ngModel)]="nombreUsuario"
+            pattern="[a-zA-Z0-9_-]{3,15}"
+          />
         </div>
 
+        <div class="inputContainer">
+          <label for="name">Nombre completo:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Ingrese el nombre completo"
+            [(ngModel)]="nombreCompleto"
+          />
+        </div>
+
+        <div class="inputContainer">
+          <label for="email">Correo electrónico:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Ingrese el correo electrónico"
+            [(ngModel)]="correoElectronico"
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+          />
+        </div>
+
+        <div class="inputContainer">
+          <label for="identification">Tipo de documento:</label>
+          <select
+            id="opciones"
+            name="opciones"
+            [(ngModel)]="selectedTypeDoc"
+            (ngModelChange)="onTypeDocChange($event)"
+          >
+            <option
+              *ngFor="let opcion of opcionesIdentification"
+              [ngValue]="opcion.valor"
+            >
+              {{ opcion.texto }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="column1">
+        <div class="inputContainer">
+          <label for="identification">Identificación:</label>
+          <input
+            type="text"
+            id="identification"
+            name="identification"
+            placeholder="Ingrese el número de identificación"
+            [(ngModel)]="identificacion"
+            maxlength="10"
+          />
+        </div>
+
+        <div class="inputContainer">
+          <label for="numberPhone">Teléfono:</label>
+          <input
+            type="text"
+            id="numberPhone"
+            name="numberPhone"
+            placeholder="Ingrese el número de teléfono"
+            [(ngModel)]="telefono"
+            maxlength="10"
+          />
+        </div>
+
+        <div class="checkboxes">
+          <label>Especialidades:</label>
+          <div *ngFor="let opcion of opcionesSpecialty" class="checkbox-option">
+            <input
+              class="checkbox"
+              type="checkbox"
+              id="{{ opcion.valor }}"
+              name="{{ opcion.texto }}"
+              [checked]="opcion.checked"
+              (change)="onCheckboxChange(opcion, 'stateFilter')"
+            />
+            <label for="{{ opcion.valor }}">{{ opcion.texto }}</label>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <div class="buttonCreate">
-    <button class="buttonCreated" (click)="crearAbogado()">Crear Abogado</button>
+  <button class="buttonCreated" (click)="crearAbogado()">Crear Abogado</button>
 </div>

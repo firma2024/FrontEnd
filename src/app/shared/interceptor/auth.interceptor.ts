@@ -33,7 +33,8 @@ export class AuthInterceptor implements HttpInterceptor {
                             icon: 'error',
                             title: 'No autorizado',
                             text: 'Su sesión ha caducado. Por favor, inicie sesión nuevamente.',
-                            confirmButtonText: 'Ir al inicio de sesión'
+                            confirmButtonText: 'Okay',
+                            confirmButtonColor: '#AA2535'
                         }).then(() => {
                             this.router.navigate(['/login']);
                         });

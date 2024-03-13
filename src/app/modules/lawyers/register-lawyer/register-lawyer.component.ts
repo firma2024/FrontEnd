@@ -24,7 +24,7 @@ export class RegisterLawyerComponent {
   imageUrlPresentation: File | null = null;
   selectedImage: File | null = null;
   selectedTypeDoc: TipoDocumento | null = null;
-  selectedSpecialization: TipoAbogado | null = null;
+  selectedSpecializations: TipoAbogado[] = [];
 
   constructor(
     private userService: UserService,
@@ -35,7 +35,11 @@ export class RegisterLawyerComponent {
   ) {}
 
   opcionesIdentification: { valor: TipoDocumento | null; texto: string }[] = [];
-  opcionesSpecialty: { valor: TipoAbogado | null; texto: string; checked: boolean }[] = [];
+  opcionesSpecialty: {
+    valor: TipoAbogado | null;
+    texto: string;
+    checked: boolean;
+  }[] = [];
 
   ngOnInit() {
     this.obtaintTypeOfDoc();
@@ -66,7 +70,7 @@ export class RegisterLawyerComponent {
           this.opcionesSpecialty.push({
             valor: tipoAbogado,
             texto: tipoAbogado.nombre,
-            checked: false // Inicializar todos los checkboxes como no seleccionados
+            checked: false,
           });
         });
       },
@@ -103,7 +107,7 @@ export class RegisterLawyerComponent {
         parseInt(this.identificacion),
         this.nombreUsuario,
         this.selectedTypeDoc!,
-        [this.selectedSpecialization!],
+        this.selectedSpecializations!,
         parseInt(localStorage.getItem('firmaId')!)
       )
       .subscribe(
@@ -144,7 +148,7 @@ export class RegisterLawyerComponent {
         parseInt(this.telefono),
         parseInt(this.identificacion),
         this.selectedTypeDoc!,
-        [this.selectedSpecialization!],
+        this.selectedSpecializations!,
         this.nombreUsuario,
         parseInt(localStorage.getItem('firmaId')!)
       )
@@ -187,7 +191,7 @@ export class RegisterLawyerComponent {
               parseInt(this.identificacion),
               this.nombreUsuario,
               this.selectedTypeDoc!,
-              [this.selectedSpecialization!],
+              this.selectedSpecializations!,
               parseInt(localStorage.getItem('firmaId')!)
             )
             .subscribe(
@@ -225,12 +229,53 @@ export class RegisterLawyerComponent {
       }
     });
   }
-
   areCorrectFields(): boolean {
     let dict: { [key: string]: string } = {};
-    // Validaciones existentes...
+    // Username validation
+    if (this.nombreUsuario === '') {
+      dict['Nombre de usuario'] = 'No puede estar vacio';
+    }
+    if (this.nombreUsuario.includes(' ')) {
+      dict['Nombre de usuario'] = 'No puede tener espacios';
+    }
 
-    // Validación de especialidades seleccionadas
+    //Name validation
+    if (this.nombreCompleto === '') {
+      dict['Nombre completo'] = 'No puede estar vacio';
+    }
+
+    //Email validation
+    if (this.correoElectronico === '') {
+      dict['Correo electronico'] = 'No puede estar vacio';
+    }
+    const expression: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    if (!expression.test(this.correoElectronico)) {
+      dict['Correo electronico'] = 'No es un correo valido';
+    }
+
+    //Type of document validation
+    if (this.selectedTypeDoc === null) {
+      dict['Tipo de documento'] =
+        'Debe seleccionar un tipo de documento valido';
+    }
+
+    //Identification validation
+    if (this.identificacion === '') {
+      dict['Identificacion'] = 'No puede estar vacio';
+    }
+    if (!/^\d+$/.test(this.identificacion)) {
+      dict['Identificacion'] = 'Solo debe contener numeros';
+    }
+
+    //Phone validation
+    if (this.telefono === '') {
+      dict['Telefono'] = 'No puede estar vacio';
+    }
+    if (!/^\d+$/.test(this.telefono)) {
+      dict['Telefono'] = 'Solo debe contener numeros';
+    }
+
+    //Speciality validation
     let specializationSelected = false;
     for (let opcion of this.opcionesSpecialty) {
       if (opcion.checked) {
@@ -241,7 +286,11 @@ export class RegisterLawyerComponent {
     if (!specializationSelected) {
       dict['Especialidad'] = 'Debe seleccionar al menos una especialidad.';
     }
-
+    for(let speciality of this.opcionesSpecialty){
+      if(speciality && speciality.checked){
+        this.selectedSpecializations!.push(speciality.valor!)
+      }
+    }
     if (Object.keys(dict).length !== 0) {
       this.utilsService.raiseInvalidFields(dict);
       return false;
@@ -250,9 +299,11 @@ export class RegisterLawyerComponent {
     }
   }
 
-  onSpecializationChange(opcion: any) {
-    // Manejar los cambios en los checkboxes de especialidades
-    console.log(opcion);
+  onCheckboxChange(
+    opcion: { valor: any; texto: string; checked: boolean },
+    filterType: string
+  ): void {
+    opcion.checked = !opcion.checked;
   }
 
   onTypeDocChange($event: any) {

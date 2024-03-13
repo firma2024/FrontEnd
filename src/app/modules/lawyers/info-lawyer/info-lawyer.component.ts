@@ -87,7 +87,7 @@ export class InfoLawyerComponent {
         this.numberPhone = lawyer.telefono.toString();
         console.log(lawyer.identificacion)
         this.identification = lawyer.identificacion.toString();
-        this.speciality = lawyer.especialidades[0].nombre;
+        this.speciality = lawyer.especialidades.map(speciality => speciality.nombre).join(', ');
       });
     //this.identification = lawyerObj.identificacion.toString();
   }

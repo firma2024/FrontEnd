@@ -6,6 +6,10 @@ import { ProcessService } from '../../../services/process.service';
 import { ProcessJefeFilter } from '../../../shared/model/process/proceso.jefe.filter';
 import { Pageable } from '../../../shared/model/pageable';
 import { DateAdapter } from '@angular/material/core';
+import { HttpParams } from '@angular/common/http';
+import { ProcesoType } from '../../../shared/model/process/proceso.tipo';
+import { ProcesoLawyerFilter } from '../../../shared/model/process/process.abogado.filter';
+import { ProcesoStatus } from '../../../shared/model/process/proceso.estado';
 
 @Component({
   selector: 'app-list-process-admin',
@@ -31,82 +35,109 @@ export class ListProcessAdminComponent {
     'Fecha',
     'Estado',
   ];
-  selectedOption: any; // Aquí almacenarás la opción seleccionada
-  selectTypeProcess = [
-    { value: 'opcion1', label: 'Opción 1' },
-    { value: 'opcion2', label: 'Opción 2' },
-    { value: 'opcion3', label: 'Opción 3' }
+  processTypeFilter: { valor: ProcesoType | null; texto: string }[] = [
+    {
+      valor: null,
+      texto: 'Seleccionar',
+    },
   ];
+  selectedProcessType: { valor: ProcesoType | null; texto: string } | undefined;
 
-  stateFilter: { valor: any; texto: string; checked: boolean }[] = [
-    { valor: 'A', texto: 'Proceso A', checked: false },
-    { valor: 'B', texto: 'Proceso B', checked: false },
-    { valor: 'A', texto: 'Proceso A', checked: false },
-    { valor: 'B', texto: 'Proceso B', checked: false },
-  ];
+  processStatusFilter: { valor: any; texto: string; checked: boolean }[] = [];
   mostrarDiv: boolean = false;
-  initDate: Date;
-  endDate: Date;
+  startDate: Date | null = null;
+  endDate: Date | null = null;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   pageSize = 5;
   pageIndex = 0;
   totalItems = 0;
 
-  
   constructor(
     private changeDetectorRefs: ChangeDetectorRef,
     private router: Router,
     private processService: ProcessService,
     private dateAdapter: DateAdapter<Date>
   ) {
-    this.initDate = new Date();
-    this.endDate = new Date();
     this.dataSource = new MatTableDataSource<ProcessJefeFilter>([]);
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.fetchData();
-    });
-  }
-
-  
-
-  fetchData() {
-    const fechaInicioStr = '';
-    const firmaId = parseInt(localStorage.getItem('firmaId')!);
-    const fechaFinStr = '';
-    const estadosProceso: string[] = [];
-    const tipoProceso = '';
-    const page = this.pageIndex;
-
+  loadFilterParams() {
+    //Obtain process status
     this.processService
-      .getProcesosByFirmaFilter(
-        fechaInicioStr,
-        firmaId,
-        fechaFinStr,
-        estadosProceso,
-        tipoProceso,
-        page,
-        this.pageSize
-      )
-      .subscribe(
-        (data: Pageable<ProcessJefeFilter>) => {
-          this.dataSource.data = data.data;
-          this.totalItems = data.totalItems; // Actualizamos totalItems con el valor devuelto por el servicio
-          console.log(data.data);
-        },
-        (error) => {
-          console.error('Error al obtener los datos:', error);
+      .getAllEstadoProcesos()
+      .subscribe((data: ProcesoStatus[]) => {
+        for (let statusProcess of data) {
+          this.processStatusFilter.push({
+            valor: statusProcess,
+            texto: statusProcess.nombre,
+            checked: false,
+          });
         }
-      );
+      });
+    //Obtain process type
+    this.processService
+      .getAllTipoProcesos()
+      .subscribe((data: ProcesoType[]) => {
+        for (let typeProcess of data) {
+          this.processTypeFilter.push({
+            valor: typeProcess,
+            texto: typeProcess.nombre,
+          });
+        }
+      });
   }
+  applyFilters() {
+    let params = new HttpParams();
+    params = params
+      .set('firmaId', parseInt(localStorage.getItem('firmaId')!))
+      .set('page', this.pageIndex.toString())
+      .set('size', this.pageSize.toString());
 
+    let startDateStr = '';
+    let endDateStr = '';
+
+    if (this.startDate) {
+      startDateStr = this.startDate.toISOString().slice(0, 10);
+      params = params.set('fechaInicioStr', startDateStr);
+    }
+    if (this.endDate) {
+      endDateStr = this.endDate.toISOString().slice(0, 10);
+      params = params.set('fechaFinStr', endDateStr);
+    }
+
+    const processStatus = this.processStatusFilter.filter(
+      (filtro) => filtro.checked
+    );
+
+    if (processStatus.length > 0) {
+      for (let statusProcess of processStatus) {
+        params = params.append('estadosProceso', statusProcess.texto);
+      }
+    }
+
+    if (this.selectedProcessType?.valor) {
+      params = params.set('tipoProceso', this.selectedProcessType.valor.nombre);
+    }
+    
+    this.processService.getProcesosByFirmaFilter(params).subscribe(
+      (data: Pageable<ProcessJefeFilter>) => {
+        this.dataSource.data = data.data;
+        this.totalItems = data.totalItems;
+      },
+      (error) => {
+        console.error('Error al obtener los datos:', error);
+      }
+    );
+  }
+  ngOnInit() {
+    this.loadFilterParams();
+    this.applyFilters();
+  }
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.fetchData();
+    this.applyFilters();
   }
 
   redirectToOtherComponent(row: ProcessJefeFilter) {
@@ -117,20 +148,9 @@ export class ListProcessAdminComponent {
     opcion: { valor: any; texto: string; checked: boolean },
     filterType: string
   ): void {
-    // Maneja el cambio de checkbox aquí
-    console.log(
-      `Opción ${opcion.texto} del filtro ${filterType} seleccionada: ${opcion.checked}`
-    );
+    opcion.checked = !opcion.checked;
   }
   toggleDiv() {
     this.mostrarDiv = !this.mostrarDiv;
   }
-  
-  aplicateFilter() {
-    // Obtener el valor seleccionado
-    console.log('Valor seleccionado:', this.selectedOption);
-    // Realizar otras acciones según el valor seleccionado
-  }
-  
-  
 }

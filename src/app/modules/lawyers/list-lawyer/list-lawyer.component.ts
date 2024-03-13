@@ -7,7 +7,8 @@ import { UserProcesess } from '../../../shared/model/user/user.procesos';
 import { Pageable } from '../../../shared/model/pageable';
 import Swal from 'sweetalert2';
 import { MensajeResponse } from '../../../shared/model/message';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { TipoAbogado } from '../../../shared/model/user/user.tipo';
 
 @Component({
   selector: 'app-list-lawyer',
@@ -24,18 +25,13 @@ export class ListLawyerComponent {
     'procesos',
     'button',
   ];
-  especialidadFilter: { valor: any; texto: string; checked: boolean }[] = [
-    { valor: 1, texto: 'Especialidad 1', checked: false },
-    { valor: 2, texto: 'Especialidad 2', checked: false },
-    { valor: 1, texto: 'Especialidad 1', checked: false },
-    { valor: 2, texto: 'Especialidad 2', checked: false },
-  ];
-  
-  processFilter: { valor: any; texto: string; checked: boolean }[] = [
-    { valor: 'A', texto: 'Proceso A', checked: false },
-    { valor: 'B', texto: 'Proceso B', checked: false },
-    { valor: 'A', texto: 'Proceso A', checked: false },
-    { valor: 'B', texto: 'Proceso B', checked: false },
+  especialidadFilter: { valor: any; texto: string; checked: boolean }[] = [];
+
+  processCountFilter: { valor: any; texto: string; checked: boolean }[] = [
+    { valor: [0, 5], texto: 'Menos de 5', checked: false },
+    { valor: [5, 10], texto: 'Entre 5 y 10', checked: false },
+    { valor: [10, 15], texto: 'Entre 10 y 15', checked: false },
+    { valor: [15, 1000], texto: 'Mas de 15', checked: false },
   ];
   mostrarDiv: boolean = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -52,27 +48,55 @@ export class ListLawyerComponent {
     this.dataSource = new MatTableDataSource<UserProcesess>([]);
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.fetchData();
-    });
+  ngOnInit() {
+    this.loadFilterParams();
+    this.applyFilters();
+  }
+  loadFilterParams() {
+    this.userService.getAllTipoAbogado().subscribe((data:TipoAbogado[])=>{
+      this.especialidadFilter = data.map((especialidad) => {
+        return { valor: especialidad.nombre, texto: especialidad.nombre, checked: false };
+      });
+    })
   }
 
-  fetchData() {
-    const firmaId = parseInt(localStorage.getItem('firmaId')!);
-    const fechaInicioStr = ''; // Cambiado a número
-    const fechaFinStr = ''; // Cambiado a número
-    const especialidades: string[] = [];
-    const page = this.pageIndex;
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.applyFilters();
+  }
 
+  applyFilterName(event: Event): void {
+    const filterValue = (event.target as HTMLInputElement).value
+      .trim()
+      .toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
+  applyFilters() {
+    let params = new HttpParams()
+      .set('page', this.pageIndex.toString())
+      .set('size', this.pageSize.toString())
+      .set('firmaId', parseInt(localStorage.getItem('firmaId')!));
+    const specSelected = this.especialidadFilter.filter(
+      (filter) => filter.checked
+    );
+    if (specSelected.length > 0) {
+      for (let spec of specSelected) {
+        params = params.append('especialidades', spec.valor);
+      }
+    }
+    const processCountSelected = this.processCountFilter.filter(
+      (filter) => filter.checked
+    );
+    if (processCountSelected.length > 0) {
+      for (let processCount of processCountSelected) {
+        params = params.append('numProcesosInicial', processCount.valor[0]);
+        params = params.append('numProcesosFinal', processCount.valor[1]);
+      }
+    }
     this.userService
       .getAbogadosFilter(
-        firmaId,
-        especialidades,
-        fechaFinStr,
-        fechaInicioStr,
-        page,
-        this.pageSize
+        params
       )
       .subscribe(
         (data: Pageable<UserProcesess>) => {
@@ -84,20 +108,6 @@ export class ListLawyerComponent {
           console.error(error);
         }
       );
-  }
-
-  onPageChange(event: PageEvent) {
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.fetchData();
-  }
-
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value
-      .trim()
-      .toLowerCase();
-    // Aplicar el filtro solo a la columna 'nombres'
-    this.dataSource.filter = filterValue;
   }
 
   deleteUser(row: UserProcesess) {
@@ -117,17 +127,17 @@ export class ListLawyerComponent {
         this.userService.deleteUser(row.id).subscribe(
           (message) => {
             console.log('Usuario eliminado:', message);
-            this.fetchData();
+            this.applyFilters();
           },
-          (error:HttpErrorResponse) => {
-            console.log(error)
-           Swal.fire({
+          (error: HttpErrorResponse) => {
+            console.log(error);
+            Swal.fire({
               icon: 'error',
               title: 'Error al eliminar el usuario',
               text: error.error.message,
               confirmButtonText: 'Aceptar',
               confirmButtonColor: '#AA2535',
-           })
+            });
           }
         );
       }
@@ -140,12 +150,26 @@ export class ListLawyerComponent {
     this.router.navigate(['/infolawyer']);
   }
 
-  onCheckboxChange(opcion: { valor: any; texto: string; checked: boolean }, filterType: string): void {
-    // Maneja el cambio de checkbox aquí
-    console.log(`Opción ${opcion.texto} del filtro ${filterType} seleccionada: ${opcion.checked}`);
+  onCheckboxChangeCountProcess(
+    opcion: { valor: any; texto: string; checked: boolean },
+    filterType: string
+  ): void {
+    if (filterType === 'processCountFilter') {
+      this.processCountFilter.forEach((filter) => {
+        if (filter.texto !== opcion.texto) {
+          filter.checked = false;
+        }
+      });
+    }
+    opcion.checked = !opcion.checked;
+  }
+  onCheckboxChangeSpeciality(
+    opcion: { valor: any; texto: string; checked: boolean },
+    filterType: string
+  ): void {
+    opcion.checked = !opcion.checked;
   }
   toggleDiv() {
     this.mostrarDiv = !this.mostrarDiv;
   }
-  
 }

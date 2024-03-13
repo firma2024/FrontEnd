@@ -12,6 +12,7 @@ import { Pageable } from '../../../shared/model/pageable';
 import { ActuacionJefeFilter } from '../../../shared/model/actuaciones/actuacion.jefe.filter';
 import { ProcesoStatus } from '../../../shared/model/process/proceso.estado';
 import { DateAdapter } from '@angular/material/core';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-info-process-admin',
@@ -35,14 +36,14 @@ export class InfoProcessAdminComponent {
   pageIndex = 0;
   totalItems = 0;
 
-  stateFilter: { valor: any; texto: string; checked: boolean }[] = [
-    { valor: 'A', texto: 'Proceso A', checked: false },
-    { valor: 'B', texto: 'Proceso B', checked: false },
+  stateViewFilter: { valor: any; texto: string; checked: boolean }[] = [
+    { valor: 'Visto', texto: 'Visto', checked: false },
+    { valor: 'No Visto', texto: 'No Visto', checked: false },
   ];
-  
+
   mostrarDiv: boolean = false;
-  initDate: Date;
-  endDate: Date;
+  startDate: Date | null = null;
+  endDate: Date | null = null;
 
   constructor(
     private changeDetectorRefs: ChangeDetectorRef,
@@ -52,8 +53,6 @@ export class InfoProcessAdminComponent {
     private actionService: ActionService,
     private dateAdapter: DateAdapter<Date>
   ) {
-    this.initDate = new Date();
-    this.endDate = new Date();
     this.dataSource = new MatTableDataSource<ActuacionJefeFilter>([]);
   }
 
@@ -62,15 +61,13 @@ export class InfoProcessAdminComponent {
   opcionesLawyer: { valor: string; texto: string }[] = [];
   opcionesState: { valor: string; texto: string }[] = [];
 
-  ngAfterViewInit() {
-    this.changeDetectorRefs.detectChanges();
-  }
-
   ngOnInit() {
     this.fetchData();
   }
 
   fetchData() {
+    this.applyFilters();
+
     const idProcess = localStorage.getItem('selectedIdProcessAdmin')!;
     this.processService
       .getProcesoPorIdJefe(idProcess)
@@ -89,8 +86,6 @@ export class InfoProcessAdminComponent {
         });
         this.selectedState = process.estado;
         this.IdSelectedProcess = process.id.toString();
-
-        this.loadPageData();
       });
     this.userService
       .getAllAbogadosNames(parseInt(localStorage.getItem('firmaId')!, 10))
@@ -174,8 +169,7 @@ export class InfoProcessAdminComponent {
               Swal.fire({
                 icon: 'error',
                 title: '¡Error!',
-                text:
-                  'Error al actualizar el proceso. Por favor, inténtalo de nuevo.',
+                text: 'Error al actualizar el proceso. Por favor, inténtalo de nuevo.',
                 confirmButtonText: 'Aceptar',
                 confirmButtonColor: '#AA2535',
                 iconColor: '#AA2535',
@@ -189,16 +183,34 @@ export class InfoProcessAdminComponent {
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
-    this.loadPageData();
+    this.applyFilters();
   }
 
-  loadPageData() {
-    const idProcess = parseInt(localStorage.getItem('selectedIdProcessAdmin')!);
-    const size = this.pageSize;
-    const page = this.pageIndex;
+  applyFilters() {
+    let params = new HttpParams()
+      .set('page', this.pageIndex.toString())
+      .set('size', this.pageSize.toString())
+      .set('procesoId', localStorage.getItem('selectedIdProcessAdmin')!);
 
+    let startDateStr = '';
+    let endDateStr = '';
+
+    if (this.startDate) {
+      startDateStr = this.startDate.toISOString().slice(0, 10);
+      params = params.set('fechaInicioStr', startDateStr);
+    }
+    if (this.endDate) {
+      endDateStr = this.endDate.toISOString().slice(0, 10);
+      params = params.set('fechaFinStr', endDateStr);
+    }
+    const docSelected = this.stateViewFilter.filter((filter) => filter.checked);
+    if (docSelected.length > 0) {
+      for (let statusAction of docSelected) {
+        params = params.append('estadoActuacion', statusAction.valor);
+      }
+    }
     this.actionService
-      .getActuacionesFilter(idProcess, page, size)
+      .getActuacionesFilter(params)
       .subscribe((actions: Pageable<ActuacionJefeFilter>) => {
         this.dataSource.data = actions.data;
         this.totalItems = actions.totalItems;
@@ -212,10 +224,14 @@ export class InfoProcessAdminComponent {
     opcion: { valor: any; texto: string; checked: boolean },
     filterType: string
   ): void {
-    // Maneja el cambio de checkbox aquí
-    console.log(
-      `Opción ${opcion.texto} del filtro ${filterType} seleccionada: ${opcion.checked}`
-    );
+    if (filterType === 'stateViewFilter') {
+      this.stateViewFilter.forEach((filter) => {
+        if (filter.texto !== opcion.texto) {
+          filter.checked = false;
+        }
+      });
+    }
+    opcion.checked = !opcion.checked;
   }
   toggleDiv() {
     this.mostrarDiv = !this.mostrarDiv;

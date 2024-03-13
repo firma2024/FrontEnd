@@ -17,31 +17,8 @@ export class ActionService {
   }
   //Get actions filtered by boss.
   getActuacionesFilter(
-    procesoId: number,
-    page: number,
-    size: number,
-    fechaInicioStr?: string,
-    fechaFinStr?: string,
-    estadoActuacion?: string
+    params = new HttpParams()
   ): Observable<Pageable<ActuacionJefeFilter>> {
-    let params = new HttpParams().set('procesoId', procesoId.toString());
-
-    if (fechaInicioStr) {
-      params = params.set('fechaInicioStr', fechaInicioStr);
-    }
-    if (fechaFinStr) {
-      params = params.set('fechaFinStr', fechaFinStr);
-    }
-    if (estadoActuacion) {
-      params = params.set('estadoActuacion', estadoActuacion);
-    }
-    if (page !== undefined) {
-      params = params.set('page', page.toString());
-    }
-    if (size !== undefined) {
-      params = params.set('size', size.toString());
-    }
-
     return this.http.get<Pageable<ActuacionJefeFilter>>(
       `${environment.actionsURL}/jefe/get/all/filter`,
       {
@@ -51,29 +28,8 @@ export class ActionService {
   }
 
   getAllActuacionesByProcesoAbogado(
-    procesoId: number,
-    fechaInicioStr?: string,
-    fechaFinStr?: string,
-    existeDoc?: boolean,
-    page: number = 0,
-    size: number = 5
+    params = new HttpParams()
   ): Observable<Pageable<ActuacionResponse>> {
-    let params = new HttpParams().set('procesoId', procesoId.toString());
-
-    if (fechaInicioStr) {
-      params = params.set('fechaInicioStr', fechaInicioStr);
-    }
-
-    if (fechaFinStr) {
-      params = params.set('fechaFinStr', fechaFinStr);
-    }
-
-    if (existeDoc != null) {
-      params = params.set('existeDoc', existeDoc.toString());
-    }
-
-    params = params.set('page', page.toString()).set('size', size.toString());
-
     return this.http.get<Pageable<ActuacionResponse>>(
       `${environment.actionsURL}/get/all/abogado/filter`,
       { params }

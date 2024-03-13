@@ -143,58 +143,31 @@
     <div class="filter1">
       <h5>Rango fecha</h5>
       <div class="calendar">
-        <h6>Fecha inicio</h6>
-        <mat-form-field style="height: 78px">
-          <input
-            class="inputcalendar"
-            [matDatepicker]="picker"
-            placeholder="Selecciona una fecha"
-            [(ngModel)]="initDate"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+        <mat-form-field class="custom-form-field">
+          <mat-label>Ingrese rango</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date" [(ngModel)]="startDate">
+            <input matEndDate placeholder="End date" [(ngModel)]="endDate">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
-        <button class="butoncalendar" (click)="picker.open()">
-          <span class="fa-solid fa-calendar-days"></span>
-        </button>
-      </div>
-      <div class="calendar">
-        <h6>Fecha final</h6>
-        <mat-form-field style="height: 78px; padding: 0%">
-          <input
-            class="inputcalendar"
-            [matDatepicker]="picker"
-            placeholder="Selecciona una fecha"
-            [(ngModel)]="endDate"
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        <button class="butoncalendar" (click)="picker.open()">
-          <span class="fa-solid fa-calendar-days"></span>
-        </button>
       </div>
     </div>
     <div class="filter2">
       <h5>Estado</h5>
-      <div *ngFor="let opcion of processFilter">
+      <div *ngFor="let opcion of docFilter">
         <input
           class="checkbox"
           type="checkbox"
           [checked]="opcion.checked"
-          (change)="onCheckboxChange(opcion, 'processFilter')"
+          (change)="onCheckboxChange(opcion, 'docFilter')"
         />
         {{ opcion.texto }}
       </div>
     </div>
     <div class="botonfiltro">
-      <button class="buttonfilterAplicate">Aplicar</button>
+      <button (click)="applyFilters()"class="buttonfilterAplicate">Aplicar</button>
     </div>
   </div>
 </div>
