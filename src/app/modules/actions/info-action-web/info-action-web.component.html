@@ -46,11 +46,16 @@
     <p>Para acceder a la página en la que encontrará el documento, haga clic en el siguiente botón:</p>
     <a [href]="officeURL" target="_blank" class="iframe-link">Ir al micrositio</a>
     <br><br>
-    <p>Para cargar la providencia de click en el siguiente boton::</p>
+    <p>Para cargar la providencia de click en el siguiente boton:</p>
+
+    <button class="iframe-file bordeado">
+        <i class="fas fa-file"></i>
+        <label for="btn-file">Adjuntar archivo</label>
+        <input type="file" id="btn-file" (change)="selectDoc($event)" accept=".pdf">
+    </button>
+    <p>{{selectedFileName}}</p>
+
     <form class="uploaddocument" (submit)="uploadDoc($event)" enctype="multipart/form-data">
-        <div>
-            <input class="iframe-linkdoc" type="file" (change)="selectDoc($event)" accept=".pdf">
-        </div>
         <div>
             <button type="submit" class="iframe-link-doc">Cargar providencia</button>
         </div>
