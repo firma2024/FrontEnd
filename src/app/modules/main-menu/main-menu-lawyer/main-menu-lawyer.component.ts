@@ -18,6 +18,7 @@ export class MainMenuLawyerComponent {
   favorProcess: string = '';
   againstProcess: string = '';
   username: string = '';
+  reconciliedProcess: string = '';
 
   constructor(private lawFirmService: LawFirmService,private userService: UserService,private processService:ProcessService) {}
 
@@ -72,6 +73,14 @@ export class MainMenuLawyerComponent {
     this.processService.getNumeroProcesosPorAbogadoYEstado('Finalizado en contra',this.username).subscribe(
       (response: any) => {console.log(response.value)
         this.againstProcess = response.value;
+      },
+      (error) => {
+        console.error('Error al obtener el número de procesos activos:', error);
+      }
+    );
+    this.processService.getNumeroProcesosPorAbogadoYEstado('Conciliado',this.username).subscribe(
+      (response: any) => {console.log(response.value)
+        this.reconciliedProcess = response.value;
       },
       (error) => {
         console.error('Error al obtener el número de procesos activos:', error);

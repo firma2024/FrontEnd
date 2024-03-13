@@ -17,6 +17,7 @@ export class MainMenuAdminComponent implements OnInit {
   lawyersRegister: number = 0;
   favorProcess: number = 0;
   againstProcess: number = 0;
+  reconciliedProcess: number = 0;
   username: string = '';
 
   constructor(
@@ -76,7 +77,7 @@ export class MainMenuAdminComponent implements OnInit {
         },
         (error) => {
           console.error(
-            'Error al obtener el número de procesos activos:',
+            'Error al obtener el número de procesos finalizados a favor:',
             error
           );
         }
@@ -89,7 +90,20 @@ export class MainMenuAdminComponent implements OnInit {
         },
         (error) => {
           console.error(
-            'Error al obtener el número de procesos activos:',
+            'Error al obtener el número de procesos finializados en contra:',
+            error
+          );
+        }
+      );
+      this.processService
+      .getNumeroProcesosPorFirmaYEstado(firmaId, 'Conciliado')
+      .subscribe(
+        (response: any) => {
+          this.reconciliedProcess = response.value;
+        },
+        (error) => {
+          console.error(
+            'Error al obtener el número de procesos conciliados:',
             error
           );
         }
