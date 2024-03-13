@@ -45,32 +45,8 @@ export class ProcessService {
 
   //Filter process information by boss
   getProcesosByFirmaFilter(
-    fechaInicioStr: string,
-    firmaId: number,
-    fechaFinStr: string,
-    estadosProceso: string[],
-    tipoProceso: string,
-    page: number,
-    size: number
+    params = new HttpParams()
   ): Observable<Pageable<ProcessJefeFilter>> {
-    let params = new HttpParams()
-      .set('firmaId', firmaId.toString())
-      .set('page', page.toString())
-      .set('size', size.toString());
-
-    if (fechaInicioStr) {
-      params = params.set('fechaInicioStr', fechaInicioStr);
-    }
-    if (fechaFinStr) {
-      params = params.set('fechaFinStr', fechaFinStr);
-    }
-    if (estadosProceso.length !== 0) {
-      params = params.set('estadosProceso', estadosProceso.join(','));
-    }
-    if (tipoProceso) {
-      params = params.set('tipoProceso', tipoProceso);
-    }
-
     return this.http.get<Pageable<ProcessJefeFilter>>(
       `${environment.processURL}/get/all/filter`,
       { params }

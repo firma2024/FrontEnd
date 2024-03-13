@@ -10,7 +10,7 @@ import { ProcessService } from '../../../services/process.service';
 import { ProcesoLawyer } from '../../../shared/model/process/proceso.abogado';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StorageService } from '../../../services/storage.service';
-import { HttpResponse } from '@angular/common/http';
+import { HttpParams, HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { Audiencia } from '../../../shared/model/audencia/audiencia';
 import { DateAdapter } from '@angular/material/core';
@@ -34,14 +34,14 @@ export class InfoProcessLawyerComponent {
   pageIndex = 0;
   totalItems = 0;
   id: string | null = null;
-  processFilter: { valor: any; texto: string; checked: boolean }[] = [
-    { valor: 'A', texto: 'Proceso A', checked: false },
-    { valor: 'B', texto: 'Proceso B', checked: false },
+  docFilter: { valor: any; texto: string; checked: boolean }[] = [
+    { valor: true, texto: 'Con Documento', checked: false },
+    { valor: false, texto: 'Sin Documento', checked: false },
   ];
 
   mostrarDiv: boolean = false;
-  initDate: Date;
-  endDate: Date;
+  startDate: Date | null = null;
+  endDate: Date | null = null;
 
   idProcess: string = '';
   ngOnInit(): void {
@@ -65,13 +65,10 @@ export class InfoProcessLawyerComponent {
     private router: Router,
     public dialog: MatDialog,
     private dateAdapter: DateAdapter<Date>
-  ) {
-    this.initDate = new Date();
-    this.endDate = new Date();
-  }
+  ) {}
 
   loadData() {
-    this.obtainActions();
+    this.applyFilters();
     this.obtainInfoProcess();
   }
   obtainInfoProcess() {
@@ -87,16 +84,32 @@ export class InfoProcessLawyerComponent {
         this.listAudience = data.audiencias;
       });
   }
-  obtainActions() {
+  applyFilters() {
+    let params = new HttpParams();
+    let startDateStr = '';
+    let endDateStr = '';
+
+    params=params.set('procesoId', parseInt(this.idProcess));
+    params=params.set('page', this.pageIndex.toString());
+    params=params.set('size', this.pageSize.toString());
+
+    if (this.startDate) {
+      startDateStr = this.startDate.toISOString().slice(0, 10);
+      params = params.set('fechaInicioStr', startDateStr);
+    }
+    if (this.endDate) {
+      endDateStr = this.endDate.toISOString().slice(0, 10);
+      params = params.set('fechaFinStr', endDateStr);
+    }
+    const docSelected = this.docFilter.filter((filtro) => filtro.checked);
+    if (docSelected.length > 0) {
+      for (let statusProcess of docSelected) {
+        params = params.append('existeDoc', statusProcess.valor);
+      }
+    }
+    console.log(params)
     this.actionService
-      .getAllActuacionesByProcesoAbogado(
-        parseInt(this.idProcess),
-        this.fechaInicioStr,
-        this.fechaFinStr,
-        this.existeDoc,
-        this.pageIndex,
-        this.pageSize
-      )
+      .getAllActuacionesByProcesoAbogado(params)
       .subscribe((data: Pageable<ActuacionAbogadoFilter>) => {
         this.dataSource.data = data.data;
         this.totalItems = data.totalItems;
@@ -164,11 +177,16 @@ export class InfoProcessLawyerComponent {
     opcion: { valor: any; texto: string; checked: boolean },
     filterType: string
   ): void {
-    // Maneja el cambio de checkbox aquí
-    console.log(
-      `Opción ${opcion.texto} del filtro ${filterType} seleccionada: ${opcion.checked}`
-    );
+    if (filterType === 'docFilter') {
+      this.docFilter.forEach((filter) => {
+        if (filter.texto !== opcion.texto) {
+          filter.checked = false;
+        }
+      });
+    }
+    opcion.checked = !opcion.checked;
   }
+  
   toggleDiv() {
     this.mostrarDiv = !this.mostrarDiv;
   }

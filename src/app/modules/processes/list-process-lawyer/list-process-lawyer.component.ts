@@ -96,7 +96,7 @@ export class ListProcessLawyerComponent {
 
     let startDateStr = '';
     let endDateStr = '';
-    const lawyerId = parseInt(localStorage.getItem('lawyerId')!);
+
     if (this.startDate) {
       startDateStr = this.startDate.toISOString().slice(0,10);
       params = params.set('fechaInicioStr', startDateStr);
