@@ -99,6 +99,7 @@
 
 .uploaddocument{
     display: flex;
+    margin-bottom: 50px;
 }
 
 .iframe-file input[type="file"]{
