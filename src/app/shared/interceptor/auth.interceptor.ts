@@ -5,11 +5,12 @@ import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { AuthService } from "../../services/auth.service";
 import { Router } from "@angular/router";
+import { AuthGuard } from "../auth/auth.guard";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     constructor(private auth: AuthService, private router: Router) { }
-
+    AuthGuard : AuthGuard | undefined
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const token = localStorage.getItem('token');
         
@@ -19,15 +20,13 @@ export class AuthInterceptor implements HttpInterceptor {
                     Authorization: 'Bearer ' + token
                 }
             });
-        } else {
-            // No hay token, no enviar la solicitud y redirigir al inicio de sesión
-            this.router.navigate(['/login']);
-        }
+        } 
 
         return next.handle(req).pipe(
             catchError((error: HttpErrorResponse) => {
                 if (error.status === 401 && !req.url.includes('login')) {
                     localStorage.clear(); 
+                    const currentUrl = this.router.url;
                     if (error.url && !error.url.includes('login')) {
                         Swal.fire({
                             icon: 'error',
@@ -36,7 +35,7 @@ export class AuthInterceptor implements HttpInterceptor {
                             confirmButtonText: 'Okay',
                             confirmButtonColor: '#AA2535'
                         }).then(() => {
-                            this.router.navigate(['/login']);
+                           // this.router.navigate(['/login'], { queryParams: { returnUrl: currentUrl } });
                         });
                     }
                 }

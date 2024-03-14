@@ -41,6 +41,7 @@ export class ListProcessLawyerComponent {
   pageIndex = 0;
   totalItems = 0;
 
+  lawyerId: string = "";
   constructor(
     private changeDetectorRefs: ChangeDetectorRef,
     private router: Router,
@@ -82,14 +83,16 @@ export class ListProcessLawyerComponent {
     this.router.navigate(['/infoprocesslawyer'], { queryParams: queryParams });
   }
   ngOnInit() {
+    this.lawyerId = localStorage.getItem('lawyerId')!;
+  
     this.loadFilterParams();
     this.applyFilters();
+    
   }
   applyFilters() {
-    let params = new HttpParams().set(
-      'abogadoId',
-      parseInt(localStorage.getItem('lawyerId')!)
-    );
+    this.lawyerId = localStorage.getItem('lawyerId')!;
+    console.log(this.lawyerId)
+    let params = new HttpParams().set('abogadoId', this.lawyerId);
     params = params.set('page', this.pageIndex.toString());
 
     params = params.set('size', this.pageSize.toString());
@@ -98,11 +101,11 @@ export class ListProcessLawyerComponent {
     let endDateStr = '';
 
     if (this.startDate) {
-      startDateStr = this.startDate.toISOString().slice(0,10);
+      startDateStr = this.startDate.toISOString().slice(0, 10);
       params = params.set('fechaInicioStr', startDateStr);
     }
     if (this.endDate) {
-      endDateStr = this.endDate.toISOString().slice(0,10);
+      endDateStr = this.endDate.toISOString().slice(0, 10);
       params = params.set('fechaFinStr', endDateStr);
     }
 
@@ -119,26 +122,25 @@ export class ListProcessLawyerComponent {
     if (this.selectedProcessType?.valor) {
       params = params.set('tipoProceso', this.selectedProcessType.valor.nombre);
     }
-    this.processService
-      .getProcesosByAbogadoFilter(params)
-      .subscribe(
-        (data: Pageable<ProcesoLawyerFilter>) => {
-          this.dataSource.data = data.data;
-          this.totalItems = data.totalItems;
-        },
-        (error) => {
-          console.error('Error al obtener los datos:', error);
-        }
-      );
+    this.processService.getProcesosByAbogadoFilter(params).subscribe(
+      (data: Pageable<ProcesoLawyerFilter>) => {
+        this.dataSource.data = data.data;
+        this.totalItems = data.totalItems;
+      },
+      (error) => {
+        console.error('Error al obtener los datos:', error);
+      }
+    );
   }
 
   onPageChange(event: PageEvent) {
+    this.lawyerId = localStorage.getItem('lawyerId')!;
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.applyFilters();
   }
   onSelected(value: ProcesoType): void {
-    console.log('AAAAAAA', value);
+    
   }
   onCheckboxChange(
     opcion: { valor: any; texto: string; checked: boolean },

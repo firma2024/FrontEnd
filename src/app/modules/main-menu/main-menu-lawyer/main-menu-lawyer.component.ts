@@ -25,34 +25,22 @@ export class MainMenuLawyerComponent {
   ngOnInit() {
 
     const storedUsername = localStorage.getItem('username')!;
-    
-    this.getProcesses(storedUsername)
+    const lawyerId = localStorage.getItem("lawyerId")
 
     if (storedUsername !== null) {
       this.username = storedUsername;
-      this.userService.getLawyerByUsername(this.username).subscribe(
-        (user: UserProcesess) => {
-          localStorage.setItem("lawyerId",user.id.toString())
-        },
-        (error) => {
-          // Manejar errores aquí
-          console.error(error);
-        }
-      );
+      
       this.lawFirmService.getFirmaByUser(this.username).subscribe(
         (firma: Firma) => {
           console.log('Firma obtenida:', firma);
           this.nombreEmpresa = `${firma.nombre}`;
           this.direccionEmpresa = `${firma.direccion}`;
-          localStorage.setItem("firmaId", firma.id.toString());
         },
         (error) => {
           console.error('Error al obtener la firma:', error);
         }
       );
-    } else {
-      console.error('No se encontró un nombre de usuario en el localStorage');
-    }
+    } 
     this.processService.getNumeroProcesosPorAbogadoYEstado('Activo',this.username).subscribe(
       (response: any) => {
         console.log(response.value)
@@ -87,8 +75,6 @@ export class MainMenuLawyerComponent {
       }
     );
   }
-  getProcesses(username: string) {
-    
-  }
+
 }
 

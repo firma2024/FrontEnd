@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Observer } from 'rxjs';
 import { AuthService } from '../../../services/auth.service';
 import { UtilService } from '../../../services/util.service';
+import { UserService } from '../../../services/user.service';
+import { UserProcesess } from '../../../shared/model/user/user.procesos';
+import { LawFirmService } from '../../../services/law.firm.service';
+import { Firma } from '../../../shared/model/lawFirm/firma';
 
 @Component({
   selector: 'app-login',
@@ -12,28 +16,62 @@ import { UtilService } from '../../../services/util.service';
 })
 export class LoginComponent {
   constructor(
-    private auth: AuthService,
+    private authService: AuthService,
     private router: Router,
-    private utilService: UtilService
+    private utilService: UtilService,
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService,
+    private lawFirmService: LawFirmService
   ) {}
 
   username: string = '';
   password: string = '';
   error: boolean = false;
   error_message: string = 'Error de conexión';
-
+  returnUrl: string = '/';
   error_dict: { [key: number]: string } = {
     400: 'Credenciales incorrectas',
     500: 'Error del servidor',
   };
-
+  ngOnInit() {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.returnUrl = params['returnUrl'];
+    });
+  }
   loginObserver: Observer<any> = {
     next: (data: any) => {
       const rol = localStorage.getItem('role');
+      
+      this.lawFirmService.getFirmaByUser(this.username).subscribe(
+        (firma: Firma) => {
+          localStorage.setItem('firmaId', firma.id.toString());
+        },
+        (error) => {
+          console.error('Error al obtener la firma:', error);
+        }
+      );
       if (rol === 'JEFE') {
         this.router.navigate(['/main']);
       } else if (rol === 'ABOGADO') {
-        this.router.navigate(['/main-lawyer']);
+        this.getLawyerInfo();
+        if (this.returnUrl !== '/' && this.returnUrl !== undefined) {
+          if (this.returnUrl.includes('?')) {
+            
+            //Url with query params
+            const id = this.returnUrl.split('?')[1].split('=')[1];
+            const urlQuery = this.returnUrl.split('?')[0];
+            let queryParams = { id: id.toString() };
+            console.log(queryParams);
+            this.router.navigate([urlQuery], {
+              queryParams: queryParams,
+            });
+          } else {
+            //Url without query params
+            this.router.navigate([this.returnUrl]);
+          }
+        } else {
+          this.router.navigate(['/main-lawyer']);
+        }
       }
     },
     error: (error: any) => {
@@ -52,9 +90,7 @@ export class LoginComponent {
         confirmButtonColor: '#AA2535',
       });
     },
-    complete: () => {
-      console.log('complete');
-    },
+    complete: () => {},
   };
   areCorrectFields(): boolean {
     let dict: { [key: string]: string } = {};
@@ -74,10 +110,20 @@ export class LoginComponent {
   }
   iniciarSesion(): void {
     if (this.areCorrectFields()) {
-      this.auth
+      this.authService
         .login(this.username, this.password)
         .subscribe(this.loginObserver);
       localStorage.setItem('username', this.username);
     }
+  }
+  getLawyerInfo(){
+    this.userService.getLawyerByUsername(this.username).subscribe(
+      (user: UserProcesess) => {
+        localStorage.setItem('lawyerId', user.id.toString());
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 }
