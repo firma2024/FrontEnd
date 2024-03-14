@@ -2,24 +2,18 @@
 body {
     height: 100vh;
     width: 100vw;
-    padding: 5%;
-    background-color: #cdc9c9;
 }
 a{
-      color: #000000;
-      cursor: pointer;
+    color: #000000;
+    cursor: pointer;
 }
-.row{
-    width: 100%;
-    margin-left: -40px;
-    margin-right: -70px;
-    border-radius: 20px;
-}
+
 
 .btn-primary{
     background-color:#AA2535;
     border-radius: 10px;
     width: 50%;
+    margin-bottom: 30px;
 }
 .btn-primary:hover{
     background-color: #AA2535; 
@@ -58,6 +52,10 @@ input[type="checkbox"]:checked {
 	align-items: center;
 	border-radius: 20px;
 }
+.row{
+    border: 2px solid #e4e4e4;
+    border-radius: 20px;
+}
 
 .login-form {
 	max-width: 85%;
@@ -82,23 +80,23 @@ input[type="checkbox"]:checked {
     width: 40%;
     padding-top: 5%;
     padding-left: 8%;
-    border-bottom-left-radius: 20px;
-    border-top-left-radius: 20px;
-    background-color: #ffffff;
+    border-bottom-left-radius: 17px;
+    border-top-left-radius: 17px;
+    background-color: #F6F6F6;
 }
 .col-der {
-    background-color: #ffffff;
+    background-color: #F6F6F6;
     flex: 2;
     max-width: 40%;
     border-top-right-radius: 60px;
     border-bottom-right-radius: 60px;
 }
 .form-control{
-    border-color: #000000;
-    color: #000000;
+    border-color: #505050;
+    color: #505050;
 }
 h1{
-    color: #000000;
+    color: #505050;
 }
 label{
     color: #000000;
@@ -123,11 +121,11 @@ label{
 	width: 60%;
 	height: 15%;
     padding-bottom: 2%;
+    margin-bottom: 30px;
 }
 
-.col-der img {
-    border-end-end-radius: 30px;
-    border-top-right-radius: 30px;
+.col-der img{
+    border-radius: 18px;
 }
 
 .switch{
@@ -144,6 +142,6 @@ label{
   }
 
   
-  .botonTexto:hover {
+.botonTexto:hover {
     color: #AA2535; 
-  }
+}
