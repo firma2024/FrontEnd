@@ -44,8 +44,13 @@ export class InfoAdminComponent implements OnInit {
     this.userService.obtenerInformacionJefe(userName).subscribe(
       (data: UserProcesess) => {
         this.usuario = data;
-        this.usuarioName = this.usuario.nombres;
-        console.log(this.usuario.telefono)
+        const palabras = this.usuario.nombres.split(' ');
+        if (palabras.length > 2) {
+          this.usuarioName = palabras.slice(0, 2).join(' ');
+        } else {
+          this.usuarioName = this.usuario.nombres;
+        }
+        console.log(this.usuario.telefono);
         localStorage.setItem('userId', this.usuario.id.toString());
       },
       (error) => {

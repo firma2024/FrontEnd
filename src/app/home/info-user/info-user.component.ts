@@ -22,6 +22,11 @@ export class InfoUserComponent implements OnInit {
   selectedSpecialty: string = '';
   rol: string = '';
   userId: string= '';
+  typeSpeciality : {
+    valor: TipoAbogado | null;
+    texto: string;
+    checked: boolean;
+  }[] = [];
 
   constructor(
     private dialogRef: MatDialogRef<InfoUserComponent>,
@@ -37,6 +42,7 @@ export class InfoUserComponent implements OnInit {
     this.obtaintUserInfo();
     this.getImageUrlByUserId(userId);
     this.getAllTipoAbogado();
+    this.obtainLaywersInfo();
   }
 
   obtaintUserInfo() {
@@ -44,8 +50,13 @@ export class InfoUserComponent implements OnInit {
     this.userService.getAbogado(userName).subscribe(
       (data: UserProcesess) => {
         this.usuario = data;
-        this.usuarioName = this.usuario.nombres;
-        console.log(this.usuario.telefono)
+        const palabras = this.usuario.nombres.split(' ');
+        if (palabras.length > 2) {
+          this.usuarioName = palabras.slice(0, 2).join(' ');
+        } else {
+          this.usuarioName = this.usuario.nombres;
+        }
+        console.log(this.usuario.telefono);
         localStorage.setItem('userId', this.usuario.id.toString());
       },
       (error) => {
@@ -53,7 +64,23 @@ export class InfoUserComponent implements OnInit {
       }
     );
   }
-
+  obtainLaywersInfo() {
+    this.userService.getAllTipoAbogado().subscribe(
+      (typeDoc: TipoAbogado[]) => {
+        typeDoc.forEach((tipoAbogado) => {
+          this.typeSpeciality.push({
+            valor: tipoAbogado,
+            texto: tipoAbogado.nombre,
+            checked: false,
+          });
+        });
+      },
+      (error) => {
+        console.error('Error al obtener tipos de abogado:', error);
+      }
+    );
+  }
+  
   updateProfile() {
     Swal.fire({
       title: '¿Estás seguro?',
@@ -145,6 +172,12 @@ export class InfoUserComponent implements OnInit {
           this.imageUrl = URL.createObjectURL(photo);
         });
     }
+  }
+  onCheckboxChange(
+    opcion: { valor: any; texto: string; checked: boolean },
+    filterType: string
+  ): void {
+    opcion.checked = !opcion.checked;
   }
 
   getAllTipoAbogado(): void {

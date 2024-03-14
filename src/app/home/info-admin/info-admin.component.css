@@ -67,8 +67,9 @@
     display: flex;
 }
 .nombrePerfil{
-    padding-left: 20px;
-    margin-left: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #AA2535;
     font-family: Arial, Helvetica, sans-serif;
     font-style: bold;
