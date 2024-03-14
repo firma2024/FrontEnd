@@ -1,121 +1,128 @@
-<div class="head">
-  <div class="title">
-    <h3>Mis abogados</h3>
+<div class="container-processes">
+  <div class="head">
+    <div class="title">
+      <h3>Mis abogados</h3>
+    </div>
+    <div class="options">
+      <input
+        type="text"
+        (input)="applyFilterName($event)"
+        placeholder="Buscar abogado..."
+      />
+      <button  class="buttonFilter" (click)="toggleDiv()">
+        <span class="fa-solid fa-filter"></span>
+      </button>
+      <button class="buttonCreate" routerLink="/registerlawyer">
+        Crear Abogado
+      </button>
+    </div>
   </div>
-  <div class="options">
-    <input
-      type="text"
-      (input)="applyFilterName($event)"
-      placeholder="Buscar abogado..."
-    />
-    <button  class="buttonFilter" (click)="toggleDiv()">
-      <span class="fa-solid fa-filter"></span>
-    </button>
-    <button class="buttonCreate" routerLink="/registerlawyer">
-      Crear Abogado
-    </button>
-  </div>
-</div>
-
-<div class="table-container">
-  <div class="table">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-      <ng-container matColumnDef="nombres">
-        <th mat-header-cell *matHeaderCellDef>Nombres</th>
-        <td mat-cell *matCellDef="let row">{{ row.nombres }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="correo">
-        <th mat-header-cell *matHeaderCellDef>Correo</th>
-        <td mat-cell *matCellDef="let row">{{ row.correo }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="telefono">
-        <th mat-header-cell *matHeaderCellDef>Teléfono</th>
-        <td mat-cell *matCellDef="let row">{{ row.telefono }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="especialidades">
-        <th mat-header-cell *matHeaderCellDef>Especialidades</th>
-        <td mat-cell *matCellDef="let row">
-          <ng-container
-            *ngIf="row.especialidades && row.especialidades.length > 0"
-          >
-            <span
-              *ngFor="let especialidad of row.especialidades; let isLast = last"
+  
+  <div class="table-container">
+    <div class="table">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="nombres">
+          <th mat-header-cell *matHeaderCellDef>Nombres</th>
+          <td mat-cell *matCellDef="let row">{{ row.nombres }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="correo">
+          <th mat-header-cell *matHeaderCellDef>Correo</th>
+          <td mat-cell *matCellDef="let row">{{ row.correo }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="telefono">
+          <th mat-header-cell *matHeaderCellDef>Teléfono</th>
+          <td mat-cell *matCellDef="let row">{{ row.telefono }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="especialidades">
+          <th mat-header-cell *matHeaderCellDef>Especialidades</th>
+          <td mat-cell *matCellDef="let row">
+            <ng-container
+              *ngIf="row.especialidades && row.especialidades.length > 0"
             >
-              {{ especialidad.nombre }}{{ isLast ? "" : ", " }}
-            </span>
-          </ng-container>
-          <ng-container
-            *ngIf="!row.especialidades || row.especialidades.length === 0"
-            >N/A</ng-container
-          >
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="procesos">
-        <th mat-header-cell *matHeaderCellDef>Procesos Asignados</th>
-        <td mat-cell *matCellDef="let row">
-          {{ row.numeroProcesosAsignados }}
-        </td>
-      </ng-container>
-
-      <!-- Columna de botón -->
-      <ng-container matColumnDef="button">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let row" style="vertical-align: middle">
-          <button
-            mat-icon-button
-            class="custom-button"
-            (click)="deleteUser(row)"
-          >
-            <i class="fas fa-trash"></i>
-          </button>
-        </td>
-      </ng-container>
-
-      <!-- Encabezados de fila -->
-      <tr
-        mat-header-row
-        *matHeaderRowDef="[
-          'nombres',
-          'correo',
-          'telefono',
-          'especialidades',
-          'procesos',
-          'button'
-        ]"
-      ></tr>
-
-      <!-- Filas de datos -->
-      <tr
-        mat-row
-        *matRowDef="
-          let row;
-          columns: [
+              <span
+                *ngFor="let especialidad of row.especialidades; let isLast = last"
+              >
+                {{ especialidad.nombre }}{{ isLast ? "" : ", " }}
+              </span>
+            </ng-container>
+            <ng-container
+              *ngIf="!row.especialidades || row.especialidades.length === 0"
+              >N/A</ng-container
+            >
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="procesos">
+          <th mat-header-cell *matHeaderCellDef>Procesos Asignados</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.numeroProcesosAsignados }}
+          </td>
+        </ng-container>
+  
+        <!-- Columna de botón -->
+        <ng-container matColumnDef="button">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row" style="vertical-align: middle">
+            <button
+              mat-icon-button
+              class="custom-button"
+              (click)="deleteUser(row)"
+            >
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </ng-container>
+  
+        <!-- Encabezados de fila -->
+        <tr
+          mat-header-row
+          *matHeaderRowDef="[
             'nombres',
             'correo',
             'telefono',
             'especialidades',
             'procesos',
             'button'
-          ]
-        "
-        style="cursor: pointer"
-        (click)="redirectToOtherComponent(row)"
-      ></tr>
-    </table>
-
-    <mat-paginator
-      [length]="totalItems"
-      [pageSize]="pageSize"
-      (page)="onPageChange($event)"
-    >
-    </mat-paginator>
+          ]"
+        ></tr>
+  
+        <!-- Filas de datos -->
+        <tr
+          mat-row
+          *matRowDef="
+            let row;
+            columns: [
+              'nombres',
+              'correo',
+              'telefono',
+              'especialidades',
+              'procesos',
+              'button'
+            ]
+          "
+          style="cursor: pointer"
+          (click)="redirectToOtherComponent(row)"
+        ></tr>
+      </table>
+  
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        (page)="onPageChange($event)"
+      >
+      </mat-paginator>
+    </div>
   </div>
-
-  <div *ngIf="mostrarDiv" class="filter">
+  
+  <div *ngIf="mostrarDiv" class="container-filter">
+    <div class="close">
+      <button class="close-button" (click)="toggleDiv()">
+        <span class="fa-solid fa-close"></span>
+      </button>
+    </div>
     <h3>Filtrar</h3>
     <div class="filter1">
       <h6>Especialidad</h6>
@@ -129,7 +136,7 @@
         {{ opcion.texto }}
       </div>
     </div>
-
+  
     <div class="filter2">
       <h6>Procesos Asignados</h6>
       <div *ngFor="let opcion of processCountFilter">
