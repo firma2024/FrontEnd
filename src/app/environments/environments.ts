@@ -4,5 +4,6 @@ export const environment = {
   actionsURL: 'http://100.103.80.102:8082/api/business/actuacion',
   storageURL: 'http://100.103.80.102:8082/api/business/storage',
   userURL:'http://100.103.80.102:8082/api/business/user',
-  authURL:'http://100.103.80.102:8080/api/auth'
+  authURL:'http://localhost:8080/api/auth',
+  secretKey: 'ThisIsASecretKey'
 };
