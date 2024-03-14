@@ -33,18 +33,20 @@
   box-shadow: none;
 }
 .table {
-  margin-top: 1%;
+  margin-top: 3%;
   width: 100%;
   margin-bottom: 3%;
 }
-.filter {
-  border: 2px solid #d3d0d0;
-  padding-left: 1%;
-  margin-left: 2%;
-  margin-top: 1%;
-  width: 20%;
-  height: 100%;
+.container-filter{
   padding: 2%;
+  width: fit-content;
+  border-radius: 2px;
+  border: 1px solid rgb(200, 200, 200);
+  height:120vh;
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  top: 70px;
+  right: 10px;
 }
 .table-container {
   display: flex;
@@ -60,14 +62,7 @@
   margin: 5%;
 }
 
-input[type="text"],
-textarea {
-  border: 1px solid #bfbbbb;
-  border-radius: 5px;
-  width: 50%;
-  height: 40px;
-  color: #bfbbbb;
-}
+
 .checkbox-option {
   display: flex;
   align-items: center;
@@ -86,7 +81,7 @@ textarea {
 .buttonfilterAplicate {
   background-color: #aa2535;
   color: white;
-  width: 40%;
+  width: 80%;
   height: 40px;
   border-radius: 6px;
   border-color: transparent;
@@ -134,7 +129,7 @@ select:hover {
 }
 .titleAction {
   display: flex;
-  width: 60vw;
+  width: 98%;
   justify-content: space-between;
 }
 .buttonFilter {
@@ -144,6 +139,7 @@ select:hover {
   background-color: transparent;
 }
 .buttonCreate {
+  border-color: transparent;
   background-color: #aa2535;
   color: white;
   width: 23%;

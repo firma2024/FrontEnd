@@ -36,7 +36,7 @@
 .buttonfilterAplicate {
   background-color: #aa2535;
   color: white;
-  width: 40%;
+  width: 80%;
   height: 40px;
   border-radius: 6px;
   border-color: transparent;
@@ -51,14 +51,29 @@
   justify-content: center;
   align-items: center;
 }
-.filter {
-  border: 2px solid #d3d0d0;
-  padding-left: 1%;
-  margin-left: 2%;
-  margin-top: 2%;
-  width: 20%;
-  height: 100%;
+.container-filter{
   padding: 2%;
+  width: 25%;
+  border-radius: 2px;
+  border: 1px solid rgb(200, 200, 200);
+  height:85vh;
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  top: 0;
+  right: 0;
+}
+.close-button{
+  border-color: transparent;
+  background-color: white;
+}
+.close{
+  width: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+}
+.container-processes{
+  position: relative;
 }
 .filter1 {
   margin-top: 3%;

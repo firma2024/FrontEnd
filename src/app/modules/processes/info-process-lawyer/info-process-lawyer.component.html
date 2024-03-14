@@ -1,62 +1,70 @@
-<div class="titleinfoLawyer">
-  <h1><strong> Información del Proceso</strong></h1>
-</div>
+<div class="container-processes">
+  <div class="titleinfoLawyer">
+    <h1><strong> Información del Proceso</strong></h1>
+  </div>
 
-<div class="columns">
-  <div class="column">
-    <div class="half-column1">
-      <p><strong>N° radicado</strong></p>
-      <p><strong>Fecha radicación</strong></p>
+  <div class="columns">
+    <div class="column">
+      <div class="half-column1">
+        <p><strong>N° radicado</strong></p>
+        <p><strong>Fecha radicación</strong></p>
+      </div>
+      <div class="half-column2">
+        <p>{{ nRadicado }}</p>
+        <p>{{ date }}</p>
+      </div>
     </div>
-    <div class="half-column2">
-      <p>{{ nRadicado }}</p>
-      <p>{{ date }}</p>
-    </div>
-  </div>
-  <div class="column">
-    <div class="half-column1">
-      <p><strong>Tipo de proceso</strong></p>
-      <p><strong>Despacho </strong></p>
-    </div>
-    <div class="half-column2">
-      <p>{{ typeProcess }}</p>
-      <p>{{ despacho }}</p>
-    </div>
-  </div>
-</div>
-<div class="sujetos">
-  <div class="column">
-    <div class="half-column4">
-      <p class="sujetos"><strong>Sujetos</strong></p>
-    </div>
-    <div class="half-column3">
-      <li *ngFor="let item of listaSujetos">{{ item }}</li>
+    <div class="column">
+      <div class="half-column1">
+        <p><strong>Tipo de proceso</strong></p>
+        <p><strong>Despacho </strong></p>
+      </div>
+      <div class="half-column2">
+        <p>{{ typeProcess }}</p>
+        <p>{{ despacho }}</p>
+      </div>
     </div>
   </div>
-</div>
-<div class="enlaceAudiencias">
-  <p><strong>Enlaces de Audiencias</strong></p>
-  <button class="buttonAdd" (click)="openDialog()">
-    <span class="icon-pull-right fas fa-add"> </span>
-  </button>
-</div>
-<div class="listAudiencia">
-  <ul>
-    <li *ngFor="let item of listAudience">
-      <a  href="{{ item.enlace }}" class="enlace" target="_blank"> {{ item.nombre }}</a>
-      <button
-        (click)="openDialogEdit(item)"
-        class="icon-pull-right fas fa-edit"
-      ></button>
-    </li>
-  </ul>
-</div>
-<div class="download">
-  <h1><strong>Actuaciones</strong></h1>
-  <button class="buttondownload" (click)="toggleDiv()"><span class="fa-solid fa-filter"></span></button>
-  <button class="buttondownload" (click)="downloadAllDocs()">
-    <span class="icon-pull-right fas fa-cloud-arrow-down"> </span>
-  </button>
+  <div class="sujetos">
+    <div class="column">
+      <div class="half-column4">
+        <p class="sujetos"><strong>Sujetos</strong></p>
+      </div>
+      <div class="half-column3">
+        <li *ngFor="let item of listaSujetos">{{ item }}</li>
+      </div>
+    </div>
+  </div>
+  <div class="enlaceAudiencias">
+    <p><strong>Enlaces de Audiencias</strong></p>
+    <button class="buttonAdd" (click)="openDialog()">
+      <span class="icon-pull-right fas fa-add"> </span>
+    </button>
+  </div>
+  <div class="listAudiencia">
+    <ul>
+      <li *ngFor="let item of listAudience">
+        <a href="{{ item.enlace }}" class="enlace" target="_blank">
+          {{ item.nombre }}</a
+        >
+        <button
+          (click)="openDialogEdit(item)"
+          class="icon-pull-right fas fa-edit"
+        ></button>
+      </li>
+    </ul>
+  </div>
+  <div class="download">
+    <h1><strong>Actuaciones</strong></h1>
+    <div class="botonestabla">
+      <button class="buttondownload" (click)="toggleDiv()">
+        <span class="fa-solid fa-filter"></span>
+      </button>
+      <button class="buttondownload" (click)="downloadAllDocs()">
+        <span class="icon-pull-right fas fa-cloud-arrow-down"> </span>
+      </button>
+    </div>
+  </div>
 </div>
 
 <div class="table-container">
@@ -138,7 +146,13 @@
     >
     </mat-paginator>
   </div>
-  <div *ngIf="mostrarDiv" class="filter">
+
+  <div *ngIf="mostrarDiv" class="container-filter">
+    <div class="close">
+      <button class="close-button" (click)="toggleDiv()">
+        <span class="fa-solid fa-close"></span>
+      </button>
+    </div>
     <h4>FILTRAR</h4>
     <div class="filter1">
       <h5>Rango fecha</h5>
@@ -146,10 +160,17 @@
         <mat-form-field class="custom-form-field">
           <mat-label>Ingrese rango</mat-label>
           <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate placeholder="Start date" [(ngModel)]="startDate">
-            <input matEndDate placeholder="End date" [(ngModel)]="endDate">
+            <input
+              matStartDate
+              placeholder="Start date"
+              [(ngModel)]="startDate"
+            />
+            <input matEndDate placeholder="End date" [(ngModel)]="endDate" />
           </mat-date-range-input>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
           <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
       </div>
@@ -167,7 +188,9 @@
       </div>
     </div>
     <div class="botonfiltro">
-      <button (click)="applyFilters()"class="buttonfilterAplicate">Aplicar</button>
+      <button (click)="applyFilters()" class="buttonfilterAplicate">
+        Aplicar
+      </button>
     </div>
   </div>
 </div>

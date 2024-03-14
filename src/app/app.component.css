@@ -14,7 +14,7 @@
 .mainContent {
   width: 80%;
   flex: 1; /* El contenido principal se expandirá para llenar el espacio restante */
-  margin-top: 50px;
+  margin-top: 60px;
   margin-left: 10%;
 }
 
@@ -29,7 +29,7 @@ app-home {
 app-header{
   position: fixed;
   height: 80px;
-  top: -1px;
+  top: -2px;
   margin-left: 5%;
 }
 
