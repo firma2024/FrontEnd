@@ -10,7 +10,7 @@
                 <img [src]="imageUrl" alt="Foto" class="rounded-image">
         </div>
         <div class="nombrePerfil">
-            <h2 class="nombrePerfil" [(ngModel)]="usuarioName"> 
+            <h2 class="namePerfil" [(ngModel)]="usuarioName"> 
                 {{ usuarioName }}
             </h2>
         </div>
@@ -32,6 +32,20 @@
             <label for="Telefono">Teléfono: </label>
             <input type="text" class="form-control custom-input" id="Telefono" name="Telefono" [(ngModel)]="usuario.telefono" maxlength="10">
         </div>
+        <div class="form-group">
+            <label>Especialidades:</label>
+            <div *ngFor="let opcion of typeSpeciality" class="checkbox-option">
+              <input
+                class="checkbox"
+                type="checkbox"
+                id="{{ opcion.valor }}"
+                name="{{ opcion.texto }}"
+                [checked]="opcion.checked"
+                (change)="onCheckboxChange(opcion, 'stateFilter')"
+              />
+              <label for="{{ opcion.valor }}">{{ opcion.texto }}</label>
+            </div>
+          </div>
         
         
     </div>

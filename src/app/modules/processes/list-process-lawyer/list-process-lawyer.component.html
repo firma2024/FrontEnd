@@ -5,6 +5,7 @@
     </div>
     <div class="options">
       <input
+        class="buscador"
         type="text"
         id="process"
         name="process"
@@ -22,21 +23,23 @@
         <!-- Numero Radicado Column -->
         <ng-container matColumnDef="numeroRadicado">
           <th mat-header-cell *matHeaderCellDef>Numero Radicado</th>
-          <td mat-cell *matCellDef="let proceso">{{ proceso.numeroRadicado }}</td>
+          <td mat-cell *matCellDef="let proceso">
+            {{ proceso.numeroRadicado }}
+          </td>
         </ng-container>
-  
+
         <!-- Despacho Column -->
         <ng-container matColumnDef="despacho">
           <th mat-header-cell *matHeaderCellDef>Despacho</th>
           <td mat-cell *matCellDef="let proceso">{{ proceso.despacho }}</td>
         </ng-container>
-  
+
         <!-- Tipo Proceso Column -->
         <ng-container matColumnDef="tipoProceso">
           <th mat-header-cell *matHeaderCellDef>Tipo Proceso</th>
           <td mat-cell *matCellDef="let proceso">{{ proceso.tipoProceso }}</td>
         </ng-container>
-  
+
         <!-- Fecha Radicacion Column -->
         <ng-container matColumnDef="fechaRadicacion">
           <th mat-header-cell *matHeaderCellDef>Fecha Radicacion</th>
@@ -44,7 +47,7 @@
             {{ proceso.fechaRadicacion }}
           </td>
         </ng-container>
-  
+
         <!-- Columnas de la tabla -->
         <tr
           mat-header-row
@@ -70,61 +73,69 @@
           (click)="redirectToOtherComponent(row)"
         ></tr>
       </table>
-  
+
       <mat-paginator
         [length]="totalItems"
         [pageSize]="pageSize"
         (page)="onPageChange($event)"
       ></mat-paginator>
     </div>
-  
   </div>
   <div class="container-filter" *ngIf="mostrarDiv">
-      <div>
+    <div>
+      <div class="close">
         <button class="close-button" (click)="toggleDiv()">
           <span class="fa-solid fa-close"></span>
         </button>
-        <h4>FILTRAR</h4>
-        <div class="filter1">
-          <h5>Rango de fechas</h5>
-          
-          <div class="calendar">
-            <mat-form-field style="height: 100px; width: 300px;">
-              
-              <mat-date-range-input [rangePicker]="picker" >
-                <input matStartDate placeholder="Start date" [(ngModel)]="startDate" style="width: 160px; height: fit-content;">
-                <input matEndDate placeholder="End date" [(ngModel)]="endDate" style="width: 260px; height: fit-content;">
-              </mat-date-range-input>
-              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-date-range-picker #picker></mat-date-range-picker>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="filter2">
-          <h5>Estado proceso</h5>
-          <div *ngFor="let opcion of processStatusFilter">
-            <input
-              class="checkbox"
-              type="checkbox"
-              [checked]="opcion.checked"
-              (change)="onCheckboxChange(opcion, 'processStatusFilter')"
-            />
-            {{ opcion.texto }}
-          </div>
-        </div>
-        <div class="selectfilter">
-          <h5>Tipo de proceso</h5>
-          <select id="options" [(ngModel)]="selectedProcessType" >
-            <option *ngFor="let option of processTypeFilter" [ngValue]="option">
-              {{ option.texto }}
-            </option>
-          </select>
-        </div>
-        <div class="botonfiltro">
-          <button class="buttonfilterAplicate" (click)="applyFilters()">
-            Aplicar
-          </button>
+      </div>
+      <h4>FILTRAR</h4>
+      <div class="filter1">
+        <h5>Rango de fechas</h5>
+
+        <div class="calendar">
+          <mat-form-field>
+            <mat-date-range-input [rangePicker]="picker" style="width: 300px">
+              <input
+                matStartDate
+                placeholder="Start date"
+                [(ngModel)]="startDate"
+                width="100%"
+              />
+              <input matEndDate placeholder="End date" [(ngModel)]="endDate" />
+            </mat-date-range-input>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
         </div>
       </div>
+      <div class="filter2">
+        <h5>Estado proceso</h5>
+        <div *ngFor="let opcion of processStatusFilter">
+          <input
+            class="checkbox"
+            type="checkbox"
+            [checked]="opcion.checked"
+            (change)="onCheckboxChange(opcion, 'processStatusFilter')"
+          />
+          {{ opcion.texto }}
+        </div>
+      </div>
+      <div class="selectfilter">
+        <h5>Tipo de proceso</h5>
+        <select id="options" name="opciones" [(ngModel)]="selectedProcessType">
+          <option *ngFor="let option of processTypeFilter" [ngValue]="option">
+            {{ option.texto }}
+          </option>
+        </select>
+      </div>
+      <div class="botonfiltro">
+        <button class="buttonfilterAplicate" (click)="applyFilters()">
+          Aplicar
+        </button>
+      </div>
     </div>
+  </div>
 </div>
