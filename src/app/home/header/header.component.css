@@ -1,6 +1,5 @@
 .header {
     width: 81.8vw; /* Establece el ancho al 100% del viewport */
-    background-color: #ffffff; 
     display: flex;
     justify-content: end;
     align-items: center;
@@ -38,6 +37,10 @@
 .custom-dialog-container {
     border-radius: 20px; /* Define el radio del borde para hacerlo redondo */
     margin: 50px;
+}
+
+.body{
+  background-color: aquamarine;
 }
   
   

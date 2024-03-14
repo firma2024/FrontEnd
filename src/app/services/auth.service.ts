@@ -8,16 +8,21 @@ import { User } from '../shared/model/auth/user';
 import { tap } from 'rxjs/operators';
 import { TipoDocumento } from '../shared/model/doc.tipo';
 import { TipoAbogado } from '../shared/model/user/user.tipo';
+import { encrypt } from '../utils/encrypt'
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
   login(username: string, password: string): Observable<TokenResponse> {
+    password = encrypt(password);
+    console.log(password)
     const authReq: AuthenticationRequest = {
       username: username,
       password: password,
     };
+
     return this.http
       .post<TokenResponse>(`${environment.authURL}/login`, authReq)
       .pipe(

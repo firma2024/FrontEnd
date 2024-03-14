@@ -22,6 +22,7 @@ export class InfoActionWebComponent implements OnInit {
   selectedFile: File | null = null;
   id: string = '';
   listaSujetos: string[] = [];
+  selectedFileName?: string | null  = "";
 
   officeURL: string = '';
   constructor(
@@ -54,6 +55,7 @@ export class InfoActionWebComponent implements OnInit {
   }
   selectDoc(event: any) {
     this.selectedFile = event.target.files[0];
+    this.selectedFileName = this.selectedFile?.name;
   }
   uploadDoc(event: any) {
     event.preventDefault();

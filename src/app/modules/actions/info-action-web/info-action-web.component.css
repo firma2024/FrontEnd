@@ -60,6 +60,7 @@
     transition: background-color 0.3s ease;
     border-color: transparent;
 }
+
 .iframe-link-doc {
     display: inline-block;
     padding: 10px 20px;
@@ -69,8 +70,9 @@
     border-radius: 5px;
     transition: background-color 0.3s ease;
     border-color: transparent;
-    margin-left: 30px;
+    margin-left: 400px; /* Ajusta el margen derecho según sea necesario */
 }
+
 /* Estilo para el botón */
 .iframe-linkdoc {
     /* Estilos generales del botón */
@@ -86,15 +88,44 @@
 }
 .iframe-link-doc:hover{
     background-color: #72252e;
-
 }
+.iframe-file:hover{
+    background-color: #72252e;
+}
+
 .description {
     margin-top: -80px; /* Ajusta el valor según sea necesario para mover el div más arriba */
 }
 
 .uploaddocument{
     display: flex;
+    margin-bottom: 50px;
 }
 
+.iframe-file input[type="file"]{
+    appearance: none;
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+.iframe-file{
+    display: inline-block;
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #AA2535;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    border-color: transparent;
+}
+.iframe-file > i{
+    margin-right: 15px;
+}
 
-
+.iframe-file.bordeado{
+    background-color: transparent;
+    border: 2px solid #AA2535;
+    color: #AA2535;
+}
