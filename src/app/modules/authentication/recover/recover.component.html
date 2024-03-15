@@ -16,10 +16,10 @@
                     <img src="/assets/logoFirma.png" alt="Imagen">
                   <h1 class="title">Bienvenido de nuevo</h1>
                   <div class="form-group">
-                    <label for="username">Para recuperar su contraseña ingrese su correo electronico:</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Correo Electronico" [(ngModel)]="mail">
+                    <label for="username">Para recuperar su contraseña ingrese su nombre de usuario:</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario" [(ngModel)]="username">
                   </div>
-                  <button type="submit" class="buttonRecover" >Recuperar</button>
+                  <button type="submit" class="buttonRecover" (click)="recoverPassword()" >Recuperar</button>
                 </form>
               </div>
             <div class="col-der">

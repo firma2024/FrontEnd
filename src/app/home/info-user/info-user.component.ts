@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '../../services/user.service';
 import { UserProcesess } from '../../shared/model/user/user.procesos';
@@ -8,11 +8,13 @@ import { TipoAbogado } from '../../shared/model/user/user.tipo';
 import Swal from 'sweetalert2';
 import { UtilService } from '../../services/util.service';
 import { Route, Router } from '@angular/router';
+import { UserRequest } from '../../shared/model/user/user.req';
+import { UserAbogadoUpdate } from '../../shared/model/user/user.abogado.update';
 
 @Component({
   selector: 'app-info-user',
   templateUrl: './info-user.component.html',
-  styleUrls: ['./info-user.component.css']
+  styleUrls: ['./info-user.component.css'],
 })
 export class InfoUserComponent implements OnInit {
   usuario: UserProcesess = {} as UserProcesess;
@@ -21,9 +23,9 @@ export class InfoUserComponent implements OnInit {
   listaEspecialidades: Speciality[] = [];
   selectedSpecialty: string = '';
   rol: string = '';
-  userId: string= '';
-  typeSpeciality : {
-    valor: TipoAbogado | null;
+  userId: string = '';
+  typeSpeciality: {
+    valor: TipoAbogado;
     texto: string;
     checked: boolean;
   }[] = [];
@@ -33,16 +35,18 @@ export class InfoUserComponent implements OnInit {
     private userService: UserService,
     private storageService: StorageService,
     private utilService: UtilService,
-    private router: Router
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.rol = localStorage.getItem('role') || '';
     const userId = localStorage.getItem('userId');
+    this.obtainLaywersInfo();
     this.obtaintUserInfo();
     this.getImageUrlByUserId(userId);
     this.getAllTipoAbogado();
-    this.obtainLaywersInfo();
+    
   }
 
   obtaintUserInfo() {
@@ -58,6 +62,14 @@ export class InfoUserComponent implements OnInit {
         }
         console.log(this.usuario.telefono);
         localStorage.setItem('userId', this.usuario.id.toString());
+        this.usuario.especialidades.forEach((especialidad) => {
+          this.typeSpeciality.forEach((speciality) => {
+            if (speciality.valor.nombre === especialidad.nombre) {
+              speciality.checked = true;
+            }
+          });
+        });
+        this.changeDetectorRef.detectChanges();
       },
       (error) => {
         console.error('Error al obtener la información del usuario:', error);
@@ -80,7 +92,7 @@ export class InfoUserComponent implements OnInit {
       }
     );
   }
-  
+
   updateProfile() {
     Swal.fire({
       title: '¿Estás seguro?',
@@ -93,44 +105,50 @@ export class InfoUserComponent implements OnInit {
       cancelButtonText: 'Cancelar',
     }).then((result) => {
       if (result.isConfirmed) {
-        if(this.areCorrectFields()){
+        if (this.areCorrectFields()) {
           this.updateUser();
         }
       }
     });
   }
   updateUser() {
-    this.userService
-      .actualizarInfoJefe(
-        this.usuario.id,
-        this.usuario.nombres,
-        this.usuario.correo,
-        this.usuario.telefono.toString(),
-        this.usuario.identificacion.toString()
-      )
-      .subscribe(
-        () => {
-          Swal.fire({
-            icon: 'success',
-            iconColor: '#AA2535',
-            title: 'Usuario actualizado',
-            confirmButtonText: 'Okay',
-            confirmButtonColor: '#AA2535',
-            didClose: () => {
-              window.location.reload();
-            },
-          });
-        },
-        (error) => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error al actualizar la información usuario',
-            text: 'No se pudo actualizar la información, por favor intente más tarde',
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: '#AA2535',
-          })
-        }
-      );
+    let userReq: UserAbogadoUpdate = {
+      id: this.usuario.id,
+      nombres: this.usuario.nombres,
+      correo: this.usuario.correo,
+      telefono: this.usuario.telefono.toString(),
+      identificacion: this.usuario.identificacion.toString(),
+      especialidades: [],
+    };
+    this.typeSpeciality.forEach((filter) => {
+      if (filter.checked) {
+        userReq.especialidades.push(filter.valor);
+      }
+    });
+    console.log(userReq);
+    this.userService.actualizarInfoAbogado(userReq).subscribe(
+      () => {
+        Swal.fire({
+          icon: 'success',
+          iconColor: '#AA2535',
+          title: 'Usuario actualizado',
+          confirmButtonText: 'Okay',
+          confirmButtonColor: '#AA2535',
+          didClose: () => {
+            window.location.reload();
+          },
+        });
+      },
+      (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al actualizar la información usuario',
+          text: 'No se pudo actualizar la información, por favor intente más tarde',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#AA2535',
+        });
+      }
+    );
   }
   areCorrectFields(): boolean {
     let dict: { [key: string]: string } = {};

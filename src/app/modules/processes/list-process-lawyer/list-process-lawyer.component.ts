@@ -78,7 +78,7 @@ export class ListProcessLawyerComponent {
       });
   }
   redirectToOtherComponent(row: any) {
-    const queryParams = { processId: row.id.toString() };
+    const queryParams = { id: row.id.toString() };
     localStorage.setItem('selectedIdProcessLawyer', row.id.toString());
     this.router.navigate(['/infoprocesslawyer'], { queryParams: queryParams });
   }
