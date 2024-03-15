@@ -14,6 +14,7 @@ import { HttpParams, HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { Audiencia } from '../../../shared/model/audencia/audiencia';
 import { DateAdapter } from '@angular/material/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-info-process-lawyer',
@@ -127,9 +128,27 @@ export class InfoProcessLawyerComponent {
     this.router.navigate(['/infoactionbroker'], { queryParams: queryParams });
   }
   downloadAllDocs() {
+    
+    Swal.fire({
+      title:
+        'Descargando providencias\nEspere un momento',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+        const container = Swal.getHtmlContainer();
+        if (container) {
+          const loader = container.querySelector('.swal2-loader');
+          if (loader instanceof HTMLElement) {
+            loader.style.color = '#AA2535';
+          }
+        }
+      },
+    });
+
     this.storageService
       .descargarTodosLosDocumentos(this.idProcess)
       .subscribe((data: HttpResponse<Blob>) => {
+        Swal.close();
         const file = new Blob([data.body!], { type: 'application/zip' });
         const url = window.URL.createObjectURL(file);
         const a = document.createElement('a');
