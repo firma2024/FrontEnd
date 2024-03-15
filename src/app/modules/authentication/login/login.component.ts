@@ -41,7 +41,7 @@ export class LoginComponent {
   loginObserver: Observer<any> = {
     next: (data: any) => {
       const rol = localStorage.getItem('role');
-      
+
       this.lawFirmService.getFirmaByUser(this.username).subscribe(
         (firma: Firma) => {
           localStorage.setItem('firmaId', firma.id.toString());
@@ -51,12 +51,27 @@ export class LoginComponent {
         }
       );
       if (rol === 'JEFE') {
-        this.router.navigate(['/main']);
+        if (this.returnUrl !== '/' && this.returnUrl !== undefined) {
+          if (this.returnUrl.includes('?')) {
+            //Url with query params
+            const id = this.returnUrl.split('?')[1].split('=')[1];
+            const urlQuery = this.returnUrl.split('?')[0];
+            let queryParams = { id: id.toString() };
+            console.log(queryParams);
+            this.router.navigate([urlQuery], {
+              queryParams: queryParams,
+            });
+          } else {
+            //Url without query params
+            this.router.navigate([this.returnUrl]);
+          }
+        } else {
+          this.router.navigate(['/main']);
+        }
       } else if (rol === 'ABOGADO') {
         this.getLawyerInfo();
         if (this.returnUrl !== '/' && this.returnUrl !== undefined) {
           if (this.returnUrl.includes('?')) {
-            
             //Url with query params
             const id = this.returnUrl.split('?')[1].split('=')[1];
             const urlQuery = this.returnUrl.split('?')[0];
@@ -108,6 +123,7 @@ export class LoginComponent {
       return true;
     }
   }
+  hasQueryParams() {}
   iniciarSesion(): void {
     if (this.areCorrectFields()) {
       this.authService
@@ -116,7 +132,7 @@ export class LoginComponent {
       localStorage.setItem('username', this.username);
     }
   }
-  getLawyerInfo(){
+  getLawyerInfo() {
     this.userService.getLawyerByUsername(this.username).subscribe(
       (user: UserProcesess) => {
         localStorage.setItem('lawyerId', user.id.toString());

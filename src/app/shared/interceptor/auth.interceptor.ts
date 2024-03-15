@@ -36,7 +36,7 @@ export class AuthInterceptor implements HttpInterceptor {
                             confirmButtonColor: '#AA2535'
                         }).then(() => {
                             // window.location.reload()
-                           // this.router.navigate(['/login'], { queryParams: { returnUrl: currentUrl } });
+                           //this.router.navigate(['/login'], { queryParams: { returnUrl: currentUrl } });
                         });
                     }
                 }
