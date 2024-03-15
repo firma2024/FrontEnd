@@ -49,7 +49,7 @@ export class ListProcessAdminComponent {
   endDate: Date | null = null;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  pageSize = 5;
+  pageSize = 6;
   pageIndex = 0;
   totalItems = 0;
 
