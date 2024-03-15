@@ -24,7 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
         return next.handle(req).pipe(
             catchError((error: HttpErrorResponse) => {
-                if (error.status === 401 && !req.url.includes('login')) {
+                if (error.status === 401 && !req.url.includes('login') ) {
                     localStorage.clear(); 
                     const currentUrl = this.router.url;
                     if (error.url && !error.url.includes('login')) {
@@ -35,6 +35,7 @@ export class AuthInterceptor implements HttpInterceptor {
                             confirmButtonText: 'Okay',
                             confirmButtonColor: '#AA2535'
                         }).then(() => {
+                            // window.location.reload()
                            // this.router.navigate(['/login'], { queryParams: { returnUrl: currentUrl } });
                         });
                     }

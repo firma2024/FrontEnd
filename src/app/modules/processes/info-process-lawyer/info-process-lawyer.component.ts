@@ -45,8 +45,9 @@ export class InfoProcessLawyerComponent {
 
   idProcess: string = '';
   ngOnInit(): void {
+    
     this.activatedRoute.queryParams.subscribe((params) => {
-      this.idProcess = params['processId'];
+      this.idProcess = params['id'];
     });
     this.loadData();
   }

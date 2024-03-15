@@ -41,7 +41,7 @@
                 id="{{ opcion.valor }}"
                 name="{{ opcion.texto }}"
                 [checked]="opcion.checked"
-                (change)="onCheckboxChange(opcion, 'stateFilter')"
+                (click)="onCheckboxChange(opcion, 'stateFilter')"
               />
               <label for="{{ opcion.valor }}">{{ opcion.texto }}</label>
             </div>

@@ -43,7 +43,7 @@ const routes: Routes = [
   {path: 'listprocessadmin',component: ListProcessAdminComponent, canActivate:[AuthGuard], data: { roles: ['JEFE'] }},
   {path: 'infoprocessadmin',component: InfoProcessAdminComponent, canActivate:[AuthGuard], data: { roles: ['JEFE'] }},
   {path: 'listprocesslawyer',component: ListProcessLawyerComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }},
-  {path: 'infoprocesslawyer',component: InfoProcessLawyerComponent},
+  {path: 'infoprocesslawyer',component: InfoProcessLawyerComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }},
   {path: 'header',component: HeaderComponent},
   {path: 'infoaction',component: InfoActionComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }},
   {path: 'infoactionweb',component: InfoActionWebComponent, canActivate:[AuthGuard], data: { roles: ['ABOGADO'] }},
