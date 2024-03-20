@@ -38,75 +38,6 @@ export class LoginComponent {
       this.returnUrl = params['returnUrl'];
     });
   }
-  loginObserver: Observer<any> = {
-    next: (data: any) => {
-      const rol = localStorage.getItem('role');
-
-      this.lawFirmService.getFirmaByUser(this.username).subscribe(
-        (firma: Firma) => {
-          localStorage.setItem('firmaId', firma.id.toString());
-        },
-        (error) => {
-          console.error('Error al obtener la firma:', error);
-        }
-      );
-      if (rol === 'JEFE') {
-        if (this.returnUrl !== '/' && this.returnUrl !== undefined) {
-          if (this.returnUrl.includes('?')) {
-            //Url with query params
-            const id = this.returnUrl.split('?')[1].split('=')[1];
-            const urlQuery = this.returnUrl.split('?')[0];
-            let queryParams = { id: id.toString() };
-            console.log(queryParams);
-            this.router.navigate([urlQuery], {
-              queryParams: queryParams,
-            });
-          } else {
-            //Url without query params
-            this.router.navigate([this.returnUrl]);
-          }
-        } else {
-          this.router.navigate(['/main']);
-        }
-      } else if (rol === 'ABOGADO') {
-        this.getLawyerInfo();
-        if (this.returnUrl !== '/' && this.returnUrl !== undefined) {
-          if (this.returnUrl.includes('?')) {
-            //Url with query params
-            const id = this.returnUrl.split('?')[1].split('=')[1];
-            const urlQuery = this.returnUrl.split('?')[0];
-            let queryParams = { id: id.toString() };
-            console.log(queryParams);
-            this.router.navigate([urlQuery], {
-              queryParams: queryParams,
-            });
-          } else {
-            //Url without query params
-            this.router.navigate([this.returnUrl]);
-          }
-        } else {
-          this.router.navigate(['/main-lawyer']);
-        }
-      }
-    },
-    error: (error: any) => {
-      let code: number | undefined = error.status
-        ? Math.round(error.status / 100) * 100
-        : undefined;
-      if (code && code in this.error_dict) {
-        this.error_message = this.error_dict[code];
-      }
-      this.error = true;
-      Swal.fire({
-        icon: 'error',
-        title: 'Error al iniciar sesión',
-        text: this.error_message,
-        confirmButtonText: 'Aceptar',
-        confirmButtonColor: '#AA2535',
-      });
-    },
-    complete: () => {},
-  };
   areCorrectFields(): boolean {
     let dict: { [key: string]: string } = {};
     if (this.username === '') {
@@ -126,10 +57,74 @@ export class LoginComponent {
   hasQueryParams() {}
   iniciarSesion(): void {
     if (this.areCorrectFields()) {
-      this.authService
-        .login(this.username, this.password)
-        .subscribe(this.loginObserver);
-      localStorage.setItem('username', this.username);
+      this.authService.login(this.username, this.password).subscribe(
+        (data: any) => {
+          const rol = localStorage.getItem('role');
+
+          this.lawFirmService.getFirmaByUser(this.username).subscribe(
+            (firma: Firma) => {
+              localStorage.setItem('firmaId', firma.id.toString());
+            },
+            (error) => {
+              console.error('Error al obtener la firma:', error);
+            }
+          );
+          if (rol === 'JEFE') {
+            if (this.returnUrl !== '/' && this.returnUrl !== undefined) {
+              if (this.returnUrl.includes('?')) {
+                //Url with query params
+                const id = this.returnUrl.split('?')[1].split('=')[1];
+                const urlQuery = this.returnUrl.split('?')[0];
+                let queryParams = { id: id.toString() };
+                console.log(queryParams);
+                this.router.navigate([urlQuery], {
+                  queryParams: queryParams,
+                });
+              } else {
+                //Url without query params
+                this.router.navigate([this.returnUrl]);
+              }
+            } else {
+              this.router.navigate(['/main']);
+            }
+          } else if (rol === 'ABOGADO') {
+            this.getLawyerInfo();
+            if (this.returnUrl !== '/' && this.returnUrl !== undefined) {
+              if (this.returnUrl.includes('?')) {
+                //Url with query params
+                const id = this.returnUrl.split('?')[1].split('=')[1];
+                const urlQuery = this.returnUrl.split('?')[0];
+                let queryParams = { id: id.toString() };
+                console.log(queryParams);
+                this.router.navigate([urlQuery], {
+                  queryParams: queryParams,
+                });
+              } else {
+                //Url without query params
+                this.router.navigate([this.returnUrl]);
+              }
+            } else {
+              this.router.navigate(['/main-lawyer']);
+            }
+          }
+        },
+        (error: any) => {
+          let code: number | undefined = error.status
+            ? Math.round(error.status / 100) * 100
+            : undefined;
+          if (code && code in this.error_dict) {
+            this.error_message = this.error_dict[code];
+          }
+          this.error = true;
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al iniciar sesión',
+            text: this.error_message,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#AA2535',
+          });
+        }
+      );
     }
   }
   getLawyerInfo() {
