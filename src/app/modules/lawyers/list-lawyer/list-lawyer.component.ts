@@ -1,7 +1,7 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { UserProcesess } from '../../../shared/model/user/user.procesos';
 import { Pageable } from '../../../shared/model/pageable';
@@ -26,7 +26,7 @@ export class ListLawyerComponent {
     'button',
   ];
   especialidadFilter: { valor: any; texto: string; checked: boolean }[] = [];
-
+  lawFirmId: string = ''; 
   processCountFilter: { valor: any; texto: string; checked: boolean }[] = [
     { valor: [0, 5], texto: 'Menos de 5', checked: false },
     { valor: [5, 10], texto: 'Entre 5 y 10', checked: false },
@@ -43,9 +43,11 @@ export class ListLawyerComponent {
   constructor(
     private changeDetectorRefs: ChangeDetectorRef,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
     this.dataSource = new MatTableDataSource<UserProcesess>([]);
+    this.lawFirmId = localStorage.getItem('firmaId')!;
   }
 
   ngOnInit() {
@@ -76,7 +78,7 @@ export class ListLawyerComponent {
     let params = new HttpParams()
       .set('page', this.pageIndex.toString())
       .set('size', this.pageSize.toString())
-      .set('firmaId', parseInt(localStorage.getItem('firmaId')!));
+      .set('firmaId', this.lawFirmId);
     const specSelected = this.especialidadFilter.filter(
       (filter) => filter.checked
     );
@@ -143,11 +145,11 @@ export class ListLawyerComponent {
       }
     });
   }
-
   redirectToOtherComponent(row: UserProcesess) {
+    const queryParams = { id: row.id.toString() };
     localStorage.setItem('selectedIdLawyer', row.id.toString());
     localStorage.setItem('selectedLawyer', JSON.stringify(row));
-    this.router.navigate(['/infolawyer']);
+    this.router.navigate(['/infolawyer'], { queryParams: queryParams });
   }
 
   onCheckboxChangeCountProcess(

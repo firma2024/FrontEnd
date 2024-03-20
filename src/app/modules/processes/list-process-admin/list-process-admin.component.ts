@@ -141,8 +141,9 @@ export class ListProcessAdminComponent {
   }
 
   redirectToOtherComponent(row: ProcessJefeFilter) {
+    const queryParams = { id: row.id.toString() };
     localStorage.setItem('selectedIdProcessAdmin', row.id.toString());
-    this.router.navigate(['/infoprocessadmin']);
+    this.router.navigate(['/infoprocessadmin'], { queryParams: queryParams });
   }
   onCheckboxChange(
     opcion: { valor: any; texto: string; checked: boolean },

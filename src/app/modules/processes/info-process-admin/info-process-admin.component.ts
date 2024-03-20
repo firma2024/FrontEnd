@@ -2,7 +2,7 @@ import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProcessService } from '../../../services/process.service';
 import { ProcessJefeFilter } from '../../../shared/model/process/proceso.jefe.filter';
 import { UserService } from '../../../services/user.service';
@@ -51,7 +51,7 @@ export class InfoProcessAdminComponent {
     private processService: ProcessService,
     private userService: UserService,
     private actionService: ActionService,
-    private dateAdapter: DateAdapter<Date>
+    private activatedRoute: ActivatedRoute
   ) {
     this.dataSource = new MatTableDataSource<ActuacionJefeFilter>([]);
   }
@@ -60,17 +60,19 @@ export class InfoProcessAdminComponent {
 
   opcionesLawyer: { valor: string; texto: string }[] = [];
   opcionesState: { valor: string; texto: string }[] = [];
-
+  idProcess: string = '';
   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.idProcess = params['id'];
+    });
     this.fetchData();
   }
 
   fetchData() {
     this.applyFilters();
 
-    const idProcess = localStorage.getItem('selectedIdProcessAdmin')!;
     this.processService
-      .getProcesoPorIdJefe(idProcess)
+      .getProcesoPorIdJefe(this.idProcess)
       .subscribe((process: ProcessJefeFilter) => {
         this.nRadicado = process.numeroRadicado;
         this.sujetosProcesales = process.sujetos.split('|');
@@ -190,7 +192,7 @@ export class InfoProcessAdminComponent {
     let params = new HttpParams()
       .set('page', this.pageIndex.toString())
       .set('size', this.pageSize.toString())
-      .set('procesoId', localStorage.getItem('selectedIdProcessAdmin')!);
+      .set('procesoId', this.idProcess);
 
     let startDateStr = '';
     let endDateStr = '';
