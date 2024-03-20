@@ -60,16 +60,9 @@ export class LoginComponent {
       this.authService.login(this.username, this.password).subscribe(
         (data: any) => {
           const rol = localStorage.getItem('role');
-
-          this.lawFirmService.getFirmaByUser(this.username).subscribe(
-            (firma: Firma) => {
-              localStorage.setItem('firmaId', firma.id.toString());
-            },
-            (error) => {
-              console.error('Error al obtener la firma:', error);
-            }
-          );
+          this.setLawfirmId();
           if (rol === 'JEFE') {
+            
             if (this.returnUrl !== '/' && this.returnUrl !== undefined) {
               if (this.returnUrl.includes('?')) {
                 //Url with query params
@@ -134,6 +127,16 @@ export class LoginComponent {
       },
       (error) => {
         console.error(error);
+      }
+    );
+  }
+  setLawfirmId() {
+    this.lawFirmService.getFirmaByUser(this.username).subscribe(
+      (firma: Firma) => {
+        localStorage.setItem('firmaId', firma.id.toString());
+      },
+      (error) => {
+        console.error('Error al obtener la firma:', error);
       }
     );
   }

@@ -1,7 +1,7 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserProcesess } from '../../../shared/model/user/user.procesos';
 import { StorageService } from '../../../services/storage.service';
 import { ProcesoLawyer } from '../../../shared/model/process/proceso.abogado';
@@ -35,7 +35,7 @@ export class InfoLawyerComponent {
   totalItems = 0;
 
   constructor(
-    private changeDetectorRefs: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute,
     private router: Router,
     private storageService: StorageService,
     private processService: ProcessService,
@@ -43,19 +43,21 @@ export class InfoLawyerComponent {
   ) {
     this.dataSource = new MatTableDataSource<ProcesoLawyerFilter>([]);
   }
-
+  lawyerId: string = '';
   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.lawyerId = params['id'];
+    });
     const lawyer: string = localStorage.getItem('selectedLawyer')!;
-    const lawyerId = parseInt(localStorage.getItem('selectedIdLawyer')!);
-    console.log(this.lawyerObj);
+
     this.lawyerObj = JSON.parse(lawyer);
-    this.obtainLawyerInfoById(lawyerId);
+    this.obtainLawyerInfoById(parseInt(this.lawyerId));
     this.fetchData();
     this.getImageUrlByUserId(this.lawyerObj);
   }
 
   fetchData() {
-    const lawyerId = parseInt(localStorage.getItem('selectedIdLawyer')!);
+    const lawyerId = parseInt(this.lawyerId);
 
     let params = new HttpParams()
     params = params.set('page', this.pageIndex.toString());
@@ -93,7 +95,7 @@ export class InfoLawyerComponent {
   }
 
   getImageUrlByUserId(lawyerObj: UserProcesess): void {
-    this.storageService.descargarFoto(lawyerObj.id).subscribe((photo: Blob) => {
+    this.storageService.descargarFoto(parseInt(this.lawyerId)).subscribe((photo: Blob) => {
       console.log(this.imageUrl);
       this.imageUrl = URL.createObjectURL(photo);
     });
@@ -101,10 +103,10 @@ export class InfoLawyerComponent {
 
   // Función para redirigir a otro componente al hacer clic en una fila
   redirectToOtherComponent(row: ProcesoLawyerFilter) {
+    const queryParams = { id: row.id.toString() };
     localStorage.setItem('selectedIdProcessAdmin', row.id.toString());
-    this.router.navigate(['/infoprocessadmin']);
+    this.router.navigate(['/infoprocessadmin'], { queryParams: queryParams });
   }
-
   // Función para manejar el cambio de página
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex;
