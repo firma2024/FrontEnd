@@ -83,6 +83,7 @@ export class ListProcessLawyerComponent {
     this.router.navigate(['/infoprocesslawyer'], { queryParams: queryParams });
   }
   ngOnInit() {
+    console.log('sexo')
     this.lawyerId = localStorage.getItem('lawyerId')!;
   
     this.loadFilterParams();
