@@ -41,6 +41,7 @@ select:hover {
 button{
     background-color: #AA2535 ;
     color: white;
+    border-color: transparent;
     width: 20%;
     height: 40px;
 }

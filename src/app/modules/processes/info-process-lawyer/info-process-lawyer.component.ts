@@ -31,7 +31,7 @@ export class InfoProcessLawyerComponent {
   fechaInicioStr = '';
   existeDoc: boolean | undefined;
 
-  pageSize = 5;
+  pageSize = 6;
   pageIndex = 0;
   totalItems = 0;
   id: string | null = null;

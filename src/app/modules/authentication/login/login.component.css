@@ -8,7 +8,6 @@ a{
     cursor: pointer;
 }
 
-
 .btn-primary{
     background-color:#AA2535;
     border-radius: 10px;
@@ -29,28 +28,16 @@ a{
     padding-right: 5px;
 }
 
-input[type="checkbox"]:checked {
-    color: #AA2535; 
-}
-
-.checkbox label {
-    margin-left: 8px;
-}
-
 .container {
-	display: flex;
 	justify-content: center;
 	align-items: center;
-    border-radius: 20px;
-
 }
 
 .container.login-container {
     height: 100%;
-	display: flex;
 	justify-content: center;
 	align-items: center;
-	border-radius: 20px;
+    margin-top: 110px;
 }
 .row{
     border: 2px solid #e4e4e4;
@@ -99,7 +86,7 @@ h1{
     color: #505050;
 }
 label{
-    color: #000000;
+    color: #505050;
 }
 .title{
     padding-bottom: 8%;
@@ -121,7 +108,7 @@ label{
 	width: 60%;
 	height: 15%;
     padding-bottom: 2%;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .col-der img{
@@ -138,10 +125,17 @@ label{
     border: none;
     color: #AA2535; 
     text-decoration: underline; 
-    cursor: pointer; 
-  }
-
-  
-.botonTexto:hover {
-    color: #AA2535; 
+    cursor: pointer;
+    border-color: transparent;
 }
+
+.buttonLogin {
+    background-color: #aa2535;
+    color: white;
+    width: 40%;
+    height: 40px;
+    border-radius: 6px;
+    border-color: transparent;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
