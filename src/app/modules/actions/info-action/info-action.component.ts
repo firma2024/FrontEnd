@@ -30,17 +30,24 @@ export class InfoActionComponent implements OnInit {
       this.id = params['id'];
     });
     this.loadActionInfo();
+
   }
+  
 
   updateState(actionId: number): void {
-    this.actionService.actualizarEstadoVisualizacionActuacion(actionId).subscribe(
-      (response) => {
-        console.log('Estado de visualización actualizado:', response);
-      },
-      (error) => {
-        console.error('Error al actualizar el estado de visualización:', error);
-      }
-    );
+    this.actionService
+      .actualizarEstadoVisualizacionActuacion(actionId)
+      .subscribe(
+        (response) => {
+          console.log('Estado de visualización actualizado:', response);
+        },
+        (error) => {
+          console.error(
+            'Error al actualizar el estado de visualización:',
+            error
+          );
+        }
+      );
   }
 
   loadActionInfo(): void {
@@ -59,7 +66,7 @@ export class InfoActionComponent implements OnInit {
 
         const localStorageUsername = localStorage.getItem('username');
         if (localStorageUsername === this.username) {
-          this.updateState(data.id); 
+          this.updateState(data.id);
         }
       },
       (error) => {
