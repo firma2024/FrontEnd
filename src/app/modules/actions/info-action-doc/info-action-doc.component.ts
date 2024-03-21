@@ -35,6 +35,7 @@ export class InfoActionDocComponent implements OnInit {
       this.id = params['id'];
     });
     this.loadActionInfo();
+    this.downloadAndShowPDF();
     this.suscribirEventoPopstate();
   }
   updateState(actionId: number): void {
