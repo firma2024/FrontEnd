@@ -1,0 +1,123 @@
+.head {
+  display: flex;
+}
+
+.title {
+  width: 50%;
+}
+
+.options {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttonFilter {
+  color: #aa2535;
+  font-size: 30px;
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.buttonCreate {
+  background-color: #aa2535;
+  color: white;
+  width: 40%;
+  height: 40px;
+  border-radius: 6px;
+  border-color: transparent;
+}
+
+.mat-elevation-z8 {
+  box-shadow: none;
+}
+
+.buttonfilterAplicate {
+  background-color: #aa2535;
+  color: white;
+  width: 80%;
+  height: 40px;
+  border-radius: 6px;
+  border-color: transparent;
+}
+.table {
+  margin-top: 3%;
+  width: 100%;
+}
+.botonfiltro {
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container-filter{
+  padding: 2%;
+  width: 25%;
+  border-radius: 2px;
+  border: 1px solid rgb(200, 200, 200);
+  height:85vh;
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  top: 0;
+  right: 0;
+}
+.close-button{
+  border-color: transparent;
+  background-color: white;
+}
+.close{
+  width: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+}
+.container-processes{
+  position: relative;
+}
+.filter1 {
+  margin-bottom: 5%;
+}
+.filter2 {
+  margin-top: 3%;
+  margin-bottom: 5%;
+}
+h4 {
+  border-top: 2px solid #d3d0d0;
+  border-bottom: 2px solid #d3d0d0;
+}
+.checkbox {
+  transform: scale(2);
+  margin-right: 5px;
+  margin: 5%;
+}
+
+input[type="text"],
+textarea {
+  border: 1px solid #bfbbbb;
+  border-radius: 5px;
+  width: 50%;
+  height: 40px;
+  color: #bfbbbb;
+}
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+.checkbox {
+  margin-right: 5px;
+}
+
+.table-container {
+  display: flex;
+}
+
+.custom-button {
+  background-color: transparent;
+  border-color: transparent;
+  vertical-align: middle;
+}
+.mat-row:hover {
+  cursor: pointer;
+}

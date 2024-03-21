@@ -1,0 +1,71 @@
+
+.description{
+    color:#6C6C6C;
+    margin-bottom: 2%;
+}
+
+.searchProcess{
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+.columns {
+    display: flex; 
+    margin-left: 10px;
+    min-height: 48px;
+
+}
+.column1{
+    padding: 10px;
+    flex: 1;
+    margin-right: 5%;
+    width: 10vw;
+    min-height: 48px;
+}
+.column2{
+    padding: 10px;
+    margin-right: 5%;
+    width: 25vw;
+    flex: 1;
+}
+.infoLawyer{
+    margin-top: 30px;
+    display: flex;
+}
+.mat-elevation-z8 {
+    box-shadow: none;
+}
+.table{
+    margin-top: 1%;
+    width: 70vw;
+    margin-bottom: 3%;
+}
+    
+
+input{
+    border: 1px solid #BFBBBB; 
+    border-radius: 5px;
+    width: 50%;
+    height: 40px;
+    color: #BFBBBB;
+}
+.custom-button {
+    background-color: transparent;
+    border-color: transparent;
+    vertical-align: middle;
+}
+.mat-row:hover {
+    cursor: pointer;
+}
+
+.mat-mdc-paginator-container {
+    display: flex;
+    justify-content: center;
+}
+
+.rounded-image {
+    border-radius: 50%;
+    width: 150px; /* Ajusta el ancho según tus necesidades */
+    height: 150px; /* Ajusta la altura según tus necesidades */
+    object-fit: cover;
+  }

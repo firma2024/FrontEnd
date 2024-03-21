@@ -1,0 +1,11 @@
+<div class="container" [ngClass]="{ 'special-page': isSpecialPage() }">
+  <div class="sidebar" *ngIf="!isSpecialPage()">
+    <app-home></app-home>
+  </div>
+  <div class="mainContent">
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+

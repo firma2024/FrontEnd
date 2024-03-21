@@ -1,0 +1,177 @@
+<app-header></app-header>
+<div  class="container-processes">
+  <div class="titleinfoLawyer">
+    <h1><strong> Información del Proceso</strong></h1>
+  </div>
+  <div class="infoProcess">
+    <div class="columns">
+      <div class="column1">
+        <p><strong>Numero Radicado</strong></p>
+        <p><strong>Sujetos procesales</strong></p>
+      </div>
+      <div class="column2">
+        <p>{{ nRadicado }}</p>
+        <li *ngFor="let item of sujetosProcesales">{{ item }}</li>
+      </div>
+    </div>
+  
+    <div class="columns">
+      <div class="column3">
+        <p><strong>Abogado encargado</strong></p>
+        <p><strong>Estado</strong></p>
+      </div>
+      <div class="column2">
+        <select id="opciones" name="opciones" [(ngModel)]="selectedLawyer">
+          <option *ngFor="let opcion of opcionesLawyer" [value]="opcion.valor">
+            {{ opcion.texto }}
+          </option>
+        </select>
+        <select id="opciones" name="opciones" [(ngModel)]="selectedState">
+          <option *ngFor="let opcion of opcionesState" [value]="opcion.valor">
+            {{ opcion.texto }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  
+  <div class="buttonCreateDiv">
+    <button class="buttonCreate" (click)="updateProcess()">Guardar</button>
+  </div>
+  
+  <div class="titleAction">
+    <h1><strong>Actuaciones</strong></h1>
+    <button class="buttonFilter" (click)="toggleDiv()">
+      <span class="fa-solid fa-filter"></span>
+    </button>
+  </div>
+  
+  <div class="table-container">
+    <div class="table">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="fechaActuacion">
+          <th mat-header-cell *matHeaderCellDef>Fecha de Actuación</th>
+          <td mat-cell *matCellDef="let element">{{ element.fechaActuacion }}</td>
+        </ng-container>
+        <ng-container matColumnDef="nombreActuacion">
+          <th mat-header-cell *matHeaderCellDef>Nombre de Actuación</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.nombreActuacion }}
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="anotacion">
+          <th mat-header-cell *matHeaderCellDef>Anotación</th>
+          <td mat-cell *matCellDef="let element">{{ element.anotacion }}</td>
+        </ng-container>
+        <ng-container matColumnDef="fechaRegistro">
+          <th mat-header-cell *matHeaderCellDef>Fecha de Registro</th>
+          <td mat-cell *matCellDef="let element">{{ element.fechaRegistro }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="existDocument">
+          <th mat-header-cell *matHeaderCellDef>Documento</th>
+          <td mat-cell *matCellDef="let element">
+            <img
+              *ngIf="element.existDocument"
+              [src]="documentImageUrl"
+              alt="Documento"
+              [ngStyle]="{ color: 'red', 'font-size': '2.5em' }"
+            />
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            [ngStyle]="{ color: 'rgba(170,37,53,255)' }"
+          >
+            {{ element.estado }}
+          </td>
+        </ng-container>
+  
+        <!-- Definición de las filas de la tabla -->
+        <tr
+          mat-header-row
+          *matHeaderRowDef="[
+            'fechaActuacion',
+            'nombreActuacion',
+            'anotacion',
+            'fechaRegistro',
+            'existDocument',
+            'estado'
+          ]"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="
+            let row;
+            columns: [
+              'fechaActuacion',
+              'nombreActuacion',
+              'anotacion',
+              'fechaRegistro',
+              'existDocument',
+              'estado'
+            ]
+          "
+        ></tr>
+      </table>
+  
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        (page)="onPageChange($event)"
+      >
+      </mat-paginator>
+    </div>
+    <div *ngIf="mostrarDiv" class="container-filter">
+      <div class="close">
+        <button class="close-button" (click)="toggleDiv()">
+          <span class="fa-solid fa-close"></span>
+        </button>
+      </div>
+      <h4>FILTRAR</h4>
+      <div class="filter1">
+        <h5>Rango fecha</h5>
+        <div class="calendar">
+          <mat-form-field class="custom-form-field">
+            <mat-label>Ingrese rango</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input
+                matStartDate
+                placeholder="Start date"
+                [(ngModel)]="startDate"
+              />
+              <input matEndDate placeholder="End date" [(ngModel)]="endDate" />
+            </mat-date-range-input>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="filter2">
+        <h5>Estado</h5>
+        <div *ngFor="let opcion of stateViewFilter">
+          <input
+            class="checkbox"
+            type="checkbox"
+            [checked]="opcion.checked"
+            (change)="onCheckboxChange(opcion, 'stateViewFilter')"
+          />
+          {{ opcion.texto }}
+        </div>
+      </div>
+      <div class="botonfiltro">
+        <button (click)="applyFilters()" class="buttonfilterAplicate" (click)="toggleDiv()">
+          Aplicar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

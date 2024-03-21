@@ -1,0 +1,141 @@
+
+body {
+    height: 100vh;
+    width: 100vw;
+}
+a{
+    color: #000000;
+    cursor: pointer;
+}
+
+.btn-primary{
+    background-color:#AA2535;
+    border-radius: 10px;
+    width: 50%;
+    margin-bottom: 30px;
+}
+.btn-primary:hover{
+    background-color: #AA2535; 
+}
+
+.checkbox{
+    width: 100%;
+    padding-left: 5%;
+}
+
+.checkbox input[type="checkbox"] {
+    transform: scale(1.5);
+    padding-right: 5px;
+}
+
+.container {
+	justify-content: center;
+	align-items: center;
+}
+
+.container.login-container {
+    height: 100%;
+	justify-content: center;
+	align-items: center;
+    margin-top: 110px;
+}
+.row{
+    border: 2px solid #e4e4e4;
+    border-radius: 20px;
+}
+
+.login-form {
+	max-width: 85%;
+	border-radius: 10px;
+}
+.links{
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+.container img{
+    width: 100%;
+    height: 100%;
+	align-items: center;
+	display: flex;
+}
+
+.col-izq{
+	flex: 2;
+    width: 40%;
+    padding-top: 5%;
+    padding-left: 8%;
+    border-bottom-left-radius: 17px;
+    border-top-left-radius: 17px;
+    background-color: #F6F6F6;
+}
+.col-der {
+    background-color: #F6F6F6;
+    flex: 2;
+    max-width: 40%;
+    border-top-right-radius: 60px;
+    border-bottom-right-radius: 60px;
+}
+.form-control{
+    border-color: #505050;
+    color: #505050;
+}
+h1{
+    color: #505050;
+}
+label{
+    color: #505050;
+}
+.title{
+    padding-bottom: 8%;
+    max-width: 100%;
+}
+
+.col-izq form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	flex-direction: column;
+    padding: 5%;
+}
+.form-group{
+    width: 100%;
+}
+
+.col-izq img {
+	width: 60%;
+	height: 15%;
+    padding-bottom: 2%;
+    margin-bottom: 20px;
+}
+
+.col-der img{
+    border-radius: 18px;
+}
+
+.switch{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.botonTexto {
+    background: none;
+    border: none;
+    color: #AA2535; 
+    text-decoration: underline; 
+    cursor: pointer;
+    border-color: transparent;
+}
+
+.buttonLogin {
+    background-color: #aa2535;
+    color: white;
+    width: 40%;
+    height: 40px;
+    border-radius: 6px;
+    border-color: transparent;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }

@@ -1,0 +1,166 @@
+<app-header></app-header>
+<div class="container-processes">
+  <div class="head">
+    <div class="title">
+      <h2>Mis Procesos</h2>
+    </div>
+    <div class="options">
+      <input
+        class="buscador"
+        type="text"
+        id="process"
+        name="process"
+        placeholder="Buscar proceso..."
+        [(ngModel)]="processSearch"
+      />
+      <button class="buttonFilter" (click)="toggleDiv()">
+        <span class="fa-solid fa-filter"></span>
+      </button>
+      <button class="buttonCreate" routerLink="/registerprocess">
+        Crear Proceso
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <div class="table">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="Radicado">
+          <th mat-header-cell *matHeaderCellDef>Radicado</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.numeroRadicado }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="despacho">
+          <th mat-header-cell *matHeaderCellDef>Despacho</th>
+          <td mat-cell *matCellDef="let element">{{ element.despacho }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="tipoProceso">
+          <th mat-header-cell *matHeaderCellDef>Tipo Proceso</th>
+          <td mat-cell *matCellDef="let element">{{ element.tipoProceso }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="abogado">
+          <th mat-header-cell *matHeaderCellDef>Abogado</th>
+          <td mat-cell *matCellDef="let element">{{ element.abogado }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="fechaRadicacion">
+          <th mat-header-cell *matHeaderCellDef>Fecha Radicación</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.fechaRadicacion }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            [ngStyle]="{
+              color: element.estadoVisto
+                ? 'rgba(170, 37, 53, 1)'
+                : 'rgba(170, 37, 53, 1)'
+            }"
+          >
+            {{ element.estadoVisto ? "Actuaciones sin revisar" : "" }}
+          </td>
+        </ng-container>
+
+        <!-- Definición de las filas de la tabla -->
+        <tr
+          mat-header-row
+          *matHeaderRowDef="[
+            'Radicado',
+            'despacho',
+            'tipoProceso',
+            'abogado',
+            'fechaRadicacion',
+            'estado'
+          ]"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="
+            let row;
+            columns: [
+              'Radicado',
+              'despacho',
+              'tipoProceso',
+              'abogado',
+              'fechaRadicacion',
+              'estado'
+            ]
+          "
+          (click)="redirectToOtherComponent(row)"
+        ></tr>
+      </table>
+
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        (page)="onPageChange($event)"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+
+  <div *ngIf="mostrarDiv" class="container-filter">
+    <div class="close">
+      <button class="close-button" (click)="toggleDiv()">
+        <span class="fa-solid fa-close"></span>
+      </button>
+    </div>
+    <h4>FILTRAR</h4>
+    <div class="filter1">
+      <h5>Rango de fechas</h5>
+      <div class="calendar">
+        <mat-form-field class="custom-form-field">
+          <mat-label>Ingrese rango</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input
+              matStartDate
+              placeholder="Start date"
+              [(ngModel)]="startDate"
+            />
+            <input matEndDate placeholder="End date" [(ngModel)]="endDate" />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="filter2">
+      <h5>Estado proceso</h5>
+      <div *ngFor="let opcion of processStatusFilter">
+        <input
+          class="checkbox"
+          type="checkbox"
+          [checked]="opcion.checked"
+          (change)="onCheckboxChange(opcion, 'stateFilter')"
+        />
+        {{ opcion.texto }}
+      </div>
+    </div>
+    <div class="selectfilter">
+      <h5>Tipo de proceso</h5>
+      <div>
+        <select [(ngModel)]="selectedProcessType">
+          <option *ngFor="let option of processTypeFilter" [ngValue]="option">
+            {{ option.texto }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="botonfiltro">
+      <button (click)="applyFilters()" class="buttonfilterAplicate" (click)="toggleDiv()">
+        Aplicar
+      </button>
+    </div>
+  </div>
+</div>

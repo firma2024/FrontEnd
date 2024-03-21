@@ -1,0 +1,33 @@
+<app-header></app-header>
+<div class="infoProcess">
+    <h1><strong> Crear Proceso</strong></h1>
+    <h2 class="description">Información del proceso</h2>
+</div>
+
+<div class="columns">
+    <div class="column">
+        <p><strong>N° Radicado</strong></p>
+        <p><strong>Despacho</strong></p>
+        <p><strong>Tipo Proceso</strong></p>
+        <p><strong>Fecha Radicación</strong></p>
+        <p><strong>Sujetos Procesales</strong></p>
+    </div>
+    <div class="column">
+        <p>{{nRadicado}}</p>
+        <p>{{despacho}}</p>
+        <p>{{typeProcess}}</p>
+        <p>{{dateFiling}}</p>   
+        <li *ngFor="let item of listaItems">{{ item }}</li>
+    </div>
+</div>
+
+<div class="select">
+    <h4 class="description">Seleccione el abogado que desea asignar a el proceso</h4>
+    <select id="opciones" name="opciones" [(ngModel)]="selectedLawyer" (ngModelChange)="onSelectedLawyer($event)">
+        <option *ngFor="let opcion of opciones" [value]="opcion.valor">{{ opcion.texto }}</option>
+    </select>      
+</div>
+
+<div class="buttonBuscar">
+    <button (click)="crearProceso()">Crear Proceso</button>
+</div>

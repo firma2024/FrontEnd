@@ -1,0 +1,47 @@
+<app-header></app-header>
+<div class="infoAction">
+    <button class="buttonback" (click)="goBack()"><span class="fa-solid fa-arrow-left"></span> </button>
+    <h1><strong> Información de la actuación</strong></h1>
+</div>
+
+<div class="columns">
+    <div class="column">
+        <div class="half-column1">
+            <p><strong>Despacho</strong></p>
+            <p><strong>Fecha Actuación</strong></p>
+            <p><strong>Anotación</strong></p>
+        </div>
+        <div class="half-column2">
+            <p>{{despacho}}</p>
+            <p>{{date}}</p>
+            <p>{{annotation}}</p>
+        </div>
+    </div>
+    <div class="column">
+        <div class="half-column1">
+            <p><strong>Tipo de proceso</strong></p>
+            <p><strong>Actuación </strong></p>
+            <p><strong>Fecha de Registro</strong></p>
+        </div>
+        <div class="half-column2">
+            <p>{{typeProcess}}</p>
+            <p>{{action}}</p>
+            <p>{{dateRegister}}</p>
+        </div>
+    </div>
+</div>
+
+<div class="subject">
+    <div class="column">
+        <div class="half-column4">
+            <p class="sujetos"><strong>Sujetos</strong></p>
+        </div>
+        <div class="half-column3">
+            <li *ngFor="let item of listaSujetos">{{ item }}</li>
+        </div>
+    </div>
+</div>
+
+<div class="description">
+    <h6 style="color: #AA2535;"><br>La actuacion no contiene documento</h6>
+</div>

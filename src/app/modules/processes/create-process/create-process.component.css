@@ -1,0 +1,47 @@
+.description{
+    color:#6C6C6C;
+    margin-bottom: 2%;
+}
+
+.searchProcess{
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+.columns {
+    display: flex; 
+    margin-left: 10px;
+
+}
+.column{
+    padding: 10px;
+    margin-right: 5%;
+    list-style-type: none;
+}
+select{
+    background-color: #ffffff;
+    color: #6C6C6C;
+    border-color: #6C6C6C;
+    border-radius: 5px;
+    width: 25%;
+    height: 40px;
+    margin-left: 2%;
+}
+select:hover {
+    background-color: rgb(240, 239, 239);
+    cursor: pointer; 
+}
+.buttonBuscar{
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    margin-left: 5%;
+    margin-top: 3%;
+}
+button{
+    background-color: #AA2535 ;
+    color: white;
+    border-color: transparent;
+    width: 20%;
+    height: 40px;
+}

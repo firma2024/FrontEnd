@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Inicio de Sesión</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+	<div class="container login-container">
+        <div class="row">
+            <div class="col-izq">
+                <form class="login-form">
+                    <img src="/assets/logoFirma.png" alt="Imagen">
+                  <h1 class="title">Bienvenido de nuevo</h1>
+                  <div class="form-group">
+                    <label for="username">Para recuperar su contraseña ingrese su nombre de usuario:</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario" [(ngModel)]="username">
+                  </div>
+                  <button type="submit" class="buttonRecover" (click)="recoverPassword()" >Recuperar</button>
+                </form>
+              </div>
+            <div class="col-der">
+                <img src="/assets/firma-abogados.png" alt="Imagen">
+            </div>
+        </div>
+    </div>
+
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+
+</html>

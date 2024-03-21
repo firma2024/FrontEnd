@@ -1,0 +1,121 @@
+
+.description{
+    color:#6C6C6C;
+    margin-bottom: 4%;
+}
+
+.registerLawyer{
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+.buttonCreated{
+    background-color: #AA2535 ;
+    color: white;
+    border-color: transparent;
+    width: 28%;
+    height: 40px;
+}
+.buttonCreate{
+    text-align:justify;
+    margin-left: 34%;
+}
+.columns {
+    display: flex; 
+    margin-left: 10px;
+
+}
+.column1{
+    padding-left: 5%;
+    padding-bottom: 5%;
+    display: block;
+}
+.buttonProfile{
+    font-size: 100px;
+    border-radius: 100px;
+    padding: 15px;
+    width: 180px;
+    color: white;
+    background-color: #d8d4d4;
+}
+.form{
+    display: flex;
+}
+.inputContainer{
+    display: block;
+}
+label{
+    display: block;
+    color: #6C6C6C;
+}
+::placeholder {
+    color: #BFBBBB; /* Cambia el color del texto de marcador de posición */
+}
+
+select{
+    color: #BFBBBB;
+    width: 280px;
+    height: 40px;
+    border-radius: 5px;
+    border-color: #BFBBBB;
+    text-align: center;
+}
+.botonBack {
+    display: inline-block;
+    position: relative;
+    padding: 15px 30px;
+    background-color: #AA2535;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.botonBack:hover {
+    background-color: #5d1a22;
+}
+
+.botonBack input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.botonBack span {
+    display: inline-block;
+    vertical-align: middle;
+}
+h6{
+    color: #BFBBBB;
+}
+/* Estilos para los checkboxes */
+.checkbox {
+    transform: scale(1.5);
+    margin-right: 5px;
+  }
+  
+  /* Estilos para otros inputs que no sean checkboxes */
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 280px;
+    height: 40px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #BFBBBB;
+    text-align: center;
+  }
+.checkbox-option {
+    display: flex; 
+    align-items: center;
+    margin-right: 10px;
+  }
+  .checkbox {
+    margin-right: 5px; 
+  }
+  
+  

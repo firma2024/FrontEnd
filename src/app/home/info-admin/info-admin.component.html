@@ -1,0 +1,41 @@
+<div class="botonBack">
+    <button class="button" (click)="goBack()"><span class="fa-solid fa-angle-left"></span> </button>
+</div>
+<div class="infoPerfil">
+    <div class="imagenPerfil">
+        <div class="tituloPerfil">
+            <h1>Mi Cuenta</h1>
+        </div>
+        <div class="foto">
+                <img [src]="imageUrl" alt="Foto" class="rounded-image">
+        </div>
+        <div class="nombrePerfil">
+            <h2 class="namePerfil" name="Name" ngDefaultControl [(ngModel)]="usuarioName"> 
+                {{ usuarioName }}
+            </h2>
+        </div>
+    </div>
+    <div class="datosPerfil">
+        <div class="form-group">
+            <label for="Nombre">Nombre: </label>
+            <input type="text" class="form-control custom-input" id="Nombre" name="Nombre" [(ngModel)]="usuario.nombres">
+        </div>
+        <div class="form-group">
+            <label for="Identificacion">Identificación: </label>
+            <input type="text" class="form-control custom-input" id="Identificacion" name="Identificacion" [(ngModel)]="usuario.identificacion" maxlength="10">
+        </div>
+        <div class="form-group">
+            <label for="Correo Electronico">Correo Electrónico: </label>
+            <input type="text" class="form-control custom-input" id="Correo Electronico" name="Correo electronico" [(ngModel)]="usuario.correo">
+        </div>
+        <div class="form-group">
+            <label for="Telefono">Teléfono: </label>
+            <input type="text" class="form-control custom-input" id="Telefono" name="Telefono" [(ngModel)]="usuario.telefono" maxlength="10">
+        </div>
+        
+        
+    </div>
+</div>
+<div class="botonActualizar">
+    <button type="submit" class="btn3" (click)="updateProfile()">Actualizar</button>
+</div>

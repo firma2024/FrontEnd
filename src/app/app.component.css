@@ -1,0 +1,53 @@
+
+.container {
+  display: flex;
+  height: fit-content;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar {
+  width: 280px; /* Ancho del drawer (menú lateral) */
+  height: 100%;
+}
+
+.mainContent {
+  width: 80%;
+  flex: 1; /* El contenido principal se expandirá para llenar el espacio restante */
+  margin-left: 10%;
+}
+
+app-home {
+  position: fixed; /* Establece la posición fija */
+  top: 0; /* Fija el componente en la parte superior */
+  left: 0; /* Fija el componente en el lado izquierdo */
+  bottom: 0; /* Fija el componente en la parte inferior */
+  width: 280px; /* Ancho del componente igual al del sidebar */
+}
+
+app-header{
+  position: fixed;
+  height: 80px;
+  top: -2px;
+  margin-left: 5%;
+}
+
+router-outlet{
+  height: fit-content;
+}
+.container.special-page {
+  width: fit-content;
+  height: fit-content;
+  margin-top: -100px;
+  margin-left: -220px;
+}
+
+.content{
+  margin-left: 10%;
+  width: 75vw;
+  padding-bottom: 5%;
+  height: fit-content;
+}
+
+
+

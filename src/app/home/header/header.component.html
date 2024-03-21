@@ -1,0 +1,9 @@
+
+
+    <header class="header">
+        <div class="buttonprofile">
+            <button class="boton" *ngIf="rol === 'JEFE'" (click)="openAdminDialog()" name="fieldName" ngDefaultControl [(ngModel)]="namesUser">{{namesUser}}<span class="icon-pull-right fas fa-angle-down"> </span></button>
+            <button class="boton" *ngIf="rol === 'ABOGADO'" (click)="openUserDialog()" name="fieldName" ngDefaultControl [(ngModel)]="namesUser">{{namesUser}}<span class="icon-pull-right fas fa-angle-down"> </span></button>
+        </div>
+        
+    </header>

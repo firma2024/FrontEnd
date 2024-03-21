@@ -1,0 +1,182 @@
+.head {
+  display: flex;
+  margin-top: 10px;
+  width: 95%;
+}
+
+.title {
+  width: 70%;
+}
+
+.options {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttonFilter {
+  color: #aa2535;
+  font-size: 30px;
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.buttonCreate {
+  background-color: #aa2535;
+  color: white;
+  width: 40%;
+  height: 40px;
+  border-radius: 6px;
+}
+
+.input-icon {
+  position: absolute;
+  top: 123px;
+  transform: translateY(-50%);
+  left: 930px; /* Ajusta la posición del icono según sea necesario */
+  color: #999; /* Color del icono */
+}
+
+.mat-elevation-z8 {
+  box-shadow: none;
+}
+.table {
+  margin-top: 3%;
+  width: 100%;
+}
+.filter {
+  border: 2px solid #d3d0d0;
+  padding-left: 1%;
+  margin-left: 2%;
+  margin-top: 1%;
+  width: 20%;
+  height: 100%;
+  padding: 2%;
+}
+.table-container {
+  display: flex;
+}
+.buscador{
+  height: 40px;
+  width: 60%;
+}
+
+.filter2 {
+  margin-top: 3%;
+  margin-bottom: 5%;
+}
+.filter1 {
+  margin-bottom: 5%;
+}
+
+
+.checkbox {
+  transform: scale(2);
+  margin-right: 5px;
+  margin: 5%;
+}
+
+
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+.checkbox {
+  margin-right: 5px;
+}
+
+.botonfiltro {
+  margin-top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.buttonfilterAplicate {
+  background-color: #aa2535;
+  color: white;
+  width: 40%;
+  height: 40px;
+  border-radius: 6px;
+  border-color: transparent;
+}
+.custom-button {
+  background-color: transparent;
+  border-color: transparent;
+  vertical-align: middle;
+}
+.mat-row:hover {
+  cursor: pointer;
+}
+
+.mat-mdc-paginator-container {
+  display: flex;
+  justify-content: center;
+}
+
+.calendar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.butoncalendar {
+  height: fit-content;
+  border: transparent;
+  background-color: white;
+}
+.inputcalendar {
+  width: 100%;
+  height: fit-content;
+}
+select{
+  background-color: #ffffff;
+  color: #6C6C6C;
+  border-color: #6C6C6C;
+  border-radius: 5px;
+  width: 100%;
+  height: 40px;
+  margin-left: 2%;
+}
+select:hover {
+  cursor: pointer; 
+}
+
+.custom-button {
+  background-color: transparent;
+  border-color: transparent;
+  vertical-align: middle;
+}
+.mat-row:hover {
+  cursor: pointer;
+}
+
+.mat-mdc-paginator-container {
+  display: flex;
+  justify-content: center;
+}
+
+.container-processes{
+  position: relative;
+}
+.container-filter{
+  padding: 2%;
+  width: fit-content;
+  border-radius: 2px;
+  border: 1px solid rgb(200, 200, 200);
+  height:85vh;
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  top: 0;
+  right: 0;
+}
+.close-button{
+  border-color: transparent;
+  background-color: white;
+}
+.close{
+  width: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: end;
+}
