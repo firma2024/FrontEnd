@@ -13,8 +13,7 @@
 
 .mainContent {
   width: 80%;
-  flex: 1; /* El contenido principal se expandirá para llenar el espacio restante */
-  margin-left: 10%;
+  flex: 1; 
 }
 
 app-home {
@@ -22,14 +21,7 @@ app-home {
   top: 0; /* Fija el componente en la parte superior */
   left: 0; /* Fija el componente en el lado izquierdo */
   bottom: 0; /* Fija el componente en la parte inferior */
-  width: 280px; /* Ancho del componente igual al del sidebar */
-}
-
-app-header{
-  position: fixed;
-  height: 80px;
-  top: -2px;
-  margin-left: 5%;
+  width: 16.7%; /* Ancho del componente igual al del sidebar */
 }
 
 router-outlet{
@@ -43,9 +35,8 @@ router-outlet{
 }
 
 .content{
-  margin-top: 2%;
-  margin-left: 10%;
-  width: 75vw;
+  margin-left: 7%;
+  width: 70vw;
   padding-bottom: 5%;
   height: fit-content;
 }

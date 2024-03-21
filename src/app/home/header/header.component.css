@@ -1,5 +1,5 @@
 .header {
-    width: 81.8vw; /* Establece el ancho al 100% del viewport */
+    width: 78vw; 
     display: flex;
     justify-content: end;
     align-items: center;

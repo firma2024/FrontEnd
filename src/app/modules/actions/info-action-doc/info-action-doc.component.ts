@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActionService } from '../../../services/action.service';
 import { ActuacionResponse } from '../../../shared/model/actuaciones/actuacion.req';
-import { HttpClient } from '@angular/common/http';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { StorageService } from '../../../services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-info-action-doc',
@@ -18,25 +17,40 @@ export class InfoActionDocComponent implements OnInit {
   typeProcess: string = 'Valor del tipo de proceso';
   action: string = 'Valor de la acción';
   dateRegister: string = 'Valor de la fecha de registro';
-
+  idprocess: string = '';
   id: string = '';
   listaSujetos: string[] = [];
+  username: string = '';
+  
   constructor(
     private activatedRoute: ActivatedRoute,
     private actionService: ActionService,
-    private storageService: StorageService
-  ) {}
+    private storageService: StorageService,
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.id = params['id'];
     });
     this.loadActionInfo();
+    this.suscribirEventoPopstate();
   }
-  loadActionInfo() {
-    this.actionService
-      .getActuacion(this.id)
-      .subscribe((data: ActuacionResponse) => {
+  updateState(actionId: number): void {
+    this.actionService.actualizarEstadoVisualizacionActuacion(actionId).subscribe(
+      (response) => {
+        console.log('Estado de visualización actualizado:', response);
+      },
+      (error) => {
+        console.error('Error al actualizar el estado de visualización:', error);
+      }
+    );
+  }
+  loadActionInfo(): void {
+    this.actionService.getActuacion(this.id).subscribe(
+      (data: ActuacionResponse) => {
+        console.log('Respuesta del servicio:', data);
         this.despacho = data.despacho;
         this.date = data.fechaActuacion;
         this.annotation = data.anotacion;
@@ -44,8 +58,18 @@ export class InfoActionDocComponent implements OnInit {
         this.action = data.actuacion;
         this.dateRegister = data.fechaRegistro;
         this.listaSujetos = data.sujetos.split('|');
-        this.downloadAndShowPDF();
-      });
+        this.idprocess = data.processId;
+        this.username = data.username;
+
+        const localStorageUsername = localStorage.getItem('username');
+        if (localStorageUsername === this.username) {
+          this.updateState(data.id);
+        }
+      },
+      (error) => {
+        console.error('Error al cargar la información de la acción:', error);
+      }
+    );
   }
 
   downloadAndShowPDF() {
@@ -60,5 +84,14 @@ export class InfoActionDocComponent implements OnInit {
         ) as HTMLIFrameElement;
         iframe.src = url;
       });
+  }
+  suscribirEventoPopstate(): void {
+    window.onpopstate = () => {
+      this.goBack();
+    };
+  }
+  goBack():void {
+    console.log(this.idprocess);
+    this.router.navigateByUrl(`/infoprocesslawyer?id=${this.idprocess}`);
   }
 }

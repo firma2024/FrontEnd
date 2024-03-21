@@ -14,4 +14,6 @@ export interface ActuacionResponse {
   despacho: string;
   nameAbogado: string;
   link: string;
+  processId: string;
+  username: string;
 }

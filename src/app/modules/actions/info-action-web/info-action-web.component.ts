@@ -20,22 +20,34 @@ export class InfoActionWebComponent implements OnInit {
   datestart: string = 'Valor de la fecha de registro';
   dateend: string = 'Valor de la fecha de registro';
   selectedFile: File | null = null;
+  idprocess: string = '';
   id: string = '';
   listaSujetos: string[] = [];
   selectedFileName?: string | null  = "";
-
+  username: string = '';
   officeURL: string = '';
+  
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private actionService: ActionService,
-    private storageService: StorageService
+    private storageService: StorageService,
   ) {}
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.id = params['id'];
     });
     this.loadActionInfo();
+  }
+  updateState(actionId: number): void {
+    this.actionService.actualizarEstadoVisualizacionActuacion(actionId).subscribe(
+      (response) => {
+        console.log('Estado de visualización actualizado:', response);
+      },
+      (error) => {
+        console.error('Error al actualizar el estado de visualización:', error);
+      }
+    );
   }
   loadActionInfo() {
     this.actionService
@@ -50,9 +62,21 @@ export class InfoActionWebComponent implements OnInit {
         this.datestart = data.fechaInicia;
         this.dateend = data.fechaFinaliza;
         this.listaSujetos = data.sujetos.split('|');
+        this.idprocess = data.processId;
         this.officeURL = data.link;
-      });
+        this.username = data.username;
+
+        const localStorageUsername = localStorage.getItem('username');
+        if (localStorageUsername === this.username) {
+          this.updateState(data.id);
+        }
+      },
+      (error) => {
+        console.error('Error al cargar la información de la acción:', error);
+      }
+    );
   }
+
   selectDoc(event: any) {
     this.selectedFile = event.target.files[0];
     this.selectedFileName = this.selectedFile?.name;
@@ -120,5 +144,10 @@ export class InfoActionWebComponent implements OnInit {
       }
     });
     
+  }
+  goBack():void {
+    console.log(this.idprocess);
+    this.router.navigateByUrl(`/infoprocesslawyer?id=${this.idprocess}`);
+
   }
 }
