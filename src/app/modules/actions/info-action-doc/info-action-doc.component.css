@@ -67,6 +67,21 @@
     margin-top: -80px; /* Ajusta el valor según sea necesario para mover el div más arriba */
     width: 100vh;
 }
+.buttonback {
+    width: 50px;
+    height: 50px;
+    color: #AA2535;
+    font-style: bold;
+    font-size: 30px;
+    background-color: #d1000000;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+}
 
 
 

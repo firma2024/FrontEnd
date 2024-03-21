@@ -43,7 +43,6 @@ router-outlet{
 }
 
 .content{
-  margin-top: 2%;
   margin-left: 10%;
   width: 75vw;
   padding-bottom: 5%;
