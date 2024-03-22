@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+export class ReponseInterceptor implements HttpInterceptor {
   constructor(private auth: AuthService, private router: Router) {}
   AuthGuard: AuthGuard | undefined;
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
