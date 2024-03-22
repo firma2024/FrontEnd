@@ -15,7 +15,7 @@ export class ReponseInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 && !request.url.includes('login')) {
-          localStorage.clear();
+          //localStorage.clear();
           if (error.url && !error.url.includes('login')) {
             Swal.fire({
               icon: 'error',
@@ -25,7 +25,7 @@ export class ReponseInterceptor implements HttpInterceptor {
               confirmButtonColor: '#AA2535',
             }).then(() => {
               // window.location.reload()
-              //this.router.navigate(['/login'], { queryParams: { returnUrl: currentUrl } });
+              this.router.navigate(['/login']);
             });
           }
         }
