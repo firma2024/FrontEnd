@@ -29,27 +29,9 @@ export class AuthInterceptor implements HttpInterceptor {
           Authorization: 'Bearer ' + token,
         },
       });
+      
     }
-
-    return next.handle(req).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 401 && !req.url.includes('login')) {
-          localStorage.clear();
-          if (error.url && !error.url.includes('login')) {
-            Swal.fire({
-              icon: 'error',
-              title: 'No autorizado',
-              text: 'Su sesión ha caducado. Por favor, inicie sesión nuevamente.',
-              confirmButtonText: 'Okay',
-              confirmButtonColor: '#AA2535',
-            }).then(() => {
-              // window.location.reload()
-              //this.router.navigate(['/login'], { queryParams: { returnUrl: currentUrl } });
-            });
-          }
-        }
-        return throwError(error);
-      })
-    );
+    return next.handle(req)
   }
+  
 }
