@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserRequest } from '../shared/model/user/user.req';
-import { environment } from '../environments/environments';
+import { environment } from '../../environments/environment';
 import { UserProcesess } from '../shared/model/user/user.procesos';
 import { UserAbogadoUpdate } from '../shared/model/user/user.abogado.update';
 import { UserJefeUpdate } from '../shared/model/user/user.jefe.update';
@@ -131,7 +131,7 @@ export class UserService {
   deleteUser(id: number): Observable<string> {
     const url = `${environment.userURL}/delete?id=${id}`;
     return this.http.delete<string>(url);
-  } 
+  }
 
   getLawyerByUsername(name: string): Observable<UserProcesess> {
     const url = `${environment.userURL}/get/name?name=${name}`;
@@ -155,7 +155,9 @@ export class UserService {
     return this.http.get<UserProcesess>(url);
   }
   getAbogadoById(id: number): Observable<UserProcesess> {
-    return this.http.get<UserProcesess>(`${environment.userURL}/get/abogado?id=${id}`);
+    return this.http.get<UserProcesess>(
+      `${environment.userURL}/get/abogado?id=${id}`
+    );
   }
   getActiveAbogados(firmaId: number): Observable<number> {
     const url = `${environment.userURL}/get/active/abogados?firmaId=${firmaId}`;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../environments/environments';
+import { environment } from '../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Proceso } from '../shared/model/process/proceso';
@@ -34,13 +34,11 @@ export class ProcessService {
       numeroRadicado: numeroRadicado,
       idAbogado: idAbogado,
     };
-    return this.http
-      .post<any>(`${environment.processURL}/save`, process)
-      .pipe(
-        catchError((error) => {
-          throw error;
-        })
-      );
+    return this.http.post<any>(`${environment.processURL}/save`, process).pipe(
+      catchError((error) => {
+        throw error;
+      })
+    );
   }
 
   //Filter process information by boss
@@ -56,7 +54,6 @@ export class ProcessService {
   getProcesosByAbogadoFilter(
     params = new HttpParams()
   ): Observable<Pageable<ProcesoLawyerFilter>> {
-
     return this.http.get<Pageable<ProcesoLawyerFilter>>(
       `${environment.processURL}/get/all/abogado/filter`,
       { params }
@@ -147,11 +144,11 @@ export class ProcessService {
     procesoId: string,
     nombre: string
   ): Observable<MensajeResponse> {
-    const audenciaReq: AudienciaRequest={
-      enlace:enlace,
-      procesoid:procesoId,
-      nombre:nombre
-    }
+    const audenciaReq: AudienciaRequest = {
+      enlace: enlace,
+      procesoid: procesoId,
+      nombre: nombre,
+    };
     return this.http.post<MensajeResponse>(
       `${environment.processURL}/audiencia/add`,
       audenciaReq

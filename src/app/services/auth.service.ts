@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationRequest } from '../shared/model/auth/aut.req';
 import { TokenResponse } from '../shared/model/auth/token';
-import { environment } from '../environments/environments';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../shared/model/auth/user';
 import { tap } from 'rxjs/operators';
 import { TipoDocumento } from '../shared/model/doc.tipo';
 import { TipoAbogado } from '../shared/model/user/user.tipo';
-import { encrypt } from '../utils/encrypt'
+import { encrypt } from '../utils/encrypt';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +17,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
   login(username: string, password: string): Observable<TokenResponse> {
     password = encrypt(password);
-    console.log(password)
+    console.log(password);
     const authReq: AuthenticationRequest = {
       username: username,
       password: password,
