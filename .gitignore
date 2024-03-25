@@ -44,3 +44,4 @@ Thumbs.db
 **/*.vscode
 **/*.node_modules
 **/*.angular
+**/*.env

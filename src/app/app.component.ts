@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { environment } from './environments/environments';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,8 @@ import { Router, NavigationEnd } from '@angular/router';
 export class AppComponent {
   title = 'FIRMA';
   constructor(private router: Router) {
+    console.log(environment.actionsURL);
+    console.log(environment.lawFirmURL);
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         // Verificar si la ruta actual es "/login"o "/recover"
