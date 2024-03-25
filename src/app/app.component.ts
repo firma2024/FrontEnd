@@ -10,8 +10,8 @@ import { environment } from './environments/environments';
 export class AppComponent {
   title = 'FIRMA';
   constructor(private router: Router) {
-    console.log(environment.actionsURL);
-    console.log(environment.lawFirmURL);
+    alert(environment.actionsURL);
+    alert(environment.lawFirmURL);
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         // Verificar si la ruta actual es "/login"o "/recover"
