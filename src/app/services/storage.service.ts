@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { environment } from '../environments/environments';
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -36,7 +36,11 @@ export class StorageService {
   ): Observable<HttpResponse<Blob>> {
     const headers = new HttpHeaders().set('Accept', 'application/zip');
     const url = `${environment.storageURL}/download/alldocuments?procesoId=${procesoId}`;
-    
-    return this.http.get(url, { responseType: 'blob', observe: 'response', headers });
+
+    return this.http.get(url, {
+      responseType: 'blob',
+      observe: 'response',
+      headers,
+    });
   }
 }

@@ -37,6 +37,7 @@ import { BrokerActionComponent } from './modules/actions/broker-action/broker-ac
 import { CreateLinkAudienceComponent } from './modules/processes/create-link-audience/create-link-audience.component';
 import { EditLinkAudienceComponent } from './modules/processes/edit-link-audience/edit-link-audience.component';
 import { InfoUserComponent } from './home/info-user/info-user.component';
+import { ReponseInterceptor } from './shared/interceptor/response.interceptor';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,11 @@ import { InfoUserComponent } from './home/info-user/info-user.component';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ReponseInterceptor,
       multi: true
     }
   ],

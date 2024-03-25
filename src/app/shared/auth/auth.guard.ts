@@ -6,6 +6,7 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,13 @@ export class AuthGuard implements CanActivate {
         return true;
       }
     }
+    Swal.fire({
+      icon: 'error',
+      title: 'No autorizado',
+      text: 'Por favor, inicie sesión para continuar',
+      confirmButtonText: 'Okay',
+      confirmButtonColor: '#AA2535',
+    });
     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
 
     return false;

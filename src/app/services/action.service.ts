@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from '../environments/environments';
+import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { ActuacionResponse } from '../shared/model/actuaciones/actuacion.req';
 import { Pageable } from '../shared/model/pageable';

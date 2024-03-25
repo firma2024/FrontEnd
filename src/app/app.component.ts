@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'FIRMA';
@@ -24,21 +25,22 @@ export class AppComponent {
 
     // Verificar si la ruta actual es "/login" o "/recover"
     if (currentUrl === loginUrl || currentUrl === recoverUrl) {
-        return true;
+      return true;
     }
 
     // Verificar si la ruta contiene "/login" con parámetros de consulta específicos
     if (currentUrl.includes(loginUrl)) {
-        const urlTree = this.router.parseUrl(currentUrl);
-        const queryParams = urlTree.queryParams;
-        // Verificar si existen parámetros de consulta y si tienen el valor correcto
-        if (queryParams['returnUrl'] && queryParams['returnUrl'].startsWith('/')) {
-          return true;
+      const urlTree = this.router.parseUrl(currentUrl);
+      const queryParams = urlTree.queryParams;
+      // Verificar si existen parámetros de consulta y si tienen el valor correcto
+      if (
+        queryParams['returnUrl'] &&
+        queryParams['returnUrl'].startsWith('/')
+      ) {
+        return true;
       }
-      
     }
 
     return false;
-}
-
+  }
 }
