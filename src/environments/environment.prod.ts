@@ -1,10 +1,10 @@
 export const environment = {
   production: true,
-  processURL: 'http://prod:8082/api/business/process',
-  lawFirmURL: 'http://prod:8082/api/business/firma',
-  actionsURL: 'http://prod:8082/api/business/actuacion',
-  storageURL: 'http://prod:8082/api/business/storage',
-  userURL:'http://prod:8082/api/business/user',
-  authURL:'http://prod:8080/api/auth',
+  processURL: 'https://business-service-production.up.railway.app/api/business/process',
+  lawFirmURL: 'https://business-service-production.up.railway.app/api/business/firma',
+  actionsURL: 'https://business-service-production.up.railway.app/api/business/actuacion',
+  storageURL: 'https://business-service-production.up.railway.app/api/business/storage',
+  userURL:'https://business-service-production.up.railway.app/api/business/user',
+  authURL:'https://auth-service-production-38fd.up.railway.app/api/auth',
   secretKey: 'ThisIsASecretKey'
 };
