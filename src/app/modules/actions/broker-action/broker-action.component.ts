@@ -51,6 +51,7 @@ export class BrokerActionComponent {
             title:
               'No se ha obtenido el link del micrositio',
             text: 'Por favor intente más tarde',
+            iconColor: '#AA2535',
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#AA2535',
           }).then((result) => {
