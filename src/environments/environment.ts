@@ -1,10 +1,10 @@
 export const environment = {
   production: false,
-  processURL: 'http://dev:8082/api/business/process',
-  lawFirmURL: 'http://dev:8082/api/business/firma',
-  actionsURL: 'http://dev:8082/api/business/actuacion',
-  storageURL: 'http://dev:8082/api/business/storage',
-  userURL:'http://dev:8082/api/business/user',
-  authURL:'http://dev:8080/api/auth',
+  processURL: 'http://100.103.80.102:8082/api/business/process',
+  lawFirmURL: 'http://100.103.80.102:8082/api/business/firma',
+  actionsURL: 'http://100.103.80.102:8082/api/business/actuacion',
+  storageURL: 'http://100.103.80.102:8082/api/business/storage',
+  userURL:'http://100.103.80.102:8082/api/business/user',
+  authURL:'http://100.103.80.102:8080/api/auth',
   secretKey: 'ThisIsASecretKey'
 };
